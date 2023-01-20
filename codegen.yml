@@ -1,0 +1,13 @@
+overwrite: true
+schema: "https://8fwjszx32h.execute-api.us-east-1.amazonaws.com/dev/graphql"
+documents: "**/*.{graphql,gql}"
+generates:
+  src/graphql/:
+    preset: "client"
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
