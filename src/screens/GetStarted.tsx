@@ -1,14 +1,31 @@
 import React from 'react'
-import {View, Text, Button, ImageBackground, StyleSheet} from "react-native"
-const image = { uri: 'https://reactjs.org/logo-og.png' };
+import {
+  View,
+  Text,
+  Button,
+  ImageBackground,
+  StyleSheet,
+  Platform,
+} from 'react-native'
+import { Colors } from '../shared/Constants'
 
 const GetStarted = () => {
+  const image = '../../assets/st2.jpg'
+
   return (
     <View style={styles.container}>
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>Inside</Text>
-    </ImageBackground>
-  </View>
+      <ImageBackground source={require(image)} style={styles.image}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.heading}>Leave it to us focus on you</Text>
+          <Text style={styles.subtext}>
+          Shop and chill. We offer unbeatable value and comfort at the touch of a button"
+          </Text>
+          <View style={styles.getStarted}>
+            <Button title="Get started" color={Platform.OS ? "white" : Colors.light.primary} />
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
   )
 }
 
@@ -18,17 +35,40 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: 'center',
+    resizeMode: 'cover',
   },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
+  heading: {
+    color: Colors.light.whiteText,
     textAlign: 'center',
-    backgroundColor: '#000000c0',
+    fontSize: 32,
+    fontWeight: '700',
   },
-});
-
+  subtext: {
+    color: Colors.light.tintWhite,
+    paddingVertical: '15%',
+    textAlign: "center"
+  },
+  contentContainer: {
+    width: '100%',
+    bottom: 0,
+    position: 'absolute',
+    padding: '10%',
+  },
+  getStarted: {
+    borderRadius: 7,
+    ...Platform.select({
+      android: {
+        backgroundColor: 'red',
+        borderRadius: 10,
+      },
+      ios: {
+        backgroundColor: 'transparent',
+        borderColor: Colors.light.primary,
+        borderWidth: 1,
+        color: Colors.light.whiteText
+      },
+    }),
+  },
+})
 
 export default GetStarted
