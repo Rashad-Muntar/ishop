@@ -8,9 +8,17 @@ import {
   Platform,
 } from 'react-native'
 import { Colors } from '../shared/Constants'
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const GetStarted = () => {
   const image = '../../assets/st2.jpg'
+  const navigation = useNavigation();
+
+  const registerHandler = () => {
+    navigation.navigate('Register')
+  }
 
   return (
     <View style={styles.container}>
@@ -21,7 +29,7 @@ const GetStarted = () => {
           Shop and chill. We offer unbeatable value and comfort at the touch of a button"
           </Text>
           <View style={styles.getStarted}>
-            <Button title="Get started" color={Platform.OS ? "white" : Colors.light.primary} />
+            <Button onPress={registerHandler} title="Get started" color={Platform.OS === "ios" ? Colors.light.whiteText : Colors.light.primary}/>
           </View>
         </View>
       </ImageBackground>
