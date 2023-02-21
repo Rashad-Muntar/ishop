@@ -47,9 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    borderBottomColor: Colors.light.lightGray,
-    borderWidth: 1,
-    backgroundColor: Colors.light.lightGray,
   },
   searchBar: {
     flex: 1,

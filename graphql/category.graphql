@@ -1,0 +1,37 @@
+query listCategories {
+  listCategories {
+    items {
+      id
+      title
+      image
+      stores {
+        items {
+          id
+          storeName
+          headerImg
+          address
+        }
+      }
+    }
+  }
+}
+
+query GetCategory($getCategoryId: ID!) {
+  getCategory(id: $getCategoryId) {
+    id
+    stores {
+      items {
+        categoryStoresId
+        headerImg
+        storeName
+        branches
+        address
+        logo
+        phone
+        verified
+        id
+        email
+      }
+    }
+  }
+}

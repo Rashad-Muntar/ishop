@@ -12,6 +12,10 @@ const CustomDrawer = () => {
   const date = format(new Date(), 'MMM. do yyyy')
   const time = format(new Date(), 'k: mmaaa')
   const navigation = useNavigation()
+
+  const logoutHandler = () => {
+    navigation.navigate('Home')
+  }
   return (
     <View style={styles.container}>
       <View>
@@ -41,12 +45,12 @@ const CustomDrawer = () => {
           <Text style={styles.ctaTitle}>Become an iShopper</Text>
           <Text style={styles.ctaDesc}>Earn money on your schedule</Text>
         </View>
-        <View style={styles.logoutWrapper}>
+        <TouchableOpacity onPress={logoutHandler} style={styles.logoutWrapper}>
           <Text>Logout</Text>
           <View style={styles.logoutIcon}>
             <AntDesign name="logout" size={24} color="black" />
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   )
