@@ -7,7 +7,7 @@ export const Colors = {
     primary100: "#D1F9F2",
     textPrimaryBlack: '#595959',
     tintWhite: '#878787',
-    primaryRed: '#BA4747',
+    primaryRed: '#e74c3c',
     whiteText: '#fff',
     background: '#fff',
     lightGray: '#F2F2F2',

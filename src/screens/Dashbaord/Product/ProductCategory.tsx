@@ -18,7 +18,7 @@ const ProductCategory = ({ img, title, onPress }: Props) => {
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <ImageBackground
         style={styles.img}
-        source={img}
+        source={{uri: img }}
         imageStyle={{
           borderTopRightRadius: 15,
           borderTopLeftRadius: 15,
@@ -31,15 +31,14 @@ const ProductCategory = ({ img, title, onPress }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: Colors.light.lightGray,
-    borderWidth: 1,
     borderRadius: 15,
     marginBottom: '8%',
+    backgroundColor: "white",
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 1,
-    elevation: 4,
+    elevation: 3,
   },
   img: {
     width: '100%',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Search from '../../../shared/Search'
 import { GiChickenOven } from 'react-icons/gi'
 import { AntDesign } from '@expo/vector-icons'
@@ -22,14 +22,13 @@ const Store = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchWrap}>
-        <View style={styles.backWrap}>
+        <TouchableOpacity style={styles.backWrap} onPress={navigation.goBack}>
           <AntDesign
             name="back"
             size={24}
             color="black"
-            onPress={navigation.goBack}
           />
-        </View>
+        </TouchableOpacity>
         <Search placeholder="Search for groceries" />
       </View>
 
@@ -56,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
+    paddingTop: 20
   },
   mainContent: {
     width: '90%',
@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
   searchWrap: {
     marginTop: 20,
     marginBottom: 10,
-    width: '87%',
+    width: '85%',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   backWrap: {

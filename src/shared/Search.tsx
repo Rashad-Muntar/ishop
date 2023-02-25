@@ -24,22 +24,21 @@ const Search = ({ placeholder }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: Colors.light.lightGray,
     borderRadius: 100,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 15,
-  },
-  input: {
-    height: 40,
-    paddingVertical: 18,
     paddingHorizontal: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
+  },
+  input: {
+    height: 40,
+    paddingHorizontal: 15,
+
   },
 })
 

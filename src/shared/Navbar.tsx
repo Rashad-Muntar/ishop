@@ -3,15 +3,19 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput } from 'reac
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { EvilIcons } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
-import { DrawerActions } from '@react-navigation/routers';
+import { DrawerActions } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native'
 import { Colors } from './Constants'
 
 const Navbar = () => {
-    const navigation = useNavigation()
+  const navigation = useNavigation()
+ //navigation.dispatch(DrawerActions.openDrawer())
+  const handleOpenDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer())
+  }
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+      <TouchableOpacity onPress={handleOpenDrawer}>
         <Ionicons
           name="md-grid-outline"
           size={24}

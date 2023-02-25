@@ -17,26 +17,6 @@ export type Scalars = {
   AWSTimestamp: any;
 };
 
-export type Blog = {
-  __typename?: 'Blog';
-  _deleted?: Maybe<Scalars['Boolean']>;
-  _lastChangedAt: Scalars['AWSTimestamp'];
-  _version: Scalars['Int'];
-  createdAt: Scalars['AWSDateTime'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  posts?: Maybe<ModelPostConnection>;
-  updatedAt: Scalars['AWSDateTime'];
-};
-
-
-export type BlogPostsArgs = {
-  filter?: InputMaybe<ModelPostFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  nextToken?: InputMaybe<Scalars['String']>;
-  sortDirection?: InputMaybe<ModelSortDirection>;
-};
-
 export type Category = {
   __typename?: 'Category';
   _deleted?: Maybe<Scalars['Boolean']>;
@@ -58,23 +38,29 @@ export type CategoryStoresArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
-export type Comment = {
-  __typename?: 'Comment';
+export type Client = {
+  __typename?: 'Client';
   _deleted?: Maybe<Scalars['Boolean']>;
   _lastChangedAt: Scalars['AWSTimestamp'];
   _version: Scalars['Int'];
-  content: Scalars['String'];
   createdAt: Scalars['AWSDateTime'];
+  email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  post?: Maybe<Post>;
-  postCommentsId?: Maybe<Scalars['ID']>;
+  location?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  orders?: Maybe<ModelOrderConnection>;
+  password?: Maybe<Scalars['String']>;
+  phone: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
   updatedAt: Scalars['AWSDateTime'];
 };
 
-export type CreateBlogInput = {
-  _version?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['ID']>;
-  name: Scalars['String'];
+
+export type ClientOrdersArgs = {
+  filter?: InputMaybe<ModelOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
 export type CreateCategoryInput = {
@@ -84,26 +70,36 @@ export type CreateCategoryInput = {
   title: Scalars['String'];
 };
 
-export type CreateCommentInput = {
+export type CreateClientInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  content: Scalars['String'];
+  email?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
-  postCommentsId?: InputMaybe<Scalars['ID']>;
+  location?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phone: Scalars['String'];
+  token?: InputMaybe<Scalars['String']>;
 };
 
-export type CreatePostInput = {
+export type CreateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  blogPostsId?: InputMaybe<Scalars['ID']>;
+  clientOrdersId?: InputMaybe<Scalars['ID']>;
+  code?: InputMaybe<Scalars['Int']>;
+  endTime: Scalars['AWSDateTime'];
   id?: InputMaybe<Scalars['ID']>;
-  title: Scalars['String'];
+  isCancel: Scalars['Boolean'];
+  isComplete: Scalars['Boolean'];
+  onGoing: Scalars['Boolean'];
+  shopperOrdersId?: InputMaybe<Scalars['ID']>;
+  startTime: Scalars['AWSDateTime'];
+  storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
 export type CreateProductCategoryInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['ID']>;
   image: Scalars['String'];
-  storeId: Scalars['String'];
-  storeProductCategoryId?: InputMaybe<Scalars['ID']>;
+  storeProductCategoriesId?: InputMaybe<Scalars['ID']>;
   title: Scalars['String'];
 };
 
@@ -114,9 +110,23 @@ export type CreateProductInput = {
   detail: Scalars['String'];
   id?: InputMaybe<Scalars['ID']>;
   image?: InputMaybe<Scalars['String']>;
-  price: Scalars['String'];
+  orderProductsId?: InputMaybe<Scalars['ID']>;
+  price: Scalars['Float'];
   productCategoryProductsId?: InputMaybe<Scalars['ID']>;
   title: Scalars['String'];
+};
+
+export type CreateShopperInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  avatar: Scalars['String'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id?: InputMaybe<Scalars['ID']>;
+  lastName: Scalars['String'];
+  location?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+  phone: Scalars['String'];
+  token?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateShopperIntentInput = {
@@ -162,22 +172,17 @@ export type CreateVendorIntentInput = {
   storeName: Scalars['String'];
 };
 
-export type DeleteBlogInput = {
-  _version?: InputMaybe<Scalars['Int']>;
-  id: Scalars['ID'];
-};
-
 export type DeleteCategoryInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
 };
 
-export type DeleteCommentInput = {
+export type DeleteClientInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
 };
 
-export type DeletePostInput = {
+export type DeleteOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
 };
@@ -188,6 +193,11 @@ export type DeleteProductCategoryInput = {
 };
 
 export type DeleteProductInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
+};
+
+export type DeleteShopperInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
 };
@@ -226,28 +236,6 @@ export enum ModelAttributeTypes {
   StringSet = 'stringSet'
 }
 
-export type ModelBlogConditionInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelBlogConditionInput>>>;
-  name?: InputMaybe<ModelStringInput>;
-  not?: InputMaybe<ModelBlogConditionInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelBlogConditionInput>>>;
-};
-
-export type ModelBlogConnection = {
-  __typename?: 'ModelBlogConnection';
-  items: Array<Maybe<Blog>>;
-  nextToken?: Maybe<Scalars['String']>;
-  startedAt?: Maybe<Scalars['AWSTimestamp']>;
-};
-
-export type ModelBlogFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelBlogFilterInput>>>;
-  id?: InputMaybe<ModelIdInput>;
-  name?: InputMaybe<ModelStringInput>;
-  not?: InputMaybe<ModelBlogFilterInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelBlogFilterInput>>>;
-};
-
 export type ModelBooleanInput = {
   attributeExists?: InputMaybe<Scalars['Boolean']>;
   attributeType?: InputMaybe<ModelAttributeTypes>;
@@ -279,28 +267,36 @@ export type ModelCategoryFilterInput = {
   title?: InputMaybe<ModelStringInput>;
 };
 
-export type ModelCommentConditionInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelCommentConditionInput>>>;
-  content?: InputMaybe<ModelStringInput>;
-  not?: InputMaybe<ModelCommentConditionInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelCommentConditionInput>>>;
-  postCommentsId?: InputMaybe<ModelIdInput>;
+export type ModelClientConditionInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelClientConditionInput>>>;
+  email?: InputMaybe<ModelStringInput>;
+  location?: InputMaybe<ModelStringInput>;
+  name?: InputMaybe<ModelStringInput>;
+  not?: InputMaybe<ModelClientConditionInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelClientConditionInput>>>;
+  password?: InputMaybe<ModelStringInput>;
+  phone?: InputMaybe<ModelStringInput>;
+  token?: InputMaybe<ModelStringInput>;
 };
 
-export type ModelCommentConnection = {
-  __typename?: 'ModelCommentConnection';
-  items: Array<Maybe<Comment>>;
+export type ModelClientConnection = {
+  __typename?: 'ModelClientConnection';
+  items: Array<Maybe<Client>>;
   nextToken?: Maybe<Scalars['String']>;
   startedAt?: Maybe<Scalars['AWSTimestamp']>;
 };
 
-export type ModelCommentFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelCommentFilterInput>>>;
-  content?: InputMaybe<ModelStringInput>;
+export type ModelClientFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelClientFilterInput>>>;
+  email?: InputMaybe<ModelStringInput>;
   id?: InputMaybe<ModelIdInput>;
-  not?: InputMaybe<ModelCommentFilterInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelCommentFilterInput>>>;
-  postCommentsId?: InputMaybe<ModelIdInput>;
+  location?: InputMaybe<ModelStringInput>;
+  name?: InputMaybe<ModelStringInput>;
+  not?: InputMaybe<ModelClientFilterInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelClientFilterInput>>>;
+  password?: InputMaybe<ModelStringInput>;
+  phone?: InputMaybe<ModelStringInput>;
+  token?: InputMaybe<ModelStringInput>;
 };
 
 export type ModelFloatInput = {
@@ -343,28 +339,42 @@ export type ModelIntInput = {
   ne?: InputMaybe<Scalars['Int']>;
 };
 
-export type ModelPostConditionInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelPostConditionInput>>>;
-  blogPostsId?: InputMaybe<ModelIdInput>;
-  not?: InputMaybe<ModelPostConditionInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelPostConditionInput>>>;
-  title?: InputMaybe<ModelStringInput>;
+export type ModelOrderConditionInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
+  clientOrdersId?: InputMaybe<ModelIdInput>;
+  code?: InputMaybe<ModelIntInput>;
+  endTime?: InputMaybe<ModelStringInput>;
+  isCancel?: InputMaybe<ModelBooleanInput>;
+  isComplete?: InputMaybe<ModelBooleanInput>;
+  not?: InputMaybe<ModelOrderConditionInput>;
+  onGoing?: InputMaybe<ModelBooleanInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
+  shopperOrdersId?: InputMaybe<ModelIdInput>;
+  startTime?: InputMaybe<ModelStringInput>;
+  storeOrdersId?: InputMaybe<ModelIdInput>;
 };
 
-export type ModelPostConnection = {
-  __typename?: 'ModelPostConnection';
-  items: Array<Maybe<Post>>;
+export type ModelOrderConnection = {
+  __typename?: 'ModelOrderConnection';
+  items: Array<Maybe<Order>>;
   nextToken?: Maybe<Scalars['String']>;
   startedAt?: Maybe<Scalars['AWSTimestamp']>;
 };
 
-export type ModelPostFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelPostFilterInput>>>;
-  blogPostsId?: InputMaybe<ModelIdInput>;
+export type ModelOrderFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
+  clientOrdersId?: InputMaybe<ModelIdInput>;
+  code?: InputMaybe<ModelIntInput>;
+  endTime?: InputMaybe<ModelStringInput>;
   id?: InputMaybe<ModelIdInput>;
-  not?: InputMaybe<ModelPostFilterInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelPostFilterInput>>>;
-  title?: InputMaybe<ModelStringInput>;
+  isCancel?: InputMaybe<ModelBooleanInput>;
+  isComplete?: InputMaybe<ModelBooleanInput>;
+  not?: InputMaybe<ModelOrderFilterInput>;
+  onGoing?: InputMaybe<ModelBooleanInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
+  shopperOrdersId?: InputMaybe<ModelIdInput>;
+  startTime?: InputMaybe<ModelStringInput>;
+  storeOrdersId?: InputMaybe<ModelIdInput>;
 };
 
 export type ModelProductCategoryConditionInput = {
@@ -372,8 +382,7 @@ export type ModelProductCategoryConditionInput = {
   image?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductCategoryConditionInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductCategoryConditionInput>>>;
-  storeId?: InputMaybe<ModelStringInput>;
-  storeProductCategoryId?: InputMaybe<ModelIdInput>;
+  storeProductCategoriesId?: InputMaybe<ModelIdInput>;
   title?: InputMaybe<ModelStringInput>;
 };
 
@@ -390,8 +399,7 @@ export type ModelProductCategoryFilterInput = {
   image?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductCategoryFilterInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductCategoryFilterInput>>>;
-  storeId?: InputMaybe<ModelStringInput>;
-  storeProductCategoryId?: InputMaybe<ModelIdInput>;
+  storeProductCategoriesId?: InputMaybe<ModelIdInput>;
   title?: InputMaybe<ModelStringInput>;
 };
 
@@ -403,7 +411,8 @@ export type ModelProductConditionInput = {
   image?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductConditionInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductConditionInput>>>;
-  price?: InputMaybe<ModelStringInput>;
+  orderProductsId?: InputMaybe<ModelIdInput>;
+  price?: InputMaybe<ModelFloatInput>;
   productCategoryProductsId?: InputMaybe<ModelIdInput>;
   title?: InputMaybe<ModelStringInput>;
 };
@@ -424,9 +433,46 @@ export type ModelProductFilterInput = {
   image?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductFilterInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductFilterInput>>>;
-  price?: InputMaybe<ModelStringInput>;
+  orderProductsId?: InputMaybe<ModelIdInput>;
+  price?: InputMaybe<ModelFloatInput>;
   productCategoryProductsId?: InputMaybe<ModelIdInput>;
   title?: InputMaybe<ModelStringInput>;
+};
+
+export type ModelShopperConditionInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelShopperConditionInput>>>;
+  avatar?: InputMaybe<ModelStringInput>;
+  email?: InputMaybe<ModelStringInput>;
+  firstName?: InputMaybe<ModelStringInput>;
+  lastName?: InputMaybe<ModelStringInput>;
+  location?: InputMaybe<ModelStringInput>;
+  not?: InputMaybe<ModelShopperConditionInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelShopperConditionInput>>>;
+  password?: InputMaybe<ModelStringInput>;
+  phone?: InputMaybe<ModelStringInput>;
+  token?: InputMaybe<ModelStringInput>;
+};
+
+export type ModelShopperConnection = {
+  __typename?: 'ModelShopperConnection';
+  items: Array<Maybe<Shopper>>;
+  nextToken?: Maybe<Scalars['String']>;
+  startedAt?: Maybe<Scalars['AWSTimestamp']>;
+};
+
+export type ModelShopperFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelShopperFilterInput>>>;
+  avatar?: InputMaybe<ModelStringInput>;
+  email?: InputMaybe<ModelStringInput>;
+  firstName?: InputMaybe<ModelStringInput>;
+  id?: InputMaybe<ModelIdInput>;
+  lastName?: InputMaybe<ModelStringInput>;
+  location?: InputMaybe<ModelStringInput>;
+  not?: InputMaybe<ModelShopperFilterInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelShopperFilterInput>>>;
+  password?: InputMaybe<ModelStringInput>;
+  phone?: InputMaybe<ModelStringInput>;
+  token?: InputMaybe<ModelStringInput>;
 };
 
 export type ModelShopperIntentConditionInput = {
@@ -540,13 +586,6 @@ export type ModelStringInput = {
   size?: InputMaybe<ModelSizeInput>;
 };
 
-export type ModelSubscriptionBlogFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionBlogFilterInput>>>;
-  id?: InputMaybe<ModelSubscriptionIdInput>;
-  name?: InputMaybe<ModelSubscriptionStringInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionBlogFilterInput>>>;
-};
-
 export type ModelSubscriptionBooleanInput = {
   eq?: InputMaybe<Scalars['Boolean']>;
   ne?: InputMaybe<Scalars['Boolean']>;
@@ -560,11 +599,16 @@ export type ModelSubscriptionCategoryFilterInput = {
   title?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
-export type ModelSubscriptionCommentFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionCommentFilterInput>>>;
-  content?: InputMaybe<ModelSubscriptionStringInput>;
+export type ModelSubscriptionClientFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionClientFilterInput>>>;
+  email?: InputMaybe<ModelSubscriptionStringInput>;
   id?: InputMaybe<ModelSubscriptionIdInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionCommentFilterInput>>>;
+  location?: InputMaybe<ModelSubscriptionStringInput>;
+  name?: InputMaybe<ModelSubscriptionStringInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionClientFilterInput>>>;
+  password?: InputMaybe<ModelSubscriptionStringInput>;
+  phone?: InputMaybe<ModelSubscriptionStringInput>;
+  token?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
 export type ModelSubscriptionFloatInput = {
@@ -606,11 +650,16 @@ export type ModelSubscriptionIntInput = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
 };
 
-export type ModelSubscriptionPostFilterInput = {
-  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionPostFilterInput>>>;
+export type ModelSubscriptionOrderFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
+  code?: InputMaybe<ModelSubscriptionIntInput>;
+  endTime?: InputMaybe<ModelSubscriptionStringInput>;
   id?: InputMaybe<ModelSubscriptionIdInput>;
-  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionPostFilterInput>>>;
-  title?: InputMaybe<ModelSubscriptionStringInput>;
+  isCancel?: InputMaybe<ModelSubscriptionBooleanInput>;
+  isComplete?: InputMaybe<ModelSubscriptionBooleanInput>;
+  onGoing?: InputMaybe<ModelSubscriptionBooleanInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
+  startTime?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
 export type ModelSubscriptionProductCategoryFilterInput = {
@@ -618,7 +667,6 @@ export type ModelSubscriptionProductCategoryFilterInput = {
   id?: InputMaybe<ModelSubscriptionIdInput>;
   image?: InputMaybe<ModelSubscriptionStringInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionProductCategoryFilterInput>>>;
-  storeId?: InputMaybe<ModelSubscriptionStringInput>;
   title?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
@@ -630,8 +678,22 @@ export type ModelSubscriptionProductFilterInput = {
   id?: InputMaybe<ModelSubscriptionIdInput>;
   image?: InputMaybe<ModelSubscriptionStringInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionProductFilterInput>>>;
-  price?: InputMaybe<ModelSubscriptionStringInput>;
+  price?: InputMaybe<ModelSubscriptionFloatInput>;
   title?: InputMaybe<ModelSubscriptionStringInput>;
+};
+
+export type ModelSubscriptionShopperFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionShopperFilterInput>>>;
+  avatar?: InputMaybe<ModelSubscriptionStringInput>;
+  email?: InputMaybe<ModelSubscriptionStringInput>;
+  firstName?: InputMaybe<ModelSubscriptionStringInput>;
+  id?: InputMaybe<ModelSubscriptionIdInput>;
+  lastName?: InputMaybe<ModelSubscriptionStringInput>;
+  location?: InputMaybe<ModelSubscriptionStringInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionShopperFilterInput>>>;
+  password?: InputMaybe<ModelSubscriptionStringInput>;
+  phone?: InputMaybe<ModelSubscriptionStringInput>;
+  token?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
 export type ModelSubscriptionShopperIntentFilterInput = {
@@ -731,31 +793,31 @@ export type ModelVendorIntentFilterInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   codeVerification?: Maybe<Scalars['String']>;
-  createBlog?: Maybe<Blog>;
   createCategory?: Maybe<Category>;
-  createComment?: Maybe<Comment>;
-  createPost?: Maybe<Post>;
+  createClient?: Maybe<Client>;
+  createOrder?: Maybe<Order>;
   createProduct?: Maybe<Product>;
   createProductCategory?: Maybe<ProductCategory>;
+  createShopper?: Maybe<Shopper>;
   createShopperIntent?: Maybe<ShopperIntent>;
   createStore?: Maybe<Store>;
   createVendorIntent?: Maybe<VendorIntent>;
-  deleteBlog?: Maybe<Blog>;
   deleteCategory?: Maybe<Category>;
-  deleteComment?: Maybe<Comment>;
-  deletePost?: Maybe<Post>;
+  deleteClient?: Maybe<Client>;
+  deleteOrder?: Maybe<Order>;
   deleteProduct?: Maybe<Product>;
   deleteProductCategory?: Maybe<ProductCategory>;
+  deleteShopper?: Maybe<Shopper>;
   deleteShopperIntent?: Maybe<ShopperIntent>;
   deleteStore?: Maybe<Store>;
   deleteVendorIntent?: Maybe<VendorIntent>;
   phoneVerification?: Maybe<Scalars['String']>;
-  updateBlog?: Maybe<Blog>;
   updateCategory?: Maybe<Category>;
-  updateComment?: Maybe<Comment>;
-  updatePost?: Maybe<Post>;
+  updateClient?: Maybe<Client>;
+  updateOrder?: Maybe<Order>;
   updateProduct?: Maybe<Product>;
   updateProductCategory?: Maybe<ProductCategory>;
+  updateShopper?: Maybe<Shopper>;
   updateShopperIntent?: Maybe<ShopperIntent>;
   updateStore?: Maybe<Store>;
   updateVendorIntent?: Maybe<VendorIntent>;
@@ -768,27 +830,21 @@ export type MutationCodeVerificationArgs = {
 };
 
 
-export type MutationCreateBlogArgs = {
-  condition?: InputMaybe<ModelBlogConditionInput>;
-  input: CreateBlogInput;
-};
-
-
 export type MutationCreateCategoryArgs = {
   condition?: InputMaybe<ModelCategoryConditionInput>;
   input: CreateCategoryInput;
 };
 
 
-export type MutationCreateCommentArgs = {
-  condition?: InputMaybe<ModelCommentConditionInput>;
-  input: CreateCommentInput;
+export type MutationCreateClientArgs = {
+  condition?: InputMaybe<ModelClientConditionInput>;
+  input: CreateClientInput;
 };
 
 
-export type MutationCreatePostArgs = {
-  condition?: InputMaybe<ModelPostConditionInput>;
-  input: CreatePostInput;
+export type MutationCreateOrderArgs = {
+  condition?: InputMaybe<ModelOrderConditionInput>;
+  input: CreateOrderInput;
 };
 
 
@@ -801,6 +857,12 @@ export type MutationCreateProductArgs = {
 export type MutationCreateProductCategoryArgs = {
   condition?: InputMaybe<ModelProductCategoryConditionInput>;
   input: CreateProductCategoryInput;
+};
+
+
+export type MutationCreateShopperArgs = {
+  condition?: InputMaybe<ModelShopperConditionInput>;
+  input: CreateShopperInput;
 };
 
 
@@ -822,27 +884,21 @@ export type MutationCreateVendorIntentArgs = {
 };
 
 
-export type MutationDeleteBlogArgs = {
-  condition?: InputMaybe<ModelBlogConditionInput>;
-  input: DeleteBlogInput;
-};
-
-
 export type MutationDeleteCategoryArgs = {
   condition?: InputMaybe<ModelCategoryConditionInput>;
   input: DeleteCategoryInput;
 };
 
 
-export type MutationDeleteCommentArgs = {
-  condition?: InputMaybe<ModelCommentConditionInput>;
-  input: DeleteCommentInput;
+export type MutationDeleteClientArgs = {
+  condition?: InputMaybe<ModelClientConditionInput>;
+  input: DeleteClientInput;
 };
 
 
-export type MutationDeletePostArgs = {
-  condition?: InputMaybe<ModelPostConditionInput>;
-  input: DeletePostInput;
+export type MutationDeleteOrderArgs = {
+  condition?: InputMaybe<ModelOrderConditionInput>;
+  input: DeleteOrderInput;
 };
 
 
@@ -855,6 +911,12 @@ export type MutationDeleteProductArgs = {
 export type MutationDeleteProductCategoryArgs = {
   condition?: InputMaybe<ModelProductCategoryConditionInput>;
   input: DeleteProductCategoryInput;
+};
+
+
+export type MutationDeleteShopperArgs = {
+  condition?: InputMaybe<ModelShopperConditionInput>;
+  input: DeleteShopperInput;
 };
 
 
@@ -881,27 +943,21 @@ export type MutationPhoneVerificationArgs = {
 };
 
 
-export type MutationUpdateBlogArgs = {
-  condition?: InputMaybe<ModelBlogConditionInput>;
-  input: UpdateBlogInput;
-};
-
-
 export type MutationUpdateCategoryArgs = {
   condition?: InputMaybe<ModelCategoryConditionInput>;
   input: UpdateCategoryInput;
 };
 
 
-export type MutationUpdateCommentArgs = {
-  condition?: InputMaybe<ModelCommentConditionInput>;
-  input: UpdateCommentInput;
+export type MutationUpdateClientArgs = {
+  condition?: InputMaybe<ModelClientConditionInput>;
+  input: UpdateClientInput;
 };
 
 
-export type MutationUpdatePostArgs = {
-  condition?: InputMaybe<ModelPostConditionInput>;
-  input: UpdatePostInput;
+export type MutationUpdateOrderArgs = {
+  condition?: InputMaybe<ModelOrderConditionInput>;
+  input: UpdateOrderInput;
 };
 
 
@@ -914,6 +970,12 @@ export type MutationUpdateProductArgs = {
 export type MutationUpdateProductCategoryArgs = {
   condition?: InputMaybe<ModelProductCategoryConditionInput>;
   input: UpdateProductCategoryInput;
+};
+
+
+export type MutationUpdateShopperArgs = {
+  condition?: InputMaybe<ModelShopperConditionInput>;
+  input: UpdateShopperInput;
 };
 
 
@@ -934,23 +996,32 @@ export type MutationUpdateVendorIntentArgs = {
   input: UpdateVendorIntentInput;
 };
 
-export type Post = {
-  __typename?: 'Post';
+export type Order = {
+  __typename?: 'Order';
   _deleted?: Maybe<Scalars['Boolean']>;
   _lastChangedAt: Scalars['AWSTimestamp'];
   _version: Scalars['Int'];
-  blog?: Maybe<Blog>;
-  blogPostsId?: Maybe<Scalars['ID']>;
-  comments?: Maybe<ModelCommentConnection>;
+  client?: Maybe<Client>;
+  clientOrdersId?: Maybe<Scalars['ID']>;
+  code?: Maybe<Scalars['Int']>;
   createdAt: Scalars['AWSDateTime'];
+  endTime: Scalars['AWSDateTime'];
   id: Scalars['ID'];
-  title: Scalars['String'];
+  isCancel: Scalars['Boolean'];
+  isComplete: Scalars['Boolean'];
+  onGoing: Scalars['Boolean'];
+  products?: Maybe<ModelProductConnection>;
+  shopper?: Maybe<Shopper>;
+  shopperOrdersId?: Maybe<Scalars['ID']>;
+  startTime: Scalars['AWSDateTime'];
+  store?: Maybe<Store>;
+  storeOrdersId?: Maybe<Scalars['ID']>;
   updatedAt: Scalars['AWSDateTime'];
 };
 
 
-export type PostCommentsArgs = {
-  filter?: InputMaybe<ModelCommentFilterInput>;
+export type OrderProductsArgs = {
+  filter?: InputMaybe<ModelProductFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
   sortDirection?: InputMaybe<ModelSortDirection>;
@@ -967,7 +1038,9 @@ export type Product = {
   detail: Scalars['String'];
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
-  price: Scalars['String'];
+  order?: Maybe<Order>;
+  orderProductsId?: Maybe<Scalars['ID']>;
+  price: Scalars['Float'];
   productCategory?: Maybe<ProductCategory>;
   productCategoryProductsId?: Maybe<Scalars['ID']>;
   title: Scalars['String'];
@@ -984,8 +1057,7 @@ export type ProductCategory = {
   image: Scalars['String'];
   products?: Maybe<ModelProductConnection>;
   store?: Maybe<Store>;
-  storeId: Scalars['String'];
-  storeProductCategoryId?: Maybe<Scalars['ID']>;
+  storeProductCategoriesId?: Maybe<Scalars['ID']>;
   title: Scalars['String'];
   updatedAt: Scalars['AWSDateTime'];
 };
@@ -1000,39 +1072,34 @@ export type ProductCategoryProductsArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getBlog?: Maybe<Blog>;
   getCategory?: Maybe<Category>;
-  getComment?: Maybe<Comment>;
-  getPost?: Maybe<Post>;
+  getClient?: Maybe<Client>;
+  getOrder?: Maybe<Order>;
   getProduct?: Maybe<Product>;
   getProductCategory?: Maybe<ProductCategory>;
+  getShopper?: Maybe<Shopper>;
   getShopperIntent?: Maybe<ShopperIntent>;
   getStore?: Maybe<Store>;
   getVendorIntent?: Maybe<VendorIntent>;
   hello: Scalars['String'];
-  listBlogs?: Maybe<ModelBlogConnection>;
   listCategories?: Maybe<ModelCategoryConnection>;
-  listComments?: Maybe<ModelCommentConnection>;
-  listPosts?: Maybe<ModelPostConnection>;
+  listClients?: Maybe<ModelClientConnection>;
+  listOrders?: Maybe<ModelOrderConnection>;
   listProductCategories?: Maybe<ModelProductCategoryConnection>;
   listProducts?: Maybe<ModelProductConnection>;
   listShopperIntents?: Maybe<ModelShopperIntentConnection>;
+  listShoppers?: Maybe<ModelShopperConnection>;
   listStores?: Maybe<ModelStoreConnection>;
   listVendorIntents?: Maybe<ModelVendorIntentConnection>;
-  syncBlogs?: Maybe<ModelBlogConnection>;
   syncCategories?: Maybe<ModelCategoryConnection>;
-  syncComments?: Maybe<ModelCommentConnection>;
-  syncPosts?: Maybe<ModelPostConnection>;
+  syncClients?: Maybe<ModelClientConnection>;
+  syncOrders?: Maybe<ModelOrderConnection>;
   syncProductCategories?: Maybe<ModelProductCategoryConnection>;
   syncProducts?: Maybe<ModelProductConnection>;
   syncShopperIntents?: Maybe<ModelShopperIntentConnection>;
+  syncShoppers?: Maybe<ModelShopperConnection>;
   syncStores?: Maybe<ModelStoreConnection>;
   syncVendorIntents?: Maybe<ModelVendorIntentConnection>;
-};
-
-
-export type QueryGetBlogArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -1041,12 +1108,12 @@ export type QueryGetCategoryArgs = {
 };
 
 
-export type QueryGetCommentArgs = {
+export type QueryGetClientArgs = {
   id: Scalars['ID'];
 };
 
 
-export type QueryGetPostArgs = {
+export type QueryGetOrderArgs = {
   id: Scalars['ID'];
 };
 
@@ -1057,6 +1124,11 @@ export type QueryGetProductArgs = {
 
 
 export type QueryGetProductCategoryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetShopperArgs = {
   id: Scalars['ID'];
 };
 
@@ -1076,13 +1148,6 @@ export type QueryGetVendorIntentArgs = {
 };
 
 
-export type QueryListBlogsArgs = {
-  filter?: InputMaybe<ModelBlogFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  nextToken?: InputMaybe<Scalars['String']>;
-};
-
-
 export type QueryListCategoriesArgs = {
   filter?: InputMaybe<ModelCategoryFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1090,15 +1155,15 @@ export type QueryListCategoriesArgs = {
 };
 
 
-export type QueryListCommentsArgs = {
-  filter?: InputMaybe<ModelCommentFilterInput>;
+export type QueryListClientsArgs = {
+  filter?: InputMaybe<ModelClientFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
 };
 
 
-export type QueryListPostsArgs = {
-  filter?: InputMaybe<ModelPostFilterInput>;
+export type QueryListOrdersArgs = {
+  filter?: InputMaybe<ModelOrderFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
 };
@@ -1125,6 +1190,13 @@ export type QueryListShopperIntentsArgs = {
 };
 
 
+export type QueryListShoppersArgs = {
+  filter?: InputMaybe<ModelShopperFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryListStoresArgs = {
   filter?: InputMaybe<ModelStoreFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1139,14 +1211,6 @@ export type QueryListVendorIntentsArgs = {
 };
 
 
-export type QuerySyncBlogsArgs = {
-  filter?: InputMaybe<ModelBlogFilterInput>;
-  lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
-  limit?: InputMaybe<Scalars['Int']>;
-  nextToken?: InputMaybe<Scalars['String']>;
-};
-
-
 export type QuerySyncCategoriesArgs = {
   filter?: InputMaybe<ModelCategoryFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
@@ -1155,16 +1219,16 @@ export type QuerySyncCategoriesArgs = {
 };
 
 
-export type QuerySyncCommentsArgs = {
-  filter?: InputMaybe<ModelCommentFilterInput>;
+export type QuerySyncClientsArgs = {
+  filter?: InputMaybe<ModelClientFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
 };
 
 
-export type QuerySyncPostsArgs = {
-  filter?: InputMaybe<ModelPostFilterInput>;
+export type QuerySyncOrdersArgs = {
+  filter?: InputMaybe<ModelOrderFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
@@ -1195,6 +1259,14 @@ export type QuerySyncShopperIntentsArgs = {
 };
 
 
+export type QuerySyncShoppersArgs = {
+  filter?: InputMaybe<ModelShopperFilterInput>;
+  lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QuerySyncStoresArgs = {
   filter?: InputMaybe<ModelStoreFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
@@ -1210,11 +1282,31 @@ export type QuerySyncVendorIntentsArgs = {
   nextToken?: InputMaybe<Scalars['String']>;
 };
 
-export type S3Object = {
-  __typename?: 'S3Object';
-  bucket: Scalars['String'];
-  key: Scalars['String'];
-  region: Scalars['String'];
+export type Shopper = {
+  __typename?: 'Shopper';
+  _deleted?: Maybe<Scalars['Boolean']>;
+  _lastChangedAt: Scalars['AWSTimestamp'];
+  _version: Scalars['Int'];
+  avatar: Scalars['String'];
+  createdAt: Scalars['AWSDateTime'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+  location?: Maybe<Scalars['String']>;
+  orders?: Maybe<ModelOrderConnection>;
+  password: Scalars['String'];
+  phone: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['AWSDateTime'];
+};
+
+
+export type ShopperOrdersArgs = {
+  filter?: InputMaybe<ModelOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
 export type ShopperIntent = {
@@ -1250,17 +1342,26 @@ export type Store = {
   headerImg?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   logo?: Maybe<Scalars['String']>;
+  orders?: Maybe<ModelOrderConnection>;
   outletType: Scalars['String'];
   password: Scalars['String'];
   phone: Scalars['String'];
-  productCategory?: Maybe<ModelProductCategoryConnection>;
+  productCategories?: Maybe<ModelProductCategoryConnection>;
   storeName?: Maybe<Scalars['String']>;
   updatedAt: Scalars['AWSDateTime'];
   verified: Scalars['Boolean'];
 };
 
 
-export type StoreProductCategoryArgs = {
+export type StoreOrdersArgs = {
+  filter?: InputMaybe<ModelOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  sortDirection?: InputMaybe<ModelSortDirection>;
+};
+
+
+export type StoreProductCategoriesArgs = {
   filter?: InputMaybe<ModelProductCategoryFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
@@ -1269,38 +1370,33 @@ export type StoreProductCategoryArgs = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  onCreateBlog?: Maybe<Blog>;
   onCreateCategory?: Maybe<Category>;
-  onCreateComment?: Maybe<Comment>;
-  onCreatePost?: Maybe<Post>;
+  onCreateClient?: Maybe<Client>;
+  onCreateOrder?: Maybe<Order>;
   onCreateProduct?: Maybe<Product>;
   onCreateProductCategory?: Maybe<ProductCategory>;
+  onCreateShopper?: Maybe<Shopper>;
   onCreateShopperIntent?: Maybe<ShopperIntent>;
   onCreateStore?: Maybe<Store>;
   onCreateVendorIntent?: Maybe<VendorIntent>;
-  onDeleteBlog?: Maybe<Blog>;
   onDeleteCategory?: Maybe<Category>;
-  onDeleteComment?: Maybe<Comment>;
-  onDeletePost?: Maybe<Post>;
+  onDeleteClient?: Maybe<Client>;
+  onDeleteOrder?: Maybe<Order>;
   onDeleteProduct?: Maybe<Product>;
   onDeleteProductCategory?: Maybe<ProductCategory>;
+  onDeleteShopper?: Maybe<Shopper>;
   onDeleteShopperIntent?: Maybe<ShopperIntent>;
   onDeleteStore?: Maybe<Store>;
   onDeleteVendorIntent?: Maybe<VendorIntent>;
-  onUpdateBlog?: Maybe<Blog>;
   onUpdateCategory?: Maybe<Category>;
-  onUpdateComment?: Maybe<Comment>;
-  onUpdatePost?: Maybe<Post>;
+  onUpdateClient?: Maybe<Client>;
+  onUpdateOrder?: Maybe<Order>;
   onUpdateProduct?: Maybe<Product>;
   onUpdateProductCategory?: Maybe<ProductCategory>;
+  onUpdateShopper?: Maybe<Shopper>;
   onUpdateShopperIntent?: Maybe<ShopperIntent>;
   onUpdateStore?: Maybe<Store>;
   onUpdateVendorIntent?: Maybe<VendorIntent>;
-};
-
-
-export type SubscriptionOnCreateBlogArgs = {
-  filter?: InputMaybe<ModelSubscriptionBlogFilterInput>;
 };
 
 
@@ -1309,13 +1405,13 @@ export type SubscriptionOnCreateCategoryArgs = {
 };
 
 
-export type SubscriptionOnCreateCommentArgs = {
-  filter?: InputMaybe<ModelSubscriptionCommentFilterInput>;
+export type SubscriptionOnCreateClientArgs = {
+  filter?: InputMaybe<ModelSubscriptionClientFilterInput>;
 };
 
 
-export type SubscriptionOnCreatePostArgs = {
-  filter?: InputMaybe<ModelSubscriptionPostFilterInput>;
+export type SubscriptionOnCreateOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionOrderFilterInput>;
 };
 
 
@@ -1326,6 +1422,11 @@ export type SubscriptionOnCreateProductArgs = {
 
 export type SubscriptionOnCreateProductCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionProductCategoryFilterInput>;
+};
+
+
+export type SubscriptionOnCreateShopperArgs = {
+  filter?: InputMaybe<ModelSubscriptionShopperFilterInput>;
 };
 
 
@@ -1344,23 +1445,18 @@ export type SubscriptionOnCreateVendorIntentArgs = {
 };
 
 
-export type SubscriptionOnDeleteBlogArgs = {
-  filter?: InputMaybe<ModelSubscriptionBlogFilterInput>;
-};
-
-
 export type SubscriptionOnDeleteCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionCategoryFilterInput>;
 };
 
 
-export type SubscriptionOnDeleteCommentArgs = {
-  filter?: InputMaybe<ModelSubscriptionCommentFilterInput>;
+export type SubscriptionOnDeleteClientArgs = {
+  filter?: InputMaybe<ModelSubscriptionClientFilterInput>;
 };
 
 
-export type SubscriptionOnDeletePostArgs = {
-  filter?: InputMaybe<ModelSubscriptionPostFilterInput>;
+export type SubscriptionOnDeleteOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionOrderFilterInput>;
 };
 
 
@@ -1371,6 +1467,11 @@ export type SubscriptionOnDeleteProductArgs = {
 
 export type SubscriptionOnDeleteProductCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionProductCategoryFilterInput>;
+};
+
+
+export type SubscriptionOnDeleteShopperArgs = {
+  filter?: InputMaybe<ModelSubscriptionShopperFilterInput>;
 };
 
 
@@ -1389,23 +1490,18 @@ export type SubscriptionOnDeleteVendorIntentArgs = {
 };
 
 
-export type SubscriptionOnUpdateBlogArgs = {
-  filter?: InputMaybe<ModelSubscriptionBlogFilterInput>;
-};
-
-
 export type SubscriptionOnUpdateCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionCategoryFilterInput>;
 };
 
 
-export type SubscriptionOnUpdateCommentArgs = {
-  filter?: InputMaybe<ModelSubscriptionCommentFilterInput>;
+export type SubscriptionOnUpdateClientArgs = {
+  filter?: InputMaybe<ModelSubscriptionClientFilterInput>;
 };
 
 
-export type SubscriptionOnUpdatePostArgs = {
-  filter?: InputMaybe<ModelSubscriptionPostFilterInput>;
+export type SubscriptionOnUpdateOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionOrderFilterInput>;
 };
 
 
@@ -1416,6 +1512,11 @@ export type SubscriptionOnUpdateProductArgs = {
 
 export type SubscriptionOnUpdateProductCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionProductCategoryFilterInput>;
+};
+
+
+export type SubscriptionOnUpdateShopperArgs = {
+  filter?: InputMaybe<ModelSubscriptionShopperFilterInput>;
 };
 
 
@@ -1433,12 +1534,6 @@ export type SubscriptionOnUpdateVendorIntentArgs = {
   filter?: InputMaybe<ModelSubscriptionVendorIntentFilterInput>;
 };
 
-export type UpdateBlogInput = {
-  _version?: InputMaybe<Scalars['Int']>;
-  id: Scalars['ID'];
-  name?: InputMaybe<Scalars['String']>;
-};
-
 export type UpdateCategoryInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
@@ -1446,26 +1541,36 @@ export type UpdateCategoryInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-export type UpdateCommentInput = {
+export type UpdateClientInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  content?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
-  postCommentsId?: InputMaybe<Scalars['ID']>;
+  location?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
 };
 
-export type UpdatePostInput = {
+export type UpdateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  blogPostsId?: InputMaybe<Scalars['ID']>;
+  clientOrdersId?: InputMaybe<Scalars['ID']>;
+  code?: InputMaybe<Scalars['Int']>;
+  endTime?: InputMaybe<Scalars['AWSDateTime']>;
   id: Scalars['ID'];
-  title?: InputMaybe<Scalars['String']>;
+  isCancel?: InputMaybe<Scalars['Boolean']>;
+  isComplete?: InputMaybe<Scalars['Boolean']>;
+  onGoing?: InputMaybe<Scalars['Boolean']>;
+  shopperOrdersId?: InputMaybe<Scalars['ID']>;
+  startTime?: InputMaybe<Scalars['AWSDateTime']>;
+  storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
 export type UpdateProductCategoryInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
   image?: InputMaybe<Scalars['String']>;
-  storeId?: InputMaybe<Scalars['String']>;
-  storeProductCategoryId?: InputMaybe<Scalars['ID']>;
+  storeProductCategoriesId?: InputMaybe<Scalars['ID']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -1476,9 +1581,23 @@ export type UpdateProductInput = {
   detail?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   image?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['String']>;
+  orderProductsId?: InputMaybe<Scalars['ID']>;
+  price?: InputMaybe<Scalars['Float']>;
   productCategoryProductsId?: InputMaybe<Scalars['ID']>;
   title?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateShopperInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  avatar?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateShopperIntentInput = {
@@ -1573,6 +1692,20 @@ export type GetCategoryQueryVariables = Exact<{
 
 
 export type GetCategoryQuery = { __typename?: 'Query', getCategory?: { __typename?: 'Category', id: string, stores?: { __typename?: 'ModelStoreConnection', items: Array<{ __typename?: 'Store', categoryStoresId?: string | null, headerImg?: string | null, storeName?: string | null, branches: string, address: string, logo?: string | null, phone: string, verified: boolean, id: string, email: string } | null> } | null } | null };
+
+export type GetProductCategoryQueryVariables = Exact<{
+  getProductCategoryId: Scalars['ID'];
+}>;
+
+
+export type GetProductCategoryQuery = { __typename?: 'Query', getProductCategory?: { __typename?: 'ProductCategory', id: string, image: string, title: string, products?: { __typename?: 'ModelProductConnection', items: Array<{ __typename?: 'Product', image?: string | null, price: number, title: string, brand: string, detail: string, id: string } | null> } | null } | null };
+
+export type GetStoreQueryVariables = Exact<{
+  getStoreId: Scalars['ID'];
+}>;
+
+
+export type GetStoreQuery = { __typename?: 'Query', getStore?: { __typename?: 'Store', id: string, headerImg?: string | null, logo?: string | null, storeName?: string | null, address: string, branches: string, productCategories?: { __typename?: 'ModelProductCategoryConnection', items: Array<{ __typename?: 'ProductCategory', id: string, image: string, title: string } | null> } | null } | null };
 
 
 export const PhoneVerificationDocument = gql`
@@ -1733,3 +1866,97 @@ export function useGetCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCategoryQueryHookResult = ReturnType<typeof useGetCategoryQuery>;
 export type GetCategoryLazyQueryHookResult = ReturnType<typeof useGetCategoryLazyQuery>;
 export type GetCategoryQueryResult = Apollo.QueryResult<GetCategoryQuery, GetCategoryQueryVariables>;
+export const GetProductCategoryDocument = gql`
+    query GetProductCategory($getProductCategoryId: ID!) {
+  getProductCategory(id: $getProductCategoryId) {
+    id
+    image
+    title
+    products {
+      items {
+        image
+        price
+        title
+        brand
+        detail
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetProductCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductCategoryQuery({
+ *   variables: {
+ *      getProductCategoryId: // value for 'getProductCategoryId'
+ *   },
+ * });
+ */
+export function useGetProductCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetProductCategoryQuery, GetProductCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductCategoryQuery, GetProductCategoryQueryVariables>(GetProductCategoryDocument, options);
+      }
+export function useGetProductCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductCategoryQuery, GetProductCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductCategoryQuery, GetProductCategoryQueryVariables>(GetProductCategoryDocument, options);
+        }
+export type GetProductCategoryQueryHookResult = ReturnType<typeof useGetProductCategoryQuery>;
+export type GetProductCategoryLazyQueryHookResult = ReturnType<typeof useGetProductCategoryLazyQuery>;
+export type GetProductCategoryQueryResult = Apollo.QueryResult<GetProductCategoryQuery, GetProductCategoryQueryVariables>;
+export const GetStoreDocument = gql`
+    query GetStore($getStoreId: ID!) {
+  getStore(id: $getStoreId) {
+    id
+    headerImg
+    logo
+    storeName
+    address
+    branches
+    productCategories {
+      items {
+        id
+        image
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetStoreQuery__
+ *
+ * To run a query within a React component, call `useGetStoreQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStoreQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStoreQuery({
+ *   variables: {
+ *      getStoreId: // value for 'getStoreId'
+ *   },
+ * });
+ */
+export function useGetStoreQuery(baseOptions: Apollo.QueryHookOptions<GetStoreQuery, GetStoreQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetStoreQuery, GetStoreQueryVariables>(GetStoreDocument, options);
+      }
+export function useGetStoreLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStoreQuery, GetStoreQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetStoreQuery, GetStoreQueryVariables>(GetStoreDocument, options);
+        }
+export type GetStoreQueryHookResult = ReturnType<typeof useGetStoreQuery>;
+export type GetStoreLazyQueryHookResult = ReturnType<typeof useGetStoreLazyQuery>;
+export type GetStoreQueryResult = Apollo.QueryResult<GetStoreQuery, GetStoreQueryVariables>;
