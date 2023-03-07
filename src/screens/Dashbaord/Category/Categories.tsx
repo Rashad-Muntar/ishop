@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import Navbar from '../../../shared/Navbar'
 import Category from '../Category/Category'
@@ -9,11 +9,14 @@ import { DrawerItemList } from '@react-navigation/drawer'
 
 const Categories = () => {
   const { data, loading, error } = useListCategoriesQuery()
+  const [pusToken, setPushToken] = useState()
   const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
       <Navbar />
       <View style={styles.cardWrapper}>
+   
         {data?.listCategories?.items.map((item, index) => (
           <Category
             key={index}
@@ -24,6 +27,7 @@ const Categories = () => {
           />
         ))}
       </View>
+      {/* <Push /> */}
     </View>
   )
 }

@@ -3,7 +3,7 @@ import Categories from '../screens/Dashbaord/Category/Categories'
 import Store from '../screens/Dashbaord/Vendors/Stores'
 import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
 import ProductList from '../screens/Dashbaord/Product/ProductList'
-import Checkout from '../screens/Checkout'
+import Checkout from '../screens/Dashbaord/Checkout.tsx/Checkout'
 import { RootStackParamList } from '../../Types/stackTypes'
 import { MenuDrawer } from './Drawer'
 
@@ -20,7 +20,7 @@ const MainNavigation = () => {
         },
       }}
       initialRouteName="Home"
-      mode="modal"
+      // mode="modal"
     >
       {/* <Stack.Screen name="Drawer" component={DrawerWrapper} /> */}
       {/* <Stack.Screen
@@ -58,7 +58,7 @@ const MainNavigation = () => {
         options={{ headerShown: false }}
         component={ProductList}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Checkout"
         options={{ headerShown: true }}
         component={Checkout}

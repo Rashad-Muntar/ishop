@@ -63,7 +63,7 @@ const Cart = ({onOpenCart, totalItems, totalPrice}:Props) => {
           </View>
         </View>
         <View style={styles.pricing}>
-          <Text style={styles.price}>{totalPrice}</Text>
+          <Text style={styles.price}>${totalPrice}</Text>
           <Text style={styles.delivery}>Delivery fee is not included</Text>
         </View>
       </View>

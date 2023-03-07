@@ -10,6 +10,9 @@ import theme from './theme'
 import RootNavigator from './src/navigation/rootNavigation'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { ApolloProvider } from '@apollo/client'
+import {
+  StripeProvider,
+} from '@stripe/stripe-react-native'
 import useClient from './src/lib/client'
 
 export default function App() {
@@ -22,10 +25,14 @@ export default function App() {
       <NativeBaseProvider theme={theme}>
         <Provider store={store}>
           {/* <PersistGate loading={null} persistor={persistor}> */}
-            <ApolloProvider client={client}>
+
+          <ApolloProvider client={client}>
+            <StripeProvider publishableKey="pk_test_51MfPWZI4CD8H90K2zYRQSG2YB9dkFR6GwKChMF8b9VfIhLA6VzXwi2hcleBjOrNPaGcmraabqk0Vo7SxmendxV2U00PkpseKEc">
               <StatusBar style="dark" />
-              <RootNavigator />
-            </ApolloProvider>
+            </StripeProvider>
+            <RootNavigator />
+          </ApolloProvider>
+
           {/* </PersistGate> */}
         </Provider>
       </NativeBaseProvider>

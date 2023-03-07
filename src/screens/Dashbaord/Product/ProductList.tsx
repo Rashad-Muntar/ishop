@@ -11,7 +11,7 @@ import {
   FlatList,
 } from 'react-native'
 import Search from '../../../shared/Search'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, increment, decrement, removeItem } from '../../../../StateManagement/Store/Actions/cart'
 import { cartTotalPriceSelector, cartTotalSelector } from '../../../../StateManagement/selectors'
 import { AntDesign } from '@expo/vector-icons'
@@ -22,7 +22,6 @@ import Cart from '../../../shared/cart/cart'
 import BottomSheetDrawer from '../../../shared/BottomSheet'
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import CartItem from '../../../shared/cart/cartItem'
-import { useSelector } from 'react-redux'
 
 const ProductList = () => {
   const route = useRoute()
@@ -46,13 +45,10 @@ const ProductList = () => {
   const handleCartItemDecreament = (item) => {
     if (item.quantity === 1) {
       dispatch(removeItem(item.id));
-
-      // console.log("removed");
       return;
     } else {
       dispatch(decrement(item.id));
     }
-
   }
 
   const navigation = useNavigation()
@@ -112,7 +108,7 @@ const ProductList = () => {
           </View>
         </View>
       </ScrollView>
-      <Cart onOpenCart={() => handlePresentModalPress(1)} totalItems={totalItems} totalPrice={totalPrice} />
+      <Cart onOpenCart={() => navigation.navigate("Checkout")} totalItems={totalItems} totalPrice={totalPrice} />
       <BottomSheetDrawer sheetRef={sheetRef} snaPoints={snapPoints} index={0}>
         {cartItems.map((item: any, index: any) => (
           <CartItem

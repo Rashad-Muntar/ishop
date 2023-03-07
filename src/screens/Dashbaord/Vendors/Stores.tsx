@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    paddingTop: 20
   },
   mainContent: {
     width: '90%',

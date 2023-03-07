@@ -105,7 +105,6 @@ export type CreateProductCategoryInput = {
 
 export type CreateProductInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  aisleId?: InputMaybe<Scalars['String']>;
   brand: Scalars['String'];
   detail: Scalars['String'];
   id?: InputMaybe<Scalars['ID']>;
@@ -404,7 +403,6 @@ export type ModelProductCategoryFilterInput = {
 };
 
 export type ModelProductConditionInput = {
-  aisleId?: InputMaybe<ModelStringInput>;
   and?: InputMaybe<Array<InputMaybe<ModelProductConditionInput>>>;
   brand?: InputMaybe<ModelStringInput>;
   detail?: InputMaybe<ModelStringInput>;
@@ -425,7 +423,6 @@ export type ModelProductConnection = {
 };
 
 export type ModelProductFilterInput = {
-  aisleId?: InputMaybe<ModelStringInput>;
   and?: InputMaybe<Array<InputMaybe<ModelProductFilterInput>>>;
   brand?: InputMaybe<ModelStringInput>;
   detail?: InputMaybe<ModelStringInput>;
@@ -671,7 +668,6 @@ export type ModelSubscriptionProductCategoryFilterInput = {
 };
 
 export type ModelSubscriptionProductFilterInput = {
-  aisleId?: InputMaybe<ModelSubscriptionStringInput>;
   and?: InputMaybe<Array<InputMaybe<ModelSubscriptionProductFilterInput>>>;
   brand?: InputMaybe<ModelSubscriptionStringInput>;
   detail?: InputMaybe<ModelSubscriptionStringInput>;
@@ -796,6 +792,7 @@ export type Mutation = {
   createCategory?: Maybe<Category>;
   createClient?: Maybe<Client>;
   createOrder?: Maybe<Order>;
+  createPaymentIntent: PaymentIntention;
   createProduct?: Maybe<Product>;
   createProductCategory?: Maybe<ProductCategory>;
   createShopper?: Maybe<Shopper>;
@@ -845,6 +842,11 @@ export type MutationCreateClientArgs = {
 export type MutationCreateOrderArgs = {
   condition?: InputMaybe<ModelOrderConditionInput>;
   input: CreateOrderInput;
+};
+
+
+export type MutationCreatePaymentIntentArgs = {
+  amount: Scalars['Float'];
 };
 
 
@@ -1027,12 +1029,19 @@ export type OrderProductsArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
+export type PaymentIntention = {
+  __typename?: 'PaymentIntention';
+  customer: Scalars['String'];
+  ephemeralKey: Scalars['String'];
+  paymentIntent: Scalars['String'];
+  publishableKey: Scalars['String'];
+};
+
 export type Product = {
   __typename?: 'Product';
   _deleted?: Maybe<Scalars['Boolean']>;
   _lastChangedAt: Scalars['AWSTimestamp'];
   _version: Scalars['Int'];
-  aisleId?: Maybe<Scalars['String']>;
   brand: Scalars['String'];
   createdAt: Scalars['AWSDateTime'];
   detail: Scalars['String'];
@@ -1576,7 +1585,6 @@ export type UpdateProductCategoryInput = {
 
 export type UpdateProductInput = {
   _version?: InputMaybe<Scalars['Int']>;
-  aisleId?: InputMaybe<Scalars['String']>;
   brand?: InputMaybe<Scalars['String']>;
   detail?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -1692,6 +1700,13 @@ export type GetCategoryQueryVariables = Exact<{
 
 
 export type GetCategoryQuery = { __typename?: 'Query', getCategory?: { __typename?: 'Category', id: string, stores?: { __typename?: 'ModelStoreConnection', items: Array<{ __typename?: 'Store', categoryStoresId?: string | null, headerImg?: string | null, storeName?: string | null, branches: string, address: string, logo?: string | null, phone: string, verified: boolean, id: string, email: string } | null> } | null } | null };
+
+export type CreatePaymentIntentMutationVariables = Exact<{
+  amount: Scalars['Float'];
+}>;
+
+
+export type CreatePaymentIntentMutation = { __typename?: 'Mutation', createPaymentIntent: { __typename?: 'PaymentIntention', customer: string, ephemeralKey: string, paymentIntent: string, publishableKey: string } };
 
 export type GetProductCategoryQueryVariables = Exact<{
   getProductCategoryId: Scalars['ID'];
@@ -1866,6 +1881,42 @@ export function useGetCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCategoryQueryHookResult = ReturnType<typeof useGetCategoryQuery>;
 export type GetCategoryLazyQueryHookResult = ReturnType<typeof useGetCategoryLazyQuery>;
 export type GetCategoryQueryResult = Apollo.QueryResult<GetCategoryQuery, GetCategoryQueryVariables>;
+export const CreatePaymentIntentDocument = gql`
+    mutation CreatePaymentIntent($amount: Float!) {
+  createPaymentIntent(amount: $amount) {
+    customer
+    ephemeralKey
+    paymentIntent
+    publishableKey
+  }
+}
+    `;
+export type CreatePaymentIntentMutationFn = Apollo.MutationFunction<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>;
+
+/**
+ * __useCreatePaymentIntentMutation__
+ *
+ * To run a mutation, you first call `useCreatePaymentIntentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePaymentIntentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPaymentIntentMutation, { data, loading, error }] = useCreatePaymentIntentMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useCreatePaymentIntentMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>(CreatePaymentIntentDocument, options);
+      }
+export type CreatePaymentIntentMutationHookResult = ReturnType<typeof useCreatePaymentIntentMutation>;
+export type CreatePaymentIntentMutationResult = Apollo.MutationResult<CreatePaymentIntentMutation>;
+export type CreatePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>;
 export const GetProductCategoryDocument = gql`
     query GetProductCategory($getProductCategoryId: ID!) {
   getProductCategory(id: $getProductCategoryId) {

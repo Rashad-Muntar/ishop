@@ -1,0 +1,8 @@
+mutation CreatePaymentIntent($amount: Float!) {
+  createPaymentIntent(amount: $amount) {
+    customer
+    ephemeralKey
+    paymentIntent
+    publishableKey
+  }
+}

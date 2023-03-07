@@ -8,6 +8,7 @@ interface Props {
   image?: string
   title?: string
   price?: string
+  qty?: string
   onIncrease?: () => void
   onDecrease?: any
   onRemove?: () => void
@@ -15,8 +16,7 @@ interface Props {
 
 // increase, decrease
 
-const CartItem = ({ image, title, price, onIncrease, onDecrease }: Props) => {
-  console.log(title)
+const CartItem = ({ qty, image, title, price, onIncrease, onDecrease }: Props) => {
   return (
     <View style={styles.wrap}>
       <View style={styles.itemWrap}>
@@ -36,6 +36,7 @@ const CartItem = ({ image, title, price, onIncrease, onDecrease }: Props) => {
               color={Colors.light.primary}
             />
           </TouchableOpacity>
+          <View><Text style={styles.qty}>{qty}</Text></View>
           <TouchableOpacity onPress={onIncrease}>
             <Entypo
               name="circle-with-plus"
@@ -100,6 +101,9 @@ const styles = StyleSheet.create({
   //   justifyContent: 'center',
   //   alignItems: 'center',
   // },
+  qty: {
+    fontWeight: "700"
+  }
 })
 
 export default CartItem
