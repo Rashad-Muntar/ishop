@@ -1,0 +1,19 @@
+query GetStore($getStoreId: ID!) {
+  getStore(id: $getStoreId) {
+    id
+    headerImg
+    logo
+    storeName
+    address
+    branches
+    productCategories {
+      items {
+        id
+        image
+        title
+      }
+    }
+  }
+}
+
+

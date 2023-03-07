@@ -1,14 +1,7 @@
 mutation phoneVerification($phoneNumber: String!){
-  phoneVerification(phoneNumber: $phoneNumber) {
-    success
-    message
-  }
+  phoneVerification(phoneNumber: $phoneNumber)
 }
 
-mutation codeVerification($phoneNumber: String!, $code: Int!) {
-  codeVerification(phoneNumber: $phoneNumber, code: $code) {
-    success
-    message
-    token
-  }
+mutation codeVerification($phoneNumber: String!, $code: Int!){
+  codeVerification(phoneNumber: $phoneNumber, code: $code)
 }

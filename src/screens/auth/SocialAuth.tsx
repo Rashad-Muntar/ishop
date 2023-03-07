@@ -55,7 +55,6 @@ const SocialAuth = () => {
   //     }
   //   }, [user])
   const fetchUserhandler = async () => {
-    console.log('hitfetch')
     let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
       headers: {
         Authorizatino: `Bearer ${accesToken}`,

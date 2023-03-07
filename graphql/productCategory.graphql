@@ -1,0 +1,17 @@
+query GetProductCategory($getProductCategoryId: ID!) {
+  getProductCategory(id: $getProductCategoryId) {
+    id
+    image
+    title
+    products {
+      items {
+        image
+        price
+        title
+        brand
+        detail
+        id
+      }
+    }
+  }
+}

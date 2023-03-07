@@ -1,29 +1,42 @@
 import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar'
 import { NativeBaseProvider, Box } from 'native-base'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { SafeAreaView } from 'react-native'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 import store from './StateManagement/Store'
 import theme from './theme'
-import { NavigationContainer } from '@react-navigation/native'
-import DrawerNavigator from './src/navigation/mainNavigation'
-import MainNavigation from './src/navigation/mainNavigation'
+import RootNavigator from './src/navigation/rootNavigation'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { ApolloProvider } from '@apollo/client'
+import {
+  StripeProvider,
+} from '@stripe/stripe-react-native'
+import useClient from './src/lib/client'
 
 export default function App() {
-  const queryClient = new QueryClient()
+  const client = useClient()
+  let persistor = persistStore(store)
 
   return (
-    // <SafeAreaView>
-    <NavigationContainer>
-    <NativeBaseProvider theme={theme}>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <StatusBar style="dark" />
-            <DrawerNavigator />
-        </QueryClientProvider>
-      </Provider>
-    </NativeBaseProvider>
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* <BottomSheetModalProvider> */}
+      <NativeBaseProvider theme={theme}>
+        <Provider store={store}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+
+          <ApolloProvider client={client}>
+            <StripeProvider publishableKey="pk_test_51MfPWZI4CD8H90K2zYRQSG2YB9dkFR6GwKChMF8b9VfIhLA6VzXwi2hcleBjOrNPaGcmraabqk0Vo7SxmendxV2U00PkpseKEc">
+              <StatusBar style="dark" />
+            </StripeProvider>
+            <RootNavigator />
+          </ApolloProvider>
+
+          {/* </PersistGate> */}
+        </Provider>
+      </NativeBaseProvider>
+      {/* </BottomSheetModalProvider> */}
+    </SafeAreaView>
   )
 }

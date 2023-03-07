@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native'
-import { graphql } from '../../services/GraphqlClientService'
+// import { graphql } from '../../services/GraphqlClientService'
 import { Colors } from '../../shared/Constants'
 import SocialAuth from './SocialAuth'
 import { useMutation } from 'react-query'
@@ -19,9 +19,11 @@ import PhoneInput from 'react-native-phone-number-input'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setPhoneNumber } from '../../../StateManagement/Store/Actions/OtpAction'
+import { usePhoneVerificationMutation } from '../../generated/graphql'
 
 const Register = () => {
-  const [phoneNumber, setNumber] = React.useState('')
+  const [verifyPhone ] = usePhoneVerificationMutation()
+  const [number, setNumber] = React.useState('')
   const [isDisabled, setIsDisabled] = React.useState(true)
   const phoneInput = React.useRef(null)
   const navigation = useNavigation()
@@ -31,38 +33,47 @@ const Register = () => {
     navigation.navigate('VerifyCode')
   }
 
+  // const login = useMutation(
+  //   () =>
+  //     graphql.phoneVerification({
+  //       phoneNumber: phoneNumber,
+  //     }),
+  //   {
+  //     onSuccess: (result) => {
+  //       if (result.phoneVerification.success) {
+  //         verifyHandler()
+  //       } else {
+  //         navigation.navigate('Register')
+  //       }
+  //       dispatch(setPhoneNumber(phoneNumber))
+  //     },
+  //     onError: (e: any) => {
+  //       // showErrorAlert({
+  //       //   e,
+  //       //   toast: {
+  //       //     type: 'warning',
+  //       //     message: t('Incorrect credentials, please try again!'),
+  //       //   },
+  //       // })
+  //       console.log(e.message)
+  //     },
+  //   }
+  // )
 
-  const login = useMutation(
-    () =>
-      graphql.phoneVerification({
-        phoneNumber: phoneNumber,
-      }),
-    {
-      onSuccess: (result) => {
-        if (result.phoneVerification.success) {
-          verifyHandler()
-        } else {
-          navigation.navigate('Register')
-        }
-        dispatch(setPhoneNumber(phoneNumber))
-        console.log(result)
-        
-      },
-      onError: (e: any) => {
-        // showErrorAlert({
-        //   e,
-        //   toast: {
-        //     type: 'warning',
-        //     message: t('Incorrect credentials, please try again!'),
-        //   },
-        // })
-        console.log(e.message)
-      },
+  const verifyNumberHandler = () => {
+    try {
+      verifyPhone({ variables: { phoneNumber: number } })
+        dispatch(setPhoneNumber(number))
+        verifyHandler()
+    } catch (error) {
+      
     }
-  )
+    
+  }
+
   const OnPress = () => {
-    if (phoneNumber.length !== 0) {
-      Alert.alert('Confirm Number', phoneNumber, [
+    if (number.length !== 0) {
+      Alert.alert('Confirm Number', number, [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -71,7 +82,7 @@ const Register = () => {
         {
           text: 'OK',
           onPress: () => {
-            login.mutate()
+            verifyNumberHandler()
           },
         },
       ])
@@ -84,7 +95,7 @@ const Register = () => {
           <Text style={styles.title}>Enter phone number</Text>
           <PhoneInput
             ref={phoneInput}
-            defaultValue={phoneNumber}
+            defaultValue={number}
             containerStyle={styles.phoneContainer}
             textContainerStyle={styles.textInput}
             textInputStyle={styles.textInputStyle}
@@ -125,8 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'blue',
-    borderWidth: 3,
   },
   phoneContainer: {
     width: '75%',

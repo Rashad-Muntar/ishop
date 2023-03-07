@@ -14,11 +14,9 @@ import {
   Keyboard,
 } from 'react-native'
 import { useSelector } from 'react-redux'
-import { useMutation } from 'react-query'
-import { graphql } from '../../services/GraphqlClientService'
 import { useNavigation } from '@react-navigation/native'
+import { useCodeVerificationMutation } from '../../generated/graphql'
 import { Colors } from '../../shared/Constants'
-import SetToken from '../../utils/screenHooks/setToken'
 interface Props {}
 
 interface State {
@@ -29,10 +27,9 @@ interface OtpState {
   otpCode: number
 }
 
-let mem: any
-
 const VerifyCode: React.FC<Props> = () => {
-  const [otpCode, setOtpCode] = useState<State['otpCode']>(['', '', '', '', ''])
+  const [verifyCode] = useCodeVerificationMutation()
+  const [otpCode, setOtpCode] = useState<State['otpCode']>(['', '', '', ''])
   const phoneNumber = useSelector((state: any) => state.phoneNumber)
   const [otpConvert, setOtpConvert] = useState<OtpState['otpCode']>(0)
   const navigation = useNavigation()
@@ -69,37 +66,45 @@ const VerifyCode: React.FC<Props> = () => {
     navigation.navigate('Categories')
   }
 
-  const login = useMutation(
-    () =>
-      graphql.codeVerification({
-        phoneNumber: phoneNumber,
-        code: otpConvert,
-      }),
-    {
-      onSuccess: (result) => {
-        if (result.codeVerification.success) {
-          SetToken(result.codeVerification.token)
-          verifyCodeHandler()
-        } else {
-          navigation.navigate('VerifyCode')
-        }
-      },
-      onError: (e: any) => {
-        // showErrorAlert({
-        //   e,
-        //   toast: {
-        //     type: 'warning',
-        //     message: t('Incorrect credentials, please try again!'),
-        //   },
-        // })
-        console.log(e.message)
-      },
-    }
-  )
+  const verifyNumberHandler = () => {
+    try {
+      verifyCode({ variables: { phoneNumber: phoneNumber, code: otpConvert } })
+
+      verifyCodeHandler()
+    } catch (error) {}
+  }
+
+  // const login = useMutation(
+  //   () =>
+  //     graphql.codeVerification({
+  //       phoneNumber: phoneNumber,
+  //       code: otpConvert,
+  //     }),
+  //   {
+  //     onSuccess: (result) => {
+  //       if (result.codeVerification.success) {
+  //         SetToken(result.codeVerification.token)
+  //         verifyCodeHandler()
+  //       } else {
+  //         navigation.navigate('VerifyCode')
+  //       }
+  //     },
+  //     onError: (e: any) => {
+  //       // showErrorAlert({
+  //       //   e,
+  //       //   toast: {
+  //       //     type: 'warning',
+  //       //     message: t('Incorrect credentials, please try again!'),
+  //       //   },
+  //       // })
+  //       console.log(e.message)
+  //     },
+  //   }
+  // )
 
   const OnPress = () => {
     if (otpCode[otpCode.length - 1] !== '') {
-      login.mutate()
+      verifyNumberHandler
     }
   }
 
