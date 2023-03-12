@@ -4,8 +4,10 @@ import Store from '../screens/Dashbaord/Vendors/Stores'
 import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
 import ProductList from '../screens/Dashbaord/Product/ProductList'
 import Checkout from '../screens/Dashbaord/Checkout.tsx/Checkout'
+import ShopperConnect from '../screens/Dashbaord/Order/shopperConnect'
 import { RootStackParamList } from '../../Types/stackTypes'
 import { MenuDrawer } from './Drawer'
+import SearchView from '../screens/Dashbaord/Map/search'
 
 const Stack = createStackNavigator()
 
@@ -20,7 +22,7 @@ const MainNavigation = () => {
         },
       }}
       initialRouteName="Home"
-      // mode="modal"
+      mode="modal"
     >
       {/* <Stack.Screen name="Drawer" component={DrawerWrapper} /> */}
       {/* <Stack.Screen
@@ -33,7 +35,7 @@ const MainNavigation = () => {
           options={{ headerShown: true }}
           component={VerifyCode}
         /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         options={{ headerShown: false }}
         name="MenuDrawer"
         component={MenuDrawer}
@@ -62,6 +64,16 @@ const MainNavigation = () => {
         name="Checkout"
         options={{ headerShown: true }}
         component={Checkout}
+      /> */}
+      <Stack.Screen
+        name="shopperConnect"
+        options={{ headerShown: false }}
+        component={ShopperConnect}
+      />
+       <Stack.Screen
+        name="Delivery-address"
+        options={{ headerShown: false }}
+        component={SearchView}
       />
       {/* <Stack.Screen
           name="Categories"

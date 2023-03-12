@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { phoneNumberReducer } from './Actions/OtpAction';
+import { locationReducer } from './Actions/locationAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cartReducer } from './Actions/cart';
 import { checkoutReducer } from './Actions/checkout';
@@ -10,7 +11,8 @@ import thunk from 'redux-thunk';
 const reducers = combineReducers({
     phoneNumber: phoneNumberReducer,
     cart: cartReducer,
-    checkOut: checkoutReducer
+    checkOut: checkoutReducer,
+    location: locationReducer
     // order: userOrdersReducer,
 });
   

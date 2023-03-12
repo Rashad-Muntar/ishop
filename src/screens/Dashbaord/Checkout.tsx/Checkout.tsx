@@ -5,6 +5,7 @@ import CartItem from '../../../shared/cart/cartItem'
 import { useStripe, usePaymentSheet } from '@stripe/stripe-react-native'
 import { cartTotalPriceSelector } from '../../../../StateManagement/selectors'
 import { useCreatePaymentIntentMutation } from '../../../generated/graphql'
+// import ShopperConnect from '../Order/shopperConnect'
 import {
   increment,
   decrement,
@@ -74,7 +75,6 @@ const Checkout = () => {
   
   const openPaymentSheet = async () => {
     if (!paymentSheetInitialized) {
-      console.log("Payment sheet not initialized yet.");
       return;
     }
   
@@ -82,7 +82,7 @@ const Checkout = () => {
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
-      Alert.alert('Success', 'Your order is confirmed!');
+      navigation.navigate("shopperConnect")
     }
   }
 
