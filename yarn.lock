@@ -10598,6 +10598,11 @@ react-native-twilio-video-webrtc@^3.1.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-voximplant@^1.36.0:
+  version "1.36.0"
+  resolved "https://registry.yarnpkg.com/react-native-voximplant/-/react-native-voximplant-1.36.0.tgz#6fca8bf1a868a44105fc278c87a9d28a2f33dfbb"
+  integrity sha512-Kx4TjtH9811Zejal4dbQmPsCkuxVm+gSn4cuYB81akKP1cP19KVovqSNBhcdMAntXrguM7jo14ny2EWzSdmMdA==
+
 react-native-web@~0.18.9:
   version "0.18.10"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.18.10.tgz#fb4db047f4be7f9cf35f37ec8d52f7d1c450600f"

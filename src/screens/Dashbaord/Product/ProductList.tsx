@@ -10,10 +10,19 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native'
+import HeaderImg from '../../../shared/headerImg'
 import Search from '../../../shared/Search'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, increment, decrement, removeItem } from '../../../../StateManagement/Store/Actions/cart'
-import { cartTotalPriceSelector, cartTotalSelector } from '../../../../StateManagement/selectors'
+import {
+  addToCart,
+  increment,
+  decrement,
+  removeItem,
+} from '../../../../StateManagement/Store/Actions/cart'
+import {
+  cartTotalPriceSelector,
+  cartTotalSelector,
+} from '../../../../StateManagement/selectors'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useGetProductCategoryQuery } from '../../../generated/graphql'
@@ -30,8 +39,8 @@ const ProductList = () => {
   const sheetRef = useRef<BottomSheet>(null)
   const snapPoints = useMemo(() => ['1%', '25%', '50%'], [])
   const cartItems = useSelector((state: any) => state.cart)
-  const totalPrice = useSelector(cartTotalPriceSelector);
-  const totalItems = useSelector(cartTotalSelector);
+  const totalPrice = useSelector(cartTotalPriceSelector)
+  const totalItems = useSelector(cartTotalSelector)
   const { data, loading, error } = useGetProductCategoryQuery({
     variables: {
       getProductCategoryId: category?.category?.id,
@@ -44,10 +53,10 @@ const ProductList = () => {
 
   const handleCartItemDecreament = (item) => {
     if (item.quantity === 1) {
-      dispatch(removeItem(item.id));
-      return;
+      dispatch(removeItem(item.id))
+      return
     } else {
-      dispatch(decrement(item.id));
+      dispatch(decrement(item.id))
     }
   }
 
@@ -57,11 +66,7 @@ const ProductList = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.HeaderWrap}>
-          <View style={styles.hd}>
-            <ImageBackground
-              source={{ uri: data?.getProductCategory?.image }}
-              style={styles.HeaderImg}
-            />
+          <HeaderImg uriImg={data?.getProductCategory?.image}>
             <TouchableOpacity
               style={styles.backWrap}
               onPress={navigation.goBack}
@@ -79,7 +84,13 @@ const ProductList = () => {
                 </Text>
               </View>
             </View>
-          </View>
+          </HeaderImg>
+          {/* <View style={styles.hd}>
+            <ImageBackground
+              source={{ uri: data?.getProductCategory?.image }}
+              style={styles.HeaderImg}
+            />
+          </View> */}
         </View>
         <View style={styles.ctWrap}>
           <View style={styles.searchWrap}>
@@ -108,7 +119,11 @@ const ProductList = () => {
           </View>
         </View>
       </ScrollView>
-      <Cart onOpenCart={() => navigation.navigate("Checkout")} totalItems={totalItems} totalPrice={totalPrice} />
+      <Cart
+        onOpenCart={() => navigation.navigate('Checkout')}
+        totalItems={totalItems}
+        totalPrice={totalPrice}
+      />
       <BottomSheetDrawer sheetRef={sheetRef} snaPoints={snapPoints} index={0}>
         {cartItems.map((item: any, index: any) => (
           <CartItem

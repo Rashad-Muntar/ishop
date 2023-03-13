@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo, useState, useEffect } from 'react'
+import React, { useRef, useMemo, useState, useEffect } from 'react'
 import {
   View,
   StyleSheet,
@@ -12,7 +12,7 @@ import MapScreen from '../Map/mapView'
 import { AntDesign } from '@expo/vector-icons'
 import LocationSearch from '../../../shared/LocationSearch'
 import BottomSheetDrawer from '../../../shared/BottomSheet'
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet'
+import BottomSheet from '@gorhom/bottom-sheet'
 import { Ionicons } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Colors } from '../../../shared/Constants'

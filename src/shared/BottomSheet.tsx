@@ -8,10 +8,12 @@ interface Props {
   index: any
   children: ReactNode
   onPandown: any
+  style?: any
 }
-const BottomSheetDrawer = ({ sheetRef, snaPoints, index, children, onPandown }: Props) => {
+const BottomSheetDrawer = ({ sheetRef, style, snaPoints, index, children, onPandown }: Props) => {
   return (
     <BottomSheet
+    backgroundStyle={style}
       ref={sheetRef}
       index={index}
       snapPoints={snaPoints}
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     // flex: 1,
     paddingHorizontal: 18,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
 })
 
