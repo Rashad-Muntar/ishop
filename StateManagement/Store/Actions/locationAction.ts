@@ -4,7 +4,7 @@ const initialState = {
   location: {},
 }
 const locationSlice = createSlice({
-  name: 'phoneNumber',
+  name: 'location',
   initialState: initialState,
   reducers: {
     setLocation: (state, action) => {

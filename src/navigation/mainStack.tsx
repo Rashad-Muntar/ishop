@@ -5,6 +5,7 @@ import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
 import ProductList from '../screens/Dashbaord/Product/ProductList'
 import Checkout from '../screens/Dashbaord/Checkout.tsx/Checkout'
 import ShopperConnect from '../screens/Dashbaord/Order/shopperConnect'
+import OrderPeriod from '../screens/Dashbaord/Order/orderPeriod'
 import { RootStackParamList } from '../../Types/stackTypes'
 import { MenuDrawer } from './Drawer'
 import SearchView from '../screens/Dashbaord/Map/search'
@@ -66,14 +67,24 @@ const MainNavigation = () => {
         component={Checkout}
       /> */}
       <Stack.Screen
+        name="Categories"
+        options={{ headerShown: false }}
+        component={Categories}
+      />
+      <Stack.Screen
         name="shopperConnect"
         options={{ headerShown: false }}
         component={ShopperConnect}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Delivery-address"
         options={{ headerShown: false }}
         component={SearchView}
+      />
+      <Stack.Screen
+        name="Order-Details"
+        options={{ headerShown: false }}
+        component={OrderPeriod}
       />
       {/* <Stack.Screen
           name="Categories"

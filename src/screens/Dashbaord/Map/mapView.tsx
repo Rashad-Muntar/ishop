@@ -14,14 +14,14 @@ import MapViewDirections from 'react-native-maps-directions'
 import * as Location from 'expo-location'
 import { useNavigation } from '@react-navigation/native'
 import { mapStyle } from '../../../shared/MapStyles'
-import { checkPermission, getLocation } from '../../../shared/currentLocation'
+import { setLocationDetails, setLocationDistance } from '../../../../StateManagement/Store/Actions/locationDetails'
 import { carsAround, storeToShop } from '../../../shared/data'
 import { Colors } from '../../../shared/Constants'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const MapScreen = () => {
-  const [latLong, setLatLong] = useState({})
-  const { width, height } = Dimensions.get('window');
+  const dispatch = useDispatch()
+  const { width, height } = Dimensions.get('window')
   const loc = useSelector((state) => state.location)
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 })
   const [errorMsg, setErrorMsg] = useState('')
@@ -51,14 +51,25 @@ const MapScreen = () => {
     })()
   }, [loc])
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     (mapRef.current as any).fitToCoordinates([location, storeToShop], {
-  //       edgePadding: {top:150,right:50,left:50,bottom:150},
-  //       animated: true,
-  //     });
-  //   },500)
-  // },[])
+  useEffect(() => {
+    ;(async () => {
+      try {
+        if (location) {
+          ;(async () => {
+            let addressResponse = await Location.reverseGeocodeAsync({
+              latitude: location.latitude,
+              longitude: location.longitude,
+            })
+    
+            dispatch(setLocationDetails(addressResponse[0]))
+          })()
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    })()
+ 
+  }, [location])
 
   return (
     <View style={styles.container}>
@@ -104,6 +115,7 @@ const MapScreen = () => {
               optimizeWaypoints={true}
               strokeColor={Colors.light.primary}
               onReady={(result) => {
+                dispatch(setLocationDistance({distance: result.distance, duration: result.duration}))
                 console.log(`Distance: ${result.distance} km`)
                 console.log(`Duration: ${result.duration} min.`)
 
@@ -115,10 +127,9 @@ const MapScreen = () => {
                     top: height / 20,
                   },
                 })
-                
               }}
               retryOptions={{
-                attempts: 3,
+                attempts: 5,
                 delay: 1000,
                 retryOnTimeout: true,
                 retryOnConnectionLost: true,
@@ -136,7 +147,7 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '70%',
+    height: '65%',
     backgroundColor: 'grey',
     width: '100%',
   },

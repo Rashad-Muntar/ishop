@@ -26,7 +26,8 @@
         "permissions": [
           "ACCESS_COARSE_LOCATOPM",
           "ACCESS_FINE_LOCATION",
-          "FOREGROUND_SERVICE"
+          "FOREGROUND_SERVICE",
+          "microphone"
         ]
       }
     },
@@ -68,6 +69,12 @@
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Allow iShop to use your location."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Ishop to access your camera."
         }
       ]
     ]

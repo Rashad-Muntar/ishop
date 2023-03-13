@@ -44,7 +44,7 @@ const SearchView = () => {
         <GooglePlacesAutocomplete
           placeholder="Enter delivery location"
           onPress={(data, details = null) => {
-            // console.log(details?.geometry.location)
+            console.log(details)
             dispatch(setLocation(details?.geometry.location))
             navigation.goBack()
           }}
