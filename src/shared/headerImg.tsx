@@ -11,6 +11,7 @@ import {
   FlatList,
 } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
+import { Colors } from './Constants'
 
 interface Props {
   uriImg?: string
@@ -23,15 +24,16 @@ const HeaderImg = ({ uriImg, localImg, height, children }: Props) => {
     <View style={{ ...styles.HeaderWrap, height: height }}>
       <View style={styles.hd}>
         {uriImg != null ? (
-          <ImageBackground source={{ uri: uriImg }} style={styles.HeaderImg} />
+          <ImageBackground source={uriImg} style={styles.HeaderImg} />
         ) : (
-          <ImageBackground
-            source={localImg}
-            style={styles.HeaderImg}
-          />
+          <ImageBackground source={localImg} style={styles.HeaderImg} />
         )}
+              <View>
+                  
+        </View>
         {children}
       </View>
+      {/* <View style={styles.overlay} /> */}
     </View>
   )
 }
@@ -49,11 +51,12 @@ const styles = StyleSheet.create({
   },
   HeaderImg: {
     width: '100%',
-    height: "100%",
+    height: '100%',
     resizeMode: 'cover',
   },
   hd: {
-    width: '100%',
+      width: '100%',
+      
   },
   storeDesc: {
     height: '60%',
@@ -112,6 +115,15 @@ const styles = StyleSheet.create({
   },
   searchWrap: {
     width: '70%',
+  },
+  overlay: {
+    backgroundColor: Colors.light.textPrimaryBlack,
+    width: '100%',
+    height: '100%',
+    top: 0,
+      left: 0,
+      position: "absolute",
+      opacity: 0.5
   },
 })
 

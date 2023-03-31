@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import HeaderImg from '../../../shared/headerImg'
 import Search from '../../../shared/Search'
+
 import { useDispatch, useSelector } from 'react-redux'
 import {
   addToCart,
@@ -39,6 +40,7 @@ const ProductList = () => {
   const sheetRef = useRef<BottomSheet>(null)
   const snapPoints = useMemo(() => ['1%', '25%', '50%'], [])
   const cartItems = useSelector((state: any) => state.cart)
+  console.log(cartItems)
   const totalPrice = useSelector(cartTotalPriceSelector)
   const totalItems = useSelector(cartTotalSelector)
   const { data, loading, error } = useGetProductCategoryQuery({
@@ -46,6 +48,7 @@ const ProductList = () => {
       getProductCategoryId: category?.category?.id,
     },
   })
+  data?.getProductCategory?.image
 
   const handlePresentModalPress = useCallback((index) => {
     sheetRef.current?.snapToIndex(index)
@@ -66,7 +69,7 @@ const ProductList = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.HeaderWrap}>
-          <HeaderImg uriImg={data?.getProductCategory?.image}>
+          <HeaderImg height={200} uriImg={{ uri: data?.getProductCategory?.image }}>
             <TouchableOpacity
               style={styles.backWrap}
               onPress={navigation.goBack}
@@ -145,6 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   HeaderWrap: {
     flex: 1,

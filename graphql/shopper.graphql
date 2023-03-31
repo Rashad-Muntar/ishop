@@ -1,0 +1,48 @@
+subscription OnShopperLocationUpdate {
+  onShopperLocationUpdate {
+    shopper {
+      id
+      avatar
+      email
+      password
+      firstName
+      lastName
+      deliveryOption
+      location
+      latitude
+      longitude
+      phone
+    }
+  }
+}
+
+subscription OnCreateShopper {
+  onCreateShopper {
+    id
+    avatar
+    firstName
+    lastName
+    email
+    password
+    phone
+    deliveryOption
+    location
+    latitude
+    longitude
+  }
+}
+
+query ListShoppers {
+  listShoppers {
+    items {
+      id
+      avatar
+      firstName
+      lastName
+      phone
+      location
+      latitude
+      longitude
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ishopfront-dev-122755-authRole",
+      "UnauthRoleArn": "arn:aws:iam::958072043227:role/amplify-ishopfront-dev-122755-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::958072043227:role/amplify-ishopfront-dev-122755-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-ishopfront-dev-122755-deployment",
+      "UnauthRoleName": "amplify-ishopfront-dev-122755-unauthRole",
+      "StackName": "amplify-ishopfront-dev-122755",
+      "StackId": "arn:aws:cloudformation:us-east-1:958072043227:stack/amplify-ishopfront-dev-122755/7aa43b40-cfbf-11ed-9769-1209705c9405",
+      "AmplifyAppId": "dua64r0a6r36h"
+    }
+  }
+}

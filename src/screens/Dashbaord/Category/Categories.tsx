@@ -1,28 +1,42 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
+import { API, graphqlOperation } from 'aws-amplify'
 import Navbar from '../../../shared/Navbar'
 import Category from '../Category/Category'
 import { Colors } from '../../../shared/Constants'
+import { listCategories } from '../../../graphql/queries'
 import { useListCategoriesQuery } from '../../../generated/graphql'
 import { Camera, CameraType } from 'expo-camera'
 import { Audio } from 'expo-av'
 import { useNavigation } from '@react-navigation/native'
 import HeaderArea from './HeaderArea'
 import FavouriteBottomSheet from './FavouriteBottomSheet'
+import MenuBottomSheet from './menuScreen'
 
 const Categories = () => {
-  const { data, loading, error } = useListCategoriesQuery()
+  const [categoriesData, setCategoriesData] = useState()
   const [pusToken, setPushToken] = useState()
   const navigation = useNavigation()
   const [type, setType] = useState(CameraType.back)
   const [recording, setRecording] = React.useState()
   const [permission, requestPermission] = Camera.useCameraPermissions()
 
+  const getAllShoppers = async () => {
+    try {
+      const cats = await API.graphql(graphqlOperation(listCategories))
+      setCategoriesData(cats.data.listCategories.items)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getAllShoppers()
+  }, [])
+
   useEffect(() => {
     if (!permission) {
       console.log('permissions')
     }
-
     if (!permission?.granted) {
       console.log('permissions')
     }
@@ -45,7 +59,7 @@ const Categories = () => {
     <View style={styles.container}>
       <HeaderArea />
       <View style={styles.cardWrapper}>
-        {data?.listCategories?.items.map((item, index) => (
+        {categoriesData?.map((item, index) => (
           <Category
             key={index}
             title={item?.title}

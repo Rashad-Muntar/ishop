@@ -1,7 +1,10 @@
-mutation phoneVerification($phoneNumber: String!){
+mutation phoneVerification($phoneNumber: String!) {
   phoneVerification(phoneNumber: $phoneNumber)
 }
 
-mutation codeVerification($phoneNumber: String!, $code: Int!){
-  codeVerification(phoneNumber: $phoneNumber, code: $code)
+mutation CodeVerification($phoneNumber: String!, $code: Int!) {
+  codeVerification(phoneNumber: $phoneNumber, code: $code) {
+    token
+    phoneNumber
+  }
 }

@@ -18,7 +18,6 @@ import { useMutation } from 'react-query'
 import PhoneInput from 'react-native-phone-number-input'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { Voximplant } from 'react-native-voximplant'
 import { setPhoneNumber } from '../../../StateManagement/Store/Actions/OtpAction'
 import { usePhoneVerificationMutation } from '../../generated/graphql'
 
@@ -28,7 +27,6 @@ const Register = () => {
   const [isDisabled, setIsDisabled] = React.useState(true)
   const phoneInput = React.useRef(null)
   const navigation = useNavigation()
-  const voximplant = Voximplant.getInstance()
   const dispatch = useDispatch()
 
   const verifyHandler = () => {

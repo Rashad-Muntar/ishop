@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import {
   View,
   Text,
@@ -6,24 +6,35 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Pressable,
 } from 'react-native'
 import HeaderImg from '../../../shared/headerImg'
 import { Colors } from '../../../shared/Constants'
 import { AntDesign } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const HeaderArea = () => {
+  const navigation = useNavigation()
+  const openMenuHandler = () => {
+    navigation.navigate("menuScreen")
+  }
   return (
     <HeaderImg
-      height={'35%'}
+      height={'38%'}
       localImg={require('../../../../assets/Solids/baby.jpg')}
     >
       <View style={styles.content}>
+        <Pressable style={styles.user} onPress={openMenuHandler}>
+          <Feather name="user" size={22} color="black" />
+        </Pressable>
+
         <Text style={styles.headText}>Shopping can never be boring again</Text>
-        <TouchableOpacity style={styles.storesAround}>
+        <Pressable style={styles.storesAround}>
           <AntDesign name="search1" size={18} color={Colors.light.whiteText} />
           <Text style={styles.btnPlaceholder}> Stores around you</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.storeDesc}>
+        </Pressable>
+        <Pressable style={styles.storeDesc}>
           <View style={styles.smImgWrap}>
             <AntDesign
               name="search1"
@@ -35,7 +46,7 @@ const HeaderArea = () => {
               Search for grocery, electronics, clothing...
             </Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </HeaderImg>
   )
@@ -44,7 +55,7 @@ const HeaderArea = () => {
 const styles = StyleSheet.create({
   content: {
     paddingLeft: 20,
-    paddingTop: 50,
+    paddingTop: 30,
     position: 'absolute',
 
     width: '100%',
@@ -53,6 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '700',
     color: Colors.light.whiteText,
+    marginTop: 10
   },
   storesAround: {
     backgroundColor: Colors.light.primary,
@@ -72,12 +84,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   storeDesc: {
-    height: '40%',
+    height: '34%',
     width: '98%',
     padding: '5%',
     position: 'absolute',
     bottom: 0,
-    top: '160%',
+    top: '120%',
     left: '5%',
     backgroundColor: 'white',
     shadowColor: '#000',
@@ -95,6 +107,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  user: {
+    backgroundColor: Colors.light.primary50,
+    opacity: 0.5,
+    padding: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center"
+  }
 })
 
 export default HeaderArea

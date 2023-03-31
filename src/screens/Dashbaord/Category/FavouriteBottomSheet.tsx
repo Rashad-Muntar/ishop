@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react'
+import React, {useMemo, useRef } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import BottomSheet from '@gorhom/bottom-sheet'
 import BottomSheetDrawer from '../../../shared/BottomSheet'

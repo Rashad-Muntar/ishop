@@ -2,12 +2,17 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Categories from '../screens/Dashbaord/Category/Categories'
 import Store from '../screens/Dashbaord/Vendors/Stores'
 import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
+import GetStarted from '../screens/GetStarted'
+import Register from '../screens/auth/Register'
 import ProductList from '../screens/Dashbaord/Product/ProductList'
 import Checkout from '../screens/Dashbaord/Checkout.tsx/Checkout'
 import ShopperConnect from '../screens/Dashbaord/Order/shopperConnect'
 import OrderPeriod from '../screens/Dashbaord/Order/orderPeriod'
+import MenuScreen from '../screens/Dashbaord/Category/menuScreen'
+import OrderNote from '../screens/Dashbaord/Order/OrderNote'
 import { RootStackParamList } from '../../Types/stackTypes'
 import { MenuDrawer } from './Drawer'
+import Orders from '../screens/Dashbaord/Order'
 import SearchView from '../screens/Dashbaord/Map/search'
 
 const Stack = createStackNavigator()
@@ -66,10 +71,55 @@ const MainNavigation = () => {
         options={{ headerShown: true }}
         component={Checkout}
       /> */}
+      {/* <Stack.Screen
+        name="Categories"
+        options={{ headerShown: false }}
+        component={Categories}
+      />
+      <Stack.Screen
+        name="Stores"
+        options={{ headerShown: false }}
+        component={Store}
+      />
+      <Stack.Screen
+        name="Store"
+        options={{ headerShown: true }}
+        component={Store}
+      /> */}
+      <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={GetStarted}
+      />
+      <Stack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={Register}
+        />
       <Stack.Screen
         name="Categories"
         options={{ headerShown: false }}
         component={Categories}
+      />
+      <Stack.Screen
+        name="Stores"
+        options={{ headerShown: false }}
+        component={Store}
+      />
+      <Stack.Screen
+        name="StoreFront"
+        options={{ headerShown: false }}
+        component={StoreFront}
+      />
+      <Stack.Screen
+        name="Products"
+        options={{ headerShown: false }}
+        component={ProductList}
+      />
+      <Stack.Screen
+        name="Checkout"
+        options={{ headerShown: true }}
+        component={Checkout}
       />
       <Stack.Screen
         name="shopperConnect"
@@ -83,8 +133,18 @@ const MainNavigation = () => {
       />
       <Stack.Screen
         name="Order-Details"
+        options={{ headerShown: true }}
+        component={OrderNote}
+      />
+      <Stack.Screen
+        name="Orders"
         options={{ headerShown: false }}
-        component={OrderPeriod}
+        component={Orders}
+      />
+      <Stack.Screen
+        name="menuScreen"
+        options={{ headerShown: true }}
+        component={MenuScreen}
       />
       {/* <Stack.Screen
           name="Categories"

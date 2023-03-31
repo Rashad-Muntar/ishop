@@ -118,14 +118,17 @@ export type CreateProductInput = {
 export type CreateShopperInput = {
   _version?: InputMaybe<Scalars['Int']>;
   avatar: Scalars['String'];
+  deliveryOption?: InputMaybe<Scalars['String']>;
   email: Scalars['String'];
   firstName: Scalars['String'];
   id?: InputMaybe<Scalars['ID']>;
   lastName: Scalars['String'];
+  latitude?: InputMaybe<Scalars['Float']>;
   location?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+  online?: InputMaybe<Scalars['Boolean']>;
   password: Scalars['String'];
-  phone: Scalars['String'];
-  token?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateShopperIntentInput = {
@@ -138,7 +141,7 @@ export type CreateShopperIntentInput = {
   lastName: Scalars['String'];
   location: Scalars['String'];
   phone: Scalars['String'];
-  vehicleLicense: Scalars['String'];
+  vehicleInsurance: Scalars['String'];
   vehicleType: Scalars['String'];
 };
 
@@ -326,6 +329,16 @@ export type ModelIdInput = {
   size?: InputMaybe<ModelSizeInput>;
 };
 
+export type ModelIdKeyConditionInput = {
+  beginsWith?: InputMaybe<Scalars['ID']>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  eq?: InputMaybe<Scalars['ID']>;
+  ge?: InputMaybe<Scalars['ID']>;
+  gt?: InputMaybe<Scalars['ID']>;
+  le?: InputMaybe<Scalars['ID']>;
+  lt?: InputMaybe<Scalars['ID']>;
+};
+
 export type ModelIntInput = {
   attributeExists?: InputMaybe<Scalars['Boolean']>;
   attributeType?: InputMaybe<ModelAttributeTypes>;
@@ -439,15 +452,18 @@ export type ModelProductFilterInput = {
 export type ModelShopperConditionInput = {
   and?: InputMaybe<Array<InputMaybe<ModelShopperConditionInput>>>;
   avatar?: InputMaybe<ModelStringInput>;
+  deliveryOption?: InputMaybe<ModelStringInput>;
   email?: InputMaybe<ModelStringInput>;
   firstName?: InputMaybe<ModelStringInput>;
   lastName?: InputMaybe<ModelStringInput>;
+  latitude?: InputMaybe<ModelFloatInput>;
   location?: InputMaybe<ModelStringInput>;
+  longitude?: InputMaybe<ModelFloatInput>;
   not?: InputMaybe<ModelShopperConditionInput>;
+  online?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelShopperConditionInput>>>;
   password?: InputMaybe<ModelStringInput>;
   phone?: InputMaybe<ModelStringInput>;
-  token?: InputMaybe<ModelStringInput>;
 };
 
 export type ModelShopperConnection = {
@@ -460,16 +476,19 @@ export type ModelShopperConnection = {
 export type ModelShopperFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelShopperFilterInput>>>;
   avatar?: InputMaybe<ModelStringInput>;
+  deliveryOption?: InputMaybe<ModelStringInput>;
   email?: InputMaybe<ModelStringInput>;
   firstName?: InputMaybe<ModelStringInput>;
   id?: InputMaybe<ModelIdInput>;
   lastName?: InputMaybe<ModelStringInput>;
+  latitude?: InputMaybe<ModelFloatInput>;
   location?: InputMaybe<ModelStringInput>;
+  longitude?: InputMaybe<ModelFloatInput>;
   not?: InputMaybe<ModelShopperFilterInput>;
+  online?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelShopperFilterInput>>>;
   password?: InputMaybe<ModelStringInput>;
   phone?: InputMaybe<ModelStringInput>;
-  token?: InputMaybe<ModelStringInput>;
 };
 
 export type ModelShopperIntentConditionInput = {
@@ -483,7 +502,7 @@ export type ModelShopperIntentConditionInput = {
   not?: InputMaybe<ModelShopperIntentConditionInput>;
   or?: InputMaybe<Array<InputMaybe<ModelShopperIntentConditionInput>>>;
   phone?: InputMaybe<ModelStringInput>;
-  vehicleLicense?: InputMaybe<ModelStringInput>;
+  vehicleInsurance?: InputMaybe<ModelStringInput>;
   vehicleType?: InputMaybe<ModelStringInput>;
 };
 
@@ -506,7 +525,7 @@ export type ModelShopperIntentFilterInput = {
   not?: InputMaybe<ModelShopperIntentFilterInput>;
   or?: InputMaybe<Array<InputMaybe<ModelShopperIntentFilterInput>>>;
   phone?: InputMaybe<ModelStringInput>;
-  vehicleLicense?: InputMaybe<ModelStringInput>;
+  vehicleInsurance?: InputMaybe<ModelStringInput>;
   vehicleType?: InputMaybe<ModelStringInput>;
 };
 
@@ -681,15 +700,18 @@ export type ModelSubscriptionProductFilterInput = {
 export type ModelSubscriptionShopperFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelSubscriptionShopperFilterInput>>>;
   avatar?: InputMaybe<ModelSubscriptionStringInput>;
+  deliveryOption?: InputMaybe<ModelSubscriptionStringInput>;
   email?: InputMaybe<ModelSubscriptionStringInput>;
   firstName?: InputMaybe<ModelSubscriptionStringInput>;
   id?: InputMaybe<ModelSubscriptionIdInput>;
   lastName?: InputMaybe<ModelSubscriptionStringInput>;
+  latitude?: InputMaybe<ModelSubscriptionFloatInput>;
   location?: InputMaybe<ModelSubscriptionStringInput>;
+  longitude?: InputMaybe<ModelSubscriptionFloatInput>;
+  online?: InputMaybe<ModelSubscriptionBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionShopperFilterInput>>>;
   password?: InputMaybe<ModelSubscriptionStringInput>;
   phone?: InputMaybe<ModelSubscriptionStringInput>;
-  token?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
 export type ModelSubscriptionShopperIntentFilterInput = {
@@ -703,7 +725,7 @@ export type ModelSubscriptionShopperIntentFilterInput = {
   location?: InputMaybe<ModelSubscriptionStringInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionShopperIntentFilterInput>>>;
   phone?: InputMaybe<ModelSubscriptionStringInput>;
-  vehicleLicense?: InputMaybe<ModelSubscriptionStringInput>;
+  vehicleInsurance?: InputMaybe<ModelSubscriptionStringInput>;
   vehicleType?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
@@ -788,7 +810,7 @@ export type ModelVendorIntentFilterInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  codeVerification?: Maybe<Scalars['String']>;
+  codeVerification: PhoneUser;
   createCategory?: Maybe<Category>;
   createClient?: Maybe<Client>;
   createOrder?: Maybe<Order>;
@@ -808,7 +830,13 @@ export type Mutation = {
   deleteShopperIntent?: Maybe<ShopperIntent>;
   deleteStore?: Maybe<Store>;
   deleteVendorIntent?: Maybe<VendorIntent>;
+  getVideoToken: Scalars['String'];
   phoneVerification?: Maybe<Scalars['String']>;
+  shoppeLocationUpdate: NewShopper;
+  shopperLogin: NewShopper;
+  shopperSignUp: NewShopper;
+  storeLogin: NewStore;
+  storeSignup: NewStore;
   updateCategory?: Maybe<Category>;
   updateClient?: Maybe<Client>;
   updateOrder?: Maybe<Order>;
@@ -940,8 +968,59 @@ export type MutationDeleteVendorIntentArgs = {
 };
 
 
+export type MutationGetVideoTokenArgs = {
+  userName: Scalars['String'];
+};
+
+
 export type MutationPhoneVerificationArgs = {
   phoneNumber: Scalars['String'];
+};
+
+
+export type MutationShoppeLocationUpdateArgs = {
+  id: Scalars['ID'];
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+};
+
+
+export type MutationShopperLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationShopperSignUpArgs = {
+  avatar: Scalars['String'];
+  deliveryOption: Scalars['String'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  location: Scalars['String'];
+  password: Scalars['String'];
+  phone: Scalars['String'];
+};
+
+
+export type MutationStoreLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationStoreSignupArgs = {
+  address: Scalars['String'];
+  branches: Scalars['String'];
+  categoryStoresId?: InputMaybe<Scalars['ID']>;
+  email: Scalars['String'];
+  headerImg?: InputMaybe<Scalars['String']>;
+  logo?: InputMaybe<Scalars['String']>;
+  outletType: Scalars['String'];
+  password: Scalars['String'];
+  phone: Scalars['String'];
+  storeName?: InputMaybe<Scalars['String']>;
+  verified: Scalars['Boolean'];
 };
 
 
@@ -1100,6 +1179,7 @@ export type Query = {
   listShoppers?: Maybe<ModelShopperConnection>;
   listStores?: Maybe<ModelStoreConnection>;
   listVendorIntents?: Maybe<ModelVendorIntentConnection>;
+  shopperByEmail?: Maybe<ModelShopperConnection>;
   syncCategories?: Maybe<ModelCategoryConnection>;
   syncClients?: Maybe<ModelClientConnection>;
   syncOrders?: Maybe<ModelOrderConnection>;
@@ -1220,6 +1300,16 @@ export type QueryListVendorIntentsArgs = {
 };
 
 
+export type QueryShopperByEmailArgs = {
+  email: Scalars['String'];
+  filter?: InputMaybe<ModelShopperFilterInput>;
+  id?: InputMaybe<ModelIdKeyConditionInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  sortDirection?: InputMaybe<ModelSortDirection>;
+};
+
+
 export type QuerySyncCategoriesArgs = {
   filter?: InputMaybe<ModelCategoryFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
@@ -1298,15 +1388,18 @@ export type Shopper = {
   _version: Scalars['Int'];
   avatar: Scalars['String'];
   createdAt: Scalars['AWSDateTime'];
+  deliveryOption?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
   lastName: Scalars['String'];
+  latitude?: Maybe<Scalars['Float']>;
   location?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['Float']>;
+  online?: Maybe<Scalars['Boolean']>;
   orders?: Maybe<ModelOrderConnection>;
   password: Scalars['String'];
-  phone: Scalars['String'];
-  token?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
   updatedAt: Scalars['AWSDateTime'];
 };
 
@@ -1333,8 +1426,18 @@ export type ShopperIntent = {
   location: Scalars['String'];
   phone: Scalars['String'];
   updatedAt: Scalars['AWSDateTime'];
-  vehicleLicense: Scalars['String'];
+  vehicleInsurance: Scalars['String'];
   vehicleType: Scalars['String'];
+};
+
+export type ShopperSignupInput = {
+  avatar?: InputMaybe<Scalars['String']>;
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  location?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+  phone: Scalars['String'];
 };
 
 export type Store = {
@@ -1397,6 +1500,7 @@ export type Subscription = {
   onDeleteShopperIntent?: Maybe<ShopperIntent>;
   onDeleteStore?: Maybe<Store>;
   onDeleteVendorIntent?: Maybe<VendorIntent>;
+  onShopperLocationUpdate?: Maybe<NewShopper>;
   onUpdateCategory?: Maybe<Category>;
   onUpdateClient?: Maybe<Client>;
   onUpdateOrder?: Maybe<Order>;
@@ -1598,14 +1702,17 @@ export type UpdateProductInput = {
 export type UpdateShopperInput = {
   _version?: InputMaybe<Scalars['Int']>;
   avatar?: InputMaybe<Scalars['String']>;
+  deliveryOption?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   firstName?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   lastName?: InputMaybe<Scalars['String']>;
+  latitude?: InputMaybe<Scalars['Float']>;
   location?: InputMaybe<Scalars['String']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+  online?: InputMaybe<Scalars['Boolean']>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  token?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateShopperIntentInput = {
@@ -1618,7 +1725,7 @@ export type UpdateShopperIntentInput = {
   lastName?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  vehicleLicense?: InputMaybe<Scalars['String']>;
+  vehicleInsurance?: InputMaybe<Scalars['String']>;
   vehicleType?: InputMaybe<Scalars['String']>;
 };
 
@@ -1669,6 +1776,52 @@ export type VendorIntent = {
   updatedAt: Scalars['AWSDateTime'];
 };
 
+export type NewShoperPayload = {
+  __typename?: 'newShoperPayload';
+  avatar?: Maybe<Scalars['String']>;
+  deliveryOption?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['Float']>;
+  location?: Maybe<Scalars['String']>;
+  longitude?: Maybe<Scalars['Float']>;
+  password?: Maybe<Scalars['String']>;
+  phone: Scalars['String'];
+};
+
+export type NewShopper = {
+  __typename?: 'newShopper';
+  message?: Maybe<Scalars['String']>;
+  shopper?: Maybe<NewShoperPayload>;
+  success?: Maybe<Scalars['Boolean']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+export type NewStore = {
+  __typename?: 'newStore';
+  store?: Maybe<NewStorePayload>;
+  token?: Maybe<Scalars['String']>;
+};
+
+export type NewStorePayload = {
+  __typename?: 'newStorePayload';
+  avatar: Scalars['String'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['ID'];
+  lastName: Scalars['String'];
+  location: Scalars['String'];
+  phone: Scalars['String'];
+};
+
+export type PhoneUser = {
+  __typename?: 'phoneUser';
+  phoneNumber?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
 export type PhoneVerification = {
   __typename?: 'phoneVerification';
   phoneNumber: Scalars['String'];
@@ -1687,7 +1840,7 @@ export type CodeVerificationMutationVariables = Exact<{
 }>;
 
 
-export type CodeVerificationMutation = { __typename?: 'Mutation', codeVerification?: string | null };
+export type CodeVerificationMutation = { __typename?: 'Mutation', codeVerification: { __typename?: 'phoneUser', token?: string | null, phoneNumber?: string | null } };
 
 export type ListCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1714,6 +1867,21 @@ export type GetProductCategoryQueryVariables = Exact<{
 
 
 export type GetProductCategoryQuery = { __typename?: 'Query', getProductCategory?: { __typename?: 'ProductCategory', id: string, image: string, title: string, products?: { __typename?: 'ModelProductConnection', items: Array<{ __typename?: 'Product', image?: string | null, price: number, title: string, brand: string, detail: string, id: string } | null> } | null } | null };
+
+export type OnShopperLocationUpdateSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OnShopperLocationUpdateSubscription = { __typename?: 'Subscription', onShopperLocationUpdate?: { __typename?: 'newShopper', shopper?: { __typename?: 'newShoperPayload', id: string, avatar?: string | null, email?: string | null, password?: string | null, firstName?: string | null, lastName?: string | null, deliveryOption?: string | null, location?: string | null, latitude?: number | null, longitude?: number | null, phone: string } | null } | null };
+
+export type OnCreateShopperSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OnCreateShopperSubscription = { __typename?: 'Subscription', onCreateShopper?: { __typename?: 'Shopper', id: string, avatar: string, firstName: string, lastName: string, email: string, password: string, phone?: string | null, deliveryOption?: string | null, location?: string | null, latitude?: number | null, longitude?: number | null } | null };
+
+export type ListShoppersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListShoppersQuery = { __typename?: 'Query', listShoppers?: { __typename?: 'ModelShopperConnection', items: Array<{ __typename?: 'Shopper', id: string, avatar: string, firstName: string, lastName: string, phone?: string | null, location?: string | null, latitude?: number | null, longitude?: number | null } | null> } | null };
 
 export type GetStoreQueryVariables = Exact<{
   getStoreId: Scalars['ID'];
@@ -1755,8 +1923,11 @@ export type PhoneVerificationMutationHookResult = ReturnType<typeof usePhoneVeri
 export type PhoneVerificationMutationResult = Apollo.MutationResult<PhoneVerificationMutation>;
 export type PhoneVerificationMutationOptions = Apollo.BaseMutationOptions<PhoneVerificationMutation, PhoneVerificationMutationVariables>;
 export const CodeVerificationDocument = gql`
-    mutation codeVerification($phoneNumber: String!, $code: Int!) {
-  codeVerification(phoneNumber: $phoneNumber, code: $code)
+    mutation CodeVerification($phoneNumber: String!, $code: Int!) {
+  codeVerification(phoneNumber: $phoneNumber, code: $code) {
+    token
+    phoneNumber
+  }
 }
     `;
 export type CodeVerificationMutationFn = Apollo.MutationFunction<CodeVerificationMutation, CodeVerificationMutationVariables>;
@@ -1964,6 +2135,129 @@ export function useGetProductCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetProductCategoryQueryHookResult = ReturnType<typeof useGetProductCategoryQuery>;
 export type GetProductCategoryLazyQueryHookResult = ReturnType<typeof useGetProductCategoryLazyQuery>;
 export type GetProductCategoryQueryResult = Apollo.QueryResult<GetProductCategoryQuery, GetProductCategoryQueryVariables>;
+export const OnShopperLocationUpdateDocument = gql`
+    subscription OnShopperLocationUpdate {
+  onShopperLocationUpdate {
+    shopper {
+      id
+      avatar
+      email
+      password
+      firstName
+      lastName
+      deliveryOption
+      location
+      latitude
+      longitude
+      phone
+    }
+  }
+}
+    `;
+
+/**
+ * __useOnShopperLocationUpdateSubscription__
+ *
+ * To run a query within a React component, call `useOnShopperLocationUpdateSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnShopperLocationUpdateSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnShopperLocationUpdateSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOnShopperLocationUpdateSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnShopperLocationUpdateSubscription, OnShopperLocationUpdateSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnShopperLocationUpdateSubscription, OnShopperLocationUpdateSubscriptionVariables>(OnShopperLocationUpdateDocument, options);
+      }
+export type OnShopperLocationUpdateSubscriptionHookResult = ReturnType<typeof useOnShopperLocationUpdateSubscription>;
+export type OnShopperLocationUpdateSubscriptionResult = Apollo.SubscriptionResult<OnShopperLocationUpdateSubscription>;
+export const OnCreateShopperDocument = gql`
+    subscription OnCreateShopper {
+  onCreateShopper {
+    id
+    avatar
+    firstName
+    lastName
+    email
+    password
+    phone
+    deliveryOption
+    location
+    latitude
+    longitude
+  }
+}
+    `;
+
+/**
+ * __useOnCreateShopperSubscription__
+ *
+ * To run a query within a React component, call `useOnCreateShopperSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnCreateShopperSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnCreateShopperSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOnCreateShopperSubscription(baseOptions?: Apollo.SubscriptionHookOptions<OnCreateShopperSubscription, OnCreateShopperSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnCreateShopperSubscription, OnCreateShopperSubscriptionVariables>(OnCreateShopperDocument, options);
+      }
+export type OnCreateShopperSubscriptionHookResult = ReturnType<typeof useOnCreateShopperSubscription>;
+export type OnCreateShopperSubscriptionResult = Apollo.SubscriptionResult<OnCreateShopperSubscription>;
+export const ListShoppersDocument = gql`
+    query ListShoppers {
+  listShoppers {
+    items {
+      id
+      avatar
+      firstName
+      lastName
+      phone
+      location
+      latitude
+      longitude
+    }
+  }
+}
+    `;
+
+/**
+ * __useListShoppersQuery__
+ *
+ * To run a query within a React component, call `useListShoppersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListShoppersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListShoppersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListShoppersQuery(baseOptions?: Apollo.QueryHookOptions<ListShoppersQuery, ListShoppersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListShoppersQuery, ListShoppersQueryVariables>(ListShoppersDocument, options);
+      }
+export function useListShoppersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListShoppersQuery, ListShoppersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListShoppersQuery, ListShoppersQueryVariables>(ListShoppersDocument, options);
+        }
+export type ListShoppersQueryHookResult = ReturnType<typeof useListShoppersQuery>;
+export type ListShoppersLazyQueryHookResult = ReturnType<typeof useListShoppersLazyQuery>;
+export type ListShoppersQueryResult = Apollo.QueryResult<ListShoppersQuery, ListShoppersQueryVariables>;
 export const GetStoreDocument = gql`
     query GetStore($getStoreId: ID!) {
   getStore(id: $getStoreId) {

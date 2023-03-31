@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cartReducer } from './Actions/cart';
 import { checkoutReducer } from './Actions/checkout';
 import { persistReducer } from 'redux-persist';
+import { orderNoteReducer } from './Actions/orderNoteAction';
+import { authReducer } from './Actions/authAction';
 import { combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -14,8 +16,9 @@ const reducers = combineReducers({
     cart: cartReducer,
     checkOut: checkoutReducer,
     location: locationReducer,
-    locationDetail: locationDetailReducer
-    // order: userOrdersReducer,
+    locationDetail: locationDetailReducer,
+    orderNote: orderNoteReducer,
+    user: authReducer
 });
   
 // const persistConfig = {

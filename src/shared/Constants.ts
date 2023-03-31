@@ -7,6 +7,7 @@ export const Colors = {
     primary50: "#EEFFFA",
     primary100: "#D1F9F2",
     textPrimaryBlack: '#595959',
+    textPrimaryBlack100: "#8395a7",
     tintWhite: '#878787',
     primaryRed: '#e74c3c',
     whiteText: '#fff',

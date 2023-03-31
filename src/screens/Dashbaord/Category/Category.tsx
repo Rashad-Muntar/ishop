@@ -31,8 +31,8 @@ function Category({ image, title, color, onPress }: Props) {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 100,
-    height: 50,
-    width: 50,
+    height: 60,
+    width: 60,
     marginBottom: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.lightGray,
   },
   img: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
   },
   wrapper: {
     width: "30%",
