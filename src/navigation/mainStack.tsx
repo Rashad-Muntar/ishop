@@ -9,6 +9,7 @@ import Checkout from '../screens/Dashbaord/Checkout.tsx/Checkout'
 import ShopperConnect from '../screens/Dashbaord/Order/shopperConnect'
 import OrderPeriod from '../screens/Dashbaord/Order/orderPeriod'
 import MenuScreen from '../screens/Dashbaord/Category/menuScreen'
+import ProductOrPlaceSearch from '../Search/ProductOrPlace'
 import OrderNote from '../screens/Dashbaord/Order/OrderNote'
 import { RootStackParamList } from '../../Types/stackTypes'
 import { MenuDrawer } from './Drawer'
@@ -146,6 +147,11 @@ const MainNavigation = () => {
         options={{ headerShown: true }}
         component={MenuScreen}
       />
+       <Stack.Screen
+          options={{ headerShown: false }}
+          name="productOrPlaceSearch"
+          component={ProductOrPlaceSearch}
+        />
       {/* <Stack.Screen
           name="Categories"
           options={{ headerShown: false }}

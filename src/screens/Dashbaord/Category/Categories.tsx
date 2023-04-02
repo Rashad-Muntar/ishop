@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
+import Spinner from '../../../shared/Spinner'
 import { API, graphqlOperation } from 'aws-amplify'
 import Navbar from '../../../shared/Navbar'
 import Category from '../Category/Category'
@@ -17,20 +18,23 @@ const Categories = () => {
   const [categoriesData, setCategoriesData] = useState()
   const [pusToken, setPushToken] = useState()
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
   const [type, setType] = useState(CameraType.back)
   const [recording, setRecording] = React.useState()
   const [permission, requestPermission] = Camera.useCameraPermissions()
 
-  const getAllShoppers = async () => {
+  const getAllCategories = async () => {
+    setLoading(true)
     try {
       const cats = await API.graphql(graphqlOperation(listCategories))
       setCategoriesData(cats.data.listCategories.items)
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
   }
   useEffect(() => {
-    getAllShoppers()
+    getAllCategories()
   }, [])
 
   useEffect(() => {
@@ -47,16 +51,18 @@ const Categories = () => {
   }, [])
 
   async function startRecording() {
-    const { status } = await Audio.requestPermissionsAsync()
-    if (status !== 'granted') {
-      // Permission not granted
-      console.log('Permission not granted')
-      return
-    }
+    try {
+      const { status } = await Audio.requestPermissionsAsync()
+      if (status !== 'granted') {
+        console.log('Permission not granted')
+        return
+      }
+    } catch (error) {}
   }
 
   return (
     <View style={styles.container}>
+      {loading && <Spinner />}
       <HeaderArea />
       <View style={styles.cardWrapper}>
         {categoriesData?.map((item, index) => (
@@ -69,7 +75,6 @@ const Categories = () => {
           />
         ))}
       </View>
-      {/* <Push /> */}
       <FavouriteBottomSheet />
     </View>
   )

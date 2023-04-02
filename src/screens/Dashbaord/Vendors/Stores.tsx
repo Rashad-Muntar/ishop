@@ -40,7 +40,7 @@ const Store = () => {
         <TouchableOpacity style={styles.backWrap} onPress={navigation.goBack}>
           <AntDesign name="back" size={24} color="black" />
         </TouchableOpacity>
-        <Search placeholder="Search for groceries" />
+        <Search placeholder="Search for groceries" height="100%" width="80%"/>
       </View>
 
       <View style={styles.mainContent}>
@@ -68,22 +68,27 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   mainContent: {
-    width: '90%',
+    width: '93%',
   },
   searchWrap: {
+    height: 50,
     marginTop: 20,
     marginBottom: 10,
-    width: '85%',
+    width: '93%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   backWrap: {
-    marginRight: 12,
-
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    height: 50,
+    width: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.light.textPrimaryBlack50,
     borderRadius: 100,
     padding: 8,
+    borderWidth: 1,
+    borderColor: Colors.light.textPrimaryBlack50
   },
   subCatWrap: {
     marginBottom: 10,

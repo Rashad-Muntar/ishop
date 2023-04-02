@@ -5,12 +5,14 @@ import { Colors } from './Constants'
 
 interface Props {
   placeholder: string
+  height: String
+  width: String
 }
-const Search = ({ placeholder }: Props) => {
+const Search = ({ placeholder, height, width }: Props) => {
   const [text, setText] = useState('')
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, height, width }} >
       <AntDesign name="search1" size={20} color="gray" />
       <TextInput
         style={styles.input}
@@ -24,7 +26,7 @@ const Search = ({ placeholder }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.light.lightGray,
+    backgroundColor: Colors.light.textPrimaryBlack50,
     borderRadius: 100,
     flexDirection: "row",
     alignItems: "center",
@@ -34,11 +36,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: Colors.light.textPrimaryBlack50
   },
   input: {
     height: 40,
     paddingHorizontal: 15,
-
+    fontWeight: "600",
+    fontSize: 15
   },
 })
 

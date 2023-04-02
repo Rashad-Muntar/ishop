@@ -40,7 +40,10 @@ const FacebookAuth = () => {
     setUser(userInfo)
     SetToken(accesToken)
     navigation.navigate('Categories')
+    console.log(user)
   }
+
+  
 
   return (
     <CButton

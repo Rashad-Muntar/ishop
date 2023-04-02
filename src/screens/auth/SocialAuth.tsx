@@ -1,17 +1,9 @@
-// client-id 786388500443-ho50efo22a6s2rke3402ak3gk71uqjk7.apps.googleusercontent.com
-// client-secrete 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
-
-// ios client-id 786388500443-juqbpcomoknms7ggbbsq67ipdmis1kut.apps.googleusercontent.com
-// anddroid 786388500443-i735p8dip776gg8l9m16mct1akkgfv6q.apps.googleusercontent.com
-
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import { View, Text, StyleSheet } from 'react-native'
 import CButton from '../../shared/Button'
 import React, { useState, useEffect } from 'react'
-import GoogleSvg from '../../../assets/svgs/Google'
-import FacebookSvg from '../../../assets/svgs/Facebook'
 import { useNavigation } from '@react-navigation/native'
 import { ResponseType } from 'expo-auth-session'
 import GoogleAuth from './GoogleAuth'
@@ -47,13 +39,6 @@ const SocialAuth = () => {
     }
   })
 
-  //   useEffect(() => {
-  //     if (user) {
-  //       navigation.navigate('Categories')
-  //     } else {
-  //       navigation.navigate('Home')
-  //     }
-  //   }, [user])
   const fetchUserhandler = async () => {
     let response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
       headers: {

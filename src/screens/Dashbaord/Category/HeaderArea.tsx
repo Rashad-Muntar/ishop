@@ -17,7 +17,11 @@ import { useNavigation } from '@react-navigation/native'
 const HeaderArea = () => {
   const navigation = useNavigation()
   const openMenuHandler = () => {
-    navigation.navigate("menuScreen")
+    navigation.navigate('menuScreen')
+  }
+
+  const openSearchScreenHandler = () => {
+    navigation.navigate('productOrPlaceSearch')
   }
   return (
     <HeaderImg
@@ -30,11 +34,14 @@ const HeaderArea = () => {
         </Pressable>
 
         <Text style={styles.headText}>Shopping can never be boring again</Text>
-        <Pressable style={styles.storesAround}>
+        <Pressable
+          style={styles.storesAround}
+          onPress={openSearchScreenHandler}
+        >
           <AntDesign name="search1" size={18} color={Colors.light.whiteText} />
           <Text style={styles.btnPlaceholder}> Stores around you</Text>
         </Pressable>
-        <Pressable style={styles.storeDesc}>
+        <Pressable style={styles.storeDesc} onPress={openSearchScreenHandler}>
           <View style={styles.smImgWrap}>
             <AntDesign
               name="search1"
@@ -43,7 +50,7 @@ const HeaderArea = () => {
               style={{ marginRight: 10 }}
             />
             <Text style={styles.searchPlaceHolder}>
-              Search for grocery, electronics, clothing...
+              Search for grocery, electronics...
             </Text>
           </View>
         </Pressable>
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '700',
     color: Colors.light.whiteText,
-    marginTop: 10
+    marginTop: 10,
   },
   storesAround: {
     backgroundColor: Colors.light.primary,
@@ -88,6 +95,7 @@ const styles = StyleSheet.create({
     width: '98%',
     padding: '5%',
     position: 'absolute',
+    justifyContent: 'center',
     bottom: 0,
     top: '120%',
     left: '5%',
@@ -102,10 +110,14 @@ const styles = StyleSheet.create({
   searchPlaceHolder: {
     color: Colors.light.textPrimaryBlack,
     opacity: 0.5,
+    fontWeight: "600",
+    // fontSize: 15
   },
   smImgWrap: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: "flex-start",
+    height: '100%',
   },
   user: {
     backgroundColor: Colors.light.primary50,
@@ -114,9 +126,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center"
-  }
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default HeaderArea

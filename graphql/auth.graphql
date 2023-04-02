@@ -4,7 +4,34 @@ mutation phoneVerification($phoneNumber: String!) {
 
 mutation CodeVerification($phoneNumber: String!, $code: Int!) {
   codeVerification(phoneNumber: $phoneNumber, code: $code) {
+    client {
+      id
+      firstName
+      lastName
+      email
+      password
+      phone
+      location
+    }
     token
-    phoneNumber
+    success
+    message
+  }
+}
+
+mutation SocialAuth($firstName: String!, $lastName: String!, $email: String!, $avatar: String!) {
+  socialAuth(firstName: $firstName, lastName: $lastName, email: $email, avatar: $avatar) {
+    client {
+      id
+      firstName
+      lastName
+      email
+      password
+      phone
+      location
+    }
+    token
+    success
+    message
   }
 }
