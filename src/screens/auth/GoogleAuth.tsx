@@ -2,18 +2,18 @@ import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import CButton from '../../shared/Button'
 import React, { useState, useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useSocialAuthMutation } from '../../generated/graphql'
 import { loginAction } from '../../../StateManagement/Store/Actions/authAction'
 import GoogleSvg from '../../../assets/svgs/Google'
 import { useNavigation } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ActivityIndicator } from 'react-native'
 import { Colors } from '../../shared/Constants'
 
 WebBrowser.maybeCompleteAuthSession()
 
 const GoogleAuth = () => {
-  const userState = useSelector(state => state.user)
   const [createUser] = useSocialAuthMutation()
   const [accesToken, setAccessToken] = useState<string | undefined>(undefined)
   const [user, setUser] = useState()
@@ -37,9 +37,6 @@ const GoogleAuth = () => {
   }, [accesToken])
 
   useEffect(() => {
-    console.log(userState)
-  },[user])
-  useEffect(() => {
     if (response?.type === 'success') {
       setAccessToken(response.authentication?.accessToken)
     }
@@ -62,9 +59,10 @@ const GoogleAuth = () => {
           avatar: userInfo?.picture,
         },
       })
-      console.log(newUser?.data?.socialAuth?.token)
+      // AsyncStorage.setItem('user', JSON.stringify({token: newUser?.data?.socialAuth?.client?.id}))
       const userId = newUser?.data?.socialAuth?.client?.id
       const authToken = newUser?.data?.socialAuth?.token
+      // AsyncStorage.setItem('user', JSON.stringify({token: authToken}))
       dispatch(loginAction({ userId, authToken }))
       setUser(userInfo)
     } catch (error) {

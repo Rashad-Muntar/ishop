@@ -9,10 +9,10 @@ const storeSlice = createSlice({
   name: 'locationDetail',
   initialState: initialState,
   reducers: {
-    setStoreId: (state, action) => {
+    setStoreInfo: (state, action) => {
       return {
         ...state,
-          userId: action.payload.storeId,
+        storeId: action.payload.storeId,
         storeName: action.payload.storeName,
       }
     },
@@ -26,5 +26,5 @@ const storeSlice = createSlice({
   },
 })
 
-export const { setStoreId } = storeSlice.actions
+export const { setStoreInfo } = storeSlice.actions
 export const storeReducer = storeSlice.reducer

@@ -7,13 +7,16 @@ import { getCategory } from '../../../graphql/queries'
 import { AntDesign } from '@expo/vector-icons'
 import { Colors } from '../../../shared/Constants'
 import SubCategoryList from '../SubCategoryList'
+import { setStoreInfo } from '../../../../StateManagement/Store/Actions/storeAction'
 import StoreCard from './StoreCard'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useGetCategoryQuery } from '../../../generated/graphql'
 
 const Store = () => {
   const navigation = useNavigation()
   const [categoryData, setCategoryData] = useState()
+  const dispatch = useDispatch()
   const route = useRoute()
   const item = route.params
 
@@ -23,17 +26,12 @@ const Store = () => {
     },
   })
 
-  // const getCategoryFunc = async () => {
-  //   const category = await API.graphql(
-  //     graphqlOperation(getCategory, { id: item?.item?.id })
-  //   )
-  //   setCategoryData(category.data.getCategory.stores)
-  // }
-  // console.log(categoryData)
-  // console.log()
-  // useEffect(() => {
-  //   getCategoryFunc()
-  // }, [])
+  const gotToStoreFronthandler = (store:any) => {
+    navigation.navigate('StoreFront', { store })
+    const storeId = store.id
+    const storeName = store.storeName
+    dispatch(setStoreInfo({storeId, storeName}))
+  }
   return (
     <View style={styles.container}>
       <View style={styles.searchWrap}>
@@ -51,7 +49,7 @@ const Store = () => {
         {data?.getCategory?.stores?.items.map((store, index) => (
           <StoreCard
             key={index}
-            onPress={() => navigation.navigate('StoreFront', { store })}
+            onPress={() => gotToStoreFronthandler(store)}
             title={store?.storeName}
             image={store?.headerImg}
           />

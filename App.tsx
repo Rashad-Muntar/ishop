@@ -21,7 +21,6 @@ export default function App() {
   let persistor = persistStore(store)
 
   return (
-    // <SafeAreaView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
         <ThemeProvider>
           <Provider store={store}>
@@ -33,8 +32,6 @@ export default function App() {
               </StripeProvider>
               <RootNavigator />
             </ApolloProvider>
-
-            {/* </PersistGate> */}
           </Provider>
         </ThemeProvider>
       </BottomSheetModalProvider>
