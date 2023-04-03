@@ -62,7 +62,7 @@ const GoogleAuth = () => {
       // AsyncStorage.setItem('user', JSON.stringify({token: newUser?.data?.socialAuth?.client?.id}))
       const userId = newUser?.data?.socialAuth?.client?.id
       const authToken = newUser?.data?.socialAuth?.token
-      // AsyncStorage.setItem('user', JSON.stringify({token: authToken}))
+      await AsyncStorage.setItem('user', JSON.stringify({ token: authToken, id: userId }))
       dispatch(loginAction({ userId, authToken }))
       setUser(userInfo)
     } catch (error) {

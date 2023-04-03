@@ -1,6 +1,9 @@
+import React, {useEffect, useState} from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Categories from '../screens/Dashbaord/Category/Categories'
 import Store from '../screens/Dashbaord/Vendors/Stores'
+
 import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
 import GetStarted from '../screens/GetStarted'
 import Register from '../screens/auth/Register'
@@ -19,6 +22,15 @@ import SearchView from '../screens/Dashbaord/Map/search'
 const Stack = createStackNavigator()
 
 const MainNavigation = () => {
+  const [isLogin, setIsLogin] = useState()
+
+  const checkLogin = async () => {
+    let user = JSON.parse(await AsyncStorage.getItem('user'))
+    setIsLogin(user)
+  }
+
+  checkLogin()
+
   return (
     // <NavigationContainer>
 
@@ -42,36 +54,6 @@ const MainNavigation = () => {
           options={{ headerShown: true }}
           component={VerifyCode}
         /> */}
-      {/* <Stack.Screen
-        options={{ headerShown: false }}
-        name="MenuDrawer"
-        component={MenuDrawer}
-      />
-      <Stack.Screen
-        name="Categories"
-        options={{ headerShown: false }}
-        component={Categories}
-      />
-      <Stack.Screen
-        name="Stores"
-        options={{ headerShown: false }}
-        component={Store}
-      />
-      <Stack.Screen
-        name="StoreFront"
-        options={{ headerShown: false }}
-        component={StoreFront}
-      />
-      <Stack.Screen
-        name="Products"
-        options={{ headerShown: false }}
-        component={ProductList}
-      />
-      <Stack.Screen
-        name="Checkout"
-        options={{ headerShown: true }}
-        component={Checkout}
-      /> */}
       {/* <Stack.Screen
         name="Categories"
         options={{ headerShown: false }}

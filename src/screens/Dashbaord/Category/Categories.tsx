@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import Spinner from '../../../shared/Spinner'
 import { API, graphqlOperation } from 'aws-amplify'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Navbar from '../../../shared/Navbar'
 import Category from '../Category/Category'
 import { Colors } from '../../../shared/Constants'
@@ -22,7 +23,7 @@ const Categories = () => {
   const [type, setType] = useState(CameraType.back)
   const [recording, setRecording] = React.useState()
   const [permission, requestPermission] = Camera.useCameraPermissions()
-
+  
   const getAllCategories = async () => {
     setLoading(true)
     try {
