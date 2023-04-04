@@ -5,48 +5,14 @@ import { Colors } from '../Constants'
 import { useNavigation } from '@react-navigation/native'
 import { BottomSheetModal, BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import BottomSheet from '@gorhom/bottom-sheet'
-import CartBottomSheet from '../BottomSheet'
 import { useSelector } from 'react-redux'
-import CartItem from './cartItem'
-import DummyCart from '../BottomSheet'
 
 interface Props {
-  // title?: string
-  // price?: string
-  // image?: string
   onOpenCart: any
   totalItems?: any
   totalPrice?: any
 }
 const Cart = ({onOpenCart, totalItems, totalPrice}:Props) => {
-  const navigation = useNavigation()
-  const sheetRef = useRef<BottomSheet>(null)
-  const cartItems = useSelector((state: any) => state.cart)
-  const [isOpen, setIsOpen] = useState(false)
-  // console.log(cartItems)
-  // cartItems.map((item, index) => {
-  //   console.log(item)
-  // })
-
-  // const handlePresentModalPress = useCallback((index) => {
-  //   sheetRef.current?.snapToIndex(index)
-  //   setIsOpen(true)
-  // }, [])
-
-  // const Item = ({ title, image, price }:Props) => (
-  //   <CartItem
-  //     img={image}
-  //     title={title}
-  //     price={price}
-  //   />
-  // )
-
-  // const snapPoints = useMemo(() => ['25%', '50%'], [])
-
-  // onPress={() => handlePresentModalPress(0)}
-  // const handleOpenCheckout = () => {
-  //   navigation.navigate("Checkout")
-  // }
   return (
  
    <TouchableOpacity style={styles.cartWrap} onPress={onOpenCart}>

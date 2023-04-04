@@ -80,7 +80,7 @@ const Checkout = () => {
   
     const { error } = await presentPaymentSheet();
     if (error) {
-      Alert.alert(`Error code: ${error.code}`, error.message);
+      console.log(error)
     } else {
       navigation.navigate("shopperConnect")
     }

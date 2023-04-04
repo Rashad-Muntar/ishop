@@ -16,6 +16,7 @@ import { AntDesign } from '@expo/vector-icons'
 import ProductCategory from '../Product/ProductCategory'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useGetStoreQuery } from '../../../generated/graphql'
+import HeaderImg from '../../../shared/headerImg'
 
 const StoreFront = () => {
   const route = useRoute()
@@ -32,12 +33,10 @@ const StoreFront = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.HeaderWrap}>
+         
           <View style={styles.hd}>
-            <ImageBackground
-              source={{ uri: data?.getStore?.headerImg }}
-              style={styles.HeaderImg}
-            />
-            <TouchableOpacity
+          <HeaderImg height={170} uriImg={{ uri: data?.getStore?.headerImg }}>
+          <TouchableOpacity
               style={styles.backWrap}
               onPress={navigation.goBack}
             >
@@ -52,6 +51,7 @@ const StoreFront = () => {
                 <Text style={styles.name}>Walmart</Text>
               </View>
             </View>
+          </HeaderImg>
           </View>
         </View>
         <View style={styles.ctWrap}>
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'relative',
     flexDirection: 'row',
+    // borderWidth: 3
   },
   HeaderImg: {
     width: '100%',
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
   },
   storeDesc: {
     height: '60%',
-    width: '90%',
+    width: '95%',
     padding: '5%',
     position: 'absolute',
     bottom: 0,
     top: '55%',
-    left: '5%',
+    left: '2.5%',
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -124,12 +125,12 @@ const styles = StyleSheet.create({
     marginTop: '2%',
   },
   mainContentWrap: {
-    width: '90%',
+    width: '95%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardWrapper: {
-    width: '90%',
+    width: '95%',
     marginTop: '7%',
   },
   backWrap: {
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     margin: 3,
     marginLeft: 15,
     padding: 8,
+    marginTop: 25,
     position: 'absolute',
   },
   searchWrap: {

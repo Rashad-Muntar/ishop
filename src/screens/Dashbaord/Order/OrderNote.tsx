@@ -9,27 +9,30 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setOrderNote } from '../../../../StateManagement/Store/Actions/orderNoteAction'
+import { setOrderNote } from '../../../../StateManagement/Store/Actions/orderAction'
 import { Colors } from '../../../shared/Constants'
 
 function OrderNote() {
   const [inputText, setInputText] = useState('')
-  const note = useSelector(state => state.orderNote)
-  
+  const note = useSelector((state) => state.orderNote)
+  const navigation = useNavigation()
+
   const dispatch = useDispatch()
 
   const onChageHander = (e) => {
     setInputText(e)
   }
   const submitHandler = () => {
-    dispatch(setOrderNote(inputText))
+    dispatch(setOrderNote({ note: inputText }))
+    navigation.goBack()
   }
 
   useEffect(() => {
     console.log(note)
   }, [note])
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrap}>
@@ -45,8 +48,12 @@ function OrderNote() {
             // onChangeText={(text) => this.setState({ text })}
             value={inputText}
           />
-          <TouchableOpacity style={styles.connect} >
-            <Button color={Colors.light.whiteText} title="Submit" onPress={submitHandler}/>
+          <TouchableOpacity style={styles.connect}>
+            <Button
+              color={Colors.light.whiteText}
+              title="Submit"
+              onPress={submitHandler}
+            />
           </TouchableOpacity>
         </View>
       </View>

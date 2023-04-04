@@ -10,9 +10,11 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native'
+import { setOrderTime } from '../../../../StateManagement/Store/Actions/orderAction'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../../shared/Constants'
+import { useDispatch } from 'react-redux'
 import { format } from 'date-fns'
 
 interface Props {
@@ -21,16 +23,20 @@ interface Props {
 const OrderPeriod = ({ closeModal }: Props) => {
   const [date, setDate] = useState(new Date())
   const [formatDate, setFormatDate] = useState()
+  const dispatch = useDispatch()
   const [mode, setMode] = useState('date')
   const [show, setShow] = useState(false)
 
-  const onChange = (event, selectedDate) => {
+  const onChange = (event:any, selectedDate:any) => {
     const currentDate = selectedDate
+    const stringifyDate = JSON.stringify(currentDate)
+    dispatch(setOrderTime({orderTime: stringifyDate}))
     setShow(false)
     setDate(currentDate)
-    setFormatDate(format(date, 'EEE. MMM, do'))
-    const formatTime = format(date, 'H:m')
-    console.log(date, formatDate)
+    console.log(typeof stringifyDate)
+    // const me = format(currentDate, 'MMMM d, yyyy')
+    // const formatTime = format(date, 'H:m')
+    // console.log(me, formatTime)
   }
 
   const showMode = (currentMode) => {

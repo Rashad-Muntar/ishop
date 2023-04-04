@@ -85,7 +85,8 @@ export type CreateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
   clientOrdersId?: InputMaybe<Scalars['ID']>;
   code?: InputMaybe<Scalars['Int']>;
-  endTime: Scalars['AWSDateTime'];
+  distance?: InputMaybe<Scalars['String']>;
+  endTime?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   isCancel?: InputMaybe<Scalars['Boolean']>;
   isComplete?: InputMaybe<Scalars['Boolean']>;
@@ -93,8 +94,9 @@ export type CreateOrderInput = {
   isPicked?: InputMaybe<Scalars['Boolean']>;
   onGoing: Scalars['Boolean'];
   orderNote: Scalars['String'];
+  shopperId: Scalars['String'];
   shopperOrdersId?: InputMaybe<Scalars['ID']>;
-  startTime: Scalars['AWSDateTime'];
+  startTime: Scalars['String'];
   storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -114,13 +116,19 @@ export type CreateProductInput = {
   id?: InputMaybe<Scalars['ID']>;
   image?: InputMaybe<Scalars['String']>;
   model?: InputMaybe<Scalars['String']>;
-  orderProductsId?: InputMaybe<Scalars['ID']>;
   price: Scalars['Float'];
   productCategoryProductsId?: InputMaybe<Scalars['ID']>;
   rooms?: InputMaybe<Scalars['Int']>;
   size?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
   washrooms?: InputMaybe<Scalars['Int']>;
+};
+
+export type CreateProductOrderInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['ID']>;
+  orderId: Scalars['ID'];
+  productId: Scalars['ID'];
 };
 
 export type CreateShopperInput = {
@@ -178,6 +186,11 @@ export type DeleteProductCategoryInput = {
 };
 
 export type DeleteProductInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
+};
+
+export type DeleteProductOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
   id: Scalars['ID'];
 };
@@ -328,6 +341,7 @@ export type ModelOrderConditionInput = {
   and?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
   clientOrdersId?: InputMaybe<ModelIdInput>;
   code?: InputMaybe<ModelIntInput>;
+  distance?: InputMaybe<ModelStringInput>;
   endTime?: InputMaybe<ModelStringInput>;
   isCancel?: InputMaybe<ModelBooleanInput>;
   isComplete?: InputMaybe<ModelBooleanInput>;
@@ -337,6 +351,7 @@ export type ModelOrderConditionInput = {
   onGoing?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
   orderNote?: InputMaybe<ModelStringInput>;
+  shopperId?: InputMaybe<ModelStringInput>;
   shopperOrdersId?: InputMaybe<ModelIdInput>;
   startTime?: InputMaybe<ModelStringInput>;
   storeOrdersId?: InputMaybe<ModelIdInput>;
@@ -353,6 +368,7 @@ export type ModelOrderFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
   clientOrdersId?: InputMaybe<ModelIdInput>;
   code?: InputMaybe<ModelIntInput>;
+  distance?: InputMaybe<ModelStringInput>;
   endTime?: InputMaybe<ModelStringInput>;
   id?: InputMaybe<ModelIdInput>;
   isCancel?: InputMaybe<ModelBooleanInput>;
@@ -363,6 +379,7 @@ export type ModelOrderFilterInput = {
   onGoing?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
   orderNote?: InputMaybe<ModelStringInput>;
+  shopperId?: InputMaybe<ModelStringInput>;
   shopperOrdersId?: InputMaybe<ModelIdInput>;
   startTime?: InputMaybe<ModelStringInput>;
   storeOrdersId?: InputMaybe<ModelIdInput>;
@@ -403,7 +420,6 @@ export type ModelProductConditionInput = {
   model?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductConditionInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductConditionInput>>>;
-  orderProductsId?: InputMaybe<ModelIdInput>;
   price?: InputMaybe<ModelFloatInput>;
   productCategoryProductsId?: InputMaybe<ModelIdInput>;
   rooms?: InputMaybe<ModelIntInput>;
@@ -429,13 +445,36 @@ export type ModelProductFilterInput = {
   model?: InputMaybe<ModelStringInput>;
   not?: InputMaybe<ModelProductFilterInput>;
   or?: InputMaybe<Array<InputMaybe<ModelProductFilterInput>>>;
-  orderProductsId?: InputMaybe<ModelIdInput>;
   price?: InputMaybe<ModelFloatInput>;
   productCategoryProductsId?: InputMaybe<ModelIdInput>;
   rooms?: InputMaybe<ModelIntInput>;
   size?: InputMaybe<ModelStringInput>;
   title?: InputMaybe<ModelStringInput>;
   washrooms?: InputMaybe<ModelIntInput>;
+};
+
+export type ModelProductOrderConditionInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelProductOrderConditionInput>>>;
+  not?: InputMaybe<ModelProductOrderConditionInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelProductOrderConditionInput>>>;
+  orderId?: InputMaybe<ModelIdInput>;
+  productId?: InputMaybe<ModelIdInput>;
+};
+
+export type ModelProductOrderConnection = {
+  __typename?: 'ModelProductOrderConnection';
+  items: Array<Maybe<ProductOrder>>;
+  nextToken?: Maybe<Scalars['String']>;
+  startedAt?: Maybe<Scalars['AWSTimestamp']>;
+};
+
+export type ModelProductOrderFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelProductOrderFilterInput>>>;
+  id?: InputMaybe<ModelIdInput>;
+  not?: InputMaybe<ModelProductOrderFilterInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelProductOrderFilterInput>>>;
+  orderId?: InputMaybe<ModelIdInput>;
+  productId?: InputMaybe<ModelIdInput>;
 };
 
 export type ModelShopperConditionInput = {
@@ -624,6 +663,7 @@ export type ModelSubscriptionIntInput = {
 export type ModelSubscriptionOrderFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
   code?: InputMaybe<ModelSubscriptionIntInput>;
+  distance?: InputMaybe<ModelSubscriptionStringInput>;
   endTime?: InputMaybe<ModelSubscriptionStringInput>;
   id?: InputMaybe<ModelSubscriptionIdInput>;
   isCancel?: InputMaybe<ModelSubscriptionBooleanInput>;
@@ -633,6 +673,7 @@ export type ModelSubscriptionOrderFilterInput = {
   onGoing?: InputMaybe<ModelSubscriptionBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
   orderNote?: InputMaybe<ModelSubscriptionStringInput>;
+  shopperId?: InputMaybe<ModelSubscriptionStringInput>;
   startTime?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
@@ -658,6 +699,14 @@ export type ModelSubscriptionProductFilterInput = {
   size?: InputMaybe<ModelSubscriptionStringInput>;
   title?: InputMaybe<ModelSubscriptionStringInput>;
   washrooms?: InputMaybe<ModelSubscriptionIntInput>;
+};
+
+export type ModelSubscriptionProductOrderFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<ModelSubscriptionProductOrderFilterInput>>>;
+  id?: InputMaybe<ModelSubscriptionIdInput>;
+  or?: InputMaybe<Array<InputMaybe<ModelSubscriptionProductOrderFilterInput>>>;
+  orderId?: InputMaybe<ModelSubscriptionIdInput>;
+  productId?: InputMaybe<ModelSubscriptionIdInput>;
 };
 
 export type ModelSubscriptionShopperFilterInput = {
@@ -719,6 +768,7 @@ export type Mutation = {
   createPaymentIntent: PaymentIntention;
   createProduct?: Maybe<Product>;
   createProductCategory?: Maybe<ProductCategory>;
+  createProductOrder?: Maybe<ProductOrder>;
   createShopper?: Maybe<Shopper>;
   createStore?: Maybe<Store>;
   deleteCategory?: Maybe<Category>;
@@ -726,6 +776,7 @@ export type Mutation = {
   deleteOrder?: Maybe<Order>;
   deleteProduct?: Maybe<Product>;
   deleteProductCategory?: Maybe<ProductCategory>;
+  deleteProductOrder?: Maybe<ProductOrder>;
   deleteShopper?: Maybe<Shopper>;
   deleteStore?: Maybe<Store>;
   getVideoToken: Scalars['String'];
@@ -741,6 +792,7 @@ export type Mutation = {
   updateOrder?: Maybe<Order>;
   updateProduct?: Maybe<Product>;
   updateProductCategory?: Maybe<ProductCategory>;
+  updateProductOrder?: Maybe<ProductOrder>;
   updateShopper?: Maybe<Shopper>;
   updateStore?: Maybe<Store>;
 };
@@ -787,6 +839,12 @@ export type MutationCreateProductCategoryArgs = {
 };
 
 
+export type MutationCreateProductOrderArgs = {
+  condition?: InputMaybe<ModelProductOrderConditionInput>;
+  input: CreateProductOrderInput;
+};
+
+
 export type MutationCreateShopperArgs = {
   condition?: InputMaybe<ModelShopperConditionInput>;
   input: CreateShopperInput;
@@ -826,6 +884,12 @@ export type MutationDeleteProductArgs = {
 export type MutationDeleteProductCategoryArgs = {
   condition?: InputMaybe<ModelProductCategoryConditionInput>;
   input: DeleteProductCategoryInput;
+};
+
+
+export type MutationDeleteProductOrderArgs = {
+  condition?: InputMaybe<ModelProductOrderConditionInput>;
+  input: DeleteProductOrderInput;
 };
 
 
@@ -936,6 +1000,12 @@ export type MutationUpdateProductCategoryArgs = {
 };
 
 
+export type MutationUpdateProductOrderArgs = {
+  condition?: InputMaybe<ModelProductOrderConditionInput>;
+  input: UpdateProductOrderInput;
+};
+
+
 export type MutationUpdateShopperArgs = {
   condition?: InputMaybe<ModelShopperConditionInput>;
   input: UpdateShopperInput;
@@ -956,7 +1026,8 @@ export type Order = {
   clientOrdersId?: Maybe<Scalars['ID']>;
   code?: Maybe<Scalars['Int']>;
   createdAt: Scalars['AWSDateTime'];
-  endTime: Scalars['AWSDateTime'];
+  distance?: Maybe<Scalars['String']>;
+  endTime?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   isCancel?: Maybe<Scalars['Boolean']>;
   isComplete?: Maybe<Scalars['Boolean']>;
@@ -964,10 +1035,11 @@ export type Order = {
   isPicked?: Maybe<Scalars['Boolean']>;
   onGoing: Scalars['Boolean'];
   orderNote: Scalars['String'];
-  products?: Maybe<ModelProductConnection>;
+  products?: Maybe<ModelProductOrderConnection>;
   shopper?: Maybe<Shopper>;
+  shopperId: Scalars['String'];
   shopperOrdersId?: Maybe<Scalars['ID']>;
-  startTime: Scalars['AWSDateTime'];
+  startTime: Scalars['String'];
   store?: Maybe<Store>;
   storeOrdersId?: Maybe<Scalars['ID']>;
   updatedAt: Scalars['AWSDateTime'];
@@ -975,7 +1047,7 @@ export type Order = {
 
 
 export type OrderProductsArgs = {
-  filter?: InputMaybe<ModelProductFilterInput>;
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
   sortDirection?: InputMaybe<ModelSortDirection>;
@@ -1001,8 +1073,7 @@ export type Product = {
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
-  order?: Maybe<Order>;
-  orderProductsId?: Maybe<Scalars['ID']>;
+  orders?: Maybe<ModelProductOrderConnection>;
   price: Scalars['Float'];
   productCategory?: Maybe<ProductCategory>;
   productCategoryProductsId?: Maybe<Scalars['ID']>;
@@ -1011,6 +1082,14 @@ export type Product = {
   title: Scalars['String'];
   updatedAt: Scalars['AWSDateTime'];
   washrooms?: Maybe<Scalars['Int']>;
+};
+
+
+export type ProductOrdersArgs = {
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
 export type ProductCategory = {
@@ -1036,6 +1115,20 @@ export type ProductCategoryProductsArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
+export type ProductOrder = {
+  __typename?: 'ProductOrder';
+  _deleted?: Maybe<Scalars['Boolean']>;
+  _lastChangedAt: Scalars['AWSTimestamp'];
+  _version: Scalars['Int'];
+  createdAt: Scalars['AWSDateTime'];
+  id: Scalars['ID'];
+  order: Order;
+  orderId: Scalars['ID'];
+  product: Product;
+  productId: Scalars['ID'];
+  updatedAt: Scalars['AWSDateTime'];
+};
+
 export type Query = {
   __typename?: 'Query';
   clientByEmail?: Maybe<ModelClientConnection>;
@@ -1044,6 +1137,7 @@ export type Query = {
   getOrder?: Maybe<Order>;
   getProduct?: Maybe<Product>;
   getProductCategory?: Maybe<ProductCategory>;
+  getProductOrder?: Maybe<ProductOrder>;
   getShopper?: Maybe<Shopper>;
   getStore?: Maybe<Store>;
   hello: Scalars['String'];
@@ -1051,14 +1145,18 @@ export type Query = {
   listClients?: Maybe<ModelClientConnection>;
   listOrders?: Maybe<ModelOrderConnection>;
   listProductCategories?: Maybe<ModelProductCategoryConnection>;
+  listProductOrders?: Maybe<ModelProductOrderConnection>;
   listProducts?: Maybe<ModelProductConnection>;
   listShoppers?: Maybe<ModelShopperConnection>;
   listStores?: Maybe<ModelStoreConnection>;
+  productOrdersByOrderId?: Maybe<ModelProductOrderConnection>;
+  productOrdersByProductId?: Maybe<ModelProductOrderConnection>;
   shopperByEmail?: Maybe<ModelShopperConnection>;
   syncCategories?: Maybe<ModelCategoryConnection>;
   syncClients?: Maybe<ModelClientConnection>;
   syncOrders?: Maybe<ModelOrderConnection>;
   syncProductCategories?: Maybe<ModelProductCategoryConnection>;
+  syncProductOrders?: Maybe<ModelProductOrderConnection>;
   syncProducts?: Maybe<ModelProductConnection>;
   syncShoppers?: Maybe<ModelShopperConnection>;
   syncStores?: Maybe<ModelStoreConnection>;
@@ -1096,6 +1194,11 @@ export type QueryGetProductArgs = {
 
 
 export type QueryGetProductCategoryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetProductOrderArgs = {
   id: Scalars['ID'];
 };
 
@@ -1138,6 +1241,13 @@ export type QueryListProductCategoriesArgs = {
 };
 
 
+export type QueryListProductOrdersArgs = {
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+};
+
+
 export type QueryListProductsArgs = {
   filter?: InputMaybe<ModelProductFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1156,6 +1266,24 @@ export type QueryListStoresArgs = {
   filter?: InputMaybe<ModelStoreFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryProductOrdersByOrderIdArgs = {
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  orderId: Scalars['ID'];
+  sortDirection?: InputMaybe<ModelSortDirection>;
+};
+
+
+export type QueryProductOrdersByProductIdArgs = {
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+  productId: Scalars['ID'];
+  sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
 
@@ -1195,6 +1323,14 @@ export type QuerySyncOrdersArgs = {
 
 export type QuerySyncProductCategoriesArgs = {
   filter?: InputMaybe<ModelProductCategoryFilterInput>;
+  lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QuerySyncProductOrdersArgs = {
+  filter?: InputMaybe<ModelProductOrderFilterInput>;
   lastSync?: InputMaybe<Scalars['AWSTimestamp']>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
@@ -1303,6 +1439,7 @@ export type Subscription = {
   onCreateOrder?: Maybe<Order>;
   onCreateProduct?: Maybe<Product>;
   onCreateProductCategory?: Maybe<ProductCategory>;
+  onCreateProductOrder?: Maybe<ProductOrder>;
   onCreateShopper?: Maybe<Shopper>;
   onCreateStore?: Maybe<Store>;
   onDeleteCategory?: Maybe<Category>;
@@ -1310,6 +1447,7 @@ export type Subscription = {
   onDeleteOrder?: Maybe<Order>;
   onDeleteProduct?: Maybe<Product>;
   onDeleteProductCategory?: Maybe<ProductCategory>;
+  onDeleteProductOrder?: Maybe<ProductOrder>;
   onDeleteShopper?: Maybe<Shopper>;
   onDeleteStore?: Maybe<Store>;
   onShopperLocationUpdate?: Maybe<NewShopper>;
@@ -1318,6 +1456,7 @@ export type Subscription = {
   onUpdateOrder?: Maybe<Order>;
   onUpdateProduct?: Maybe<Product>;
   onUpdateProductCategory?: Maybe<ProductCategory>;
+  onUpdateProductOrder?: Maybe<ProductOrder>;
   onUpdateShopper?: Maybe<Shopper>;
   onUpdateStore?: Maybe<Store>;
 };
@@ -1345,6 +1484,11 @@ export type SubscriptionOnCreateProductArgs = {
 
 export type SubscriptionOnCreateProductCategoryArgs = {
   filter?: InputMaybe<ModelSubscriptionProductCategoryFilterInput>;
+};
+
+
+export type SubscriptionOnCreateProductOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionProductOrderFilterInput>;
 };
 
 
@@ -1383,6 +1527,11 @@ export type SubscriptionOnDeleteProductCategoryArgs = {
 };
 
 
+export type SubscriptionOnDeleteProductOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionProductOrderFilterInput>;
+};
+
+
 export type SubscriptionOnDeleteShopperArgs = {
   filter?: InputMaybe<ModelSubscriptionShopperFilterInput>;
 };
@@ -1418,6 +1567,11 @@ export type SubscriptionOnUpdateProductCategoryArgs = {
 };
 
 
+export type SubscriptionOnUpdateProductOrderArgs = {
+  filter?: InputMaybe<ModelSubscriptionProductOrderFilterInput>;
+};
+
+
 export type SubscriptionOnUpdateShopperArgs = {
   filter?: InputMaybe<ModelSubscriptionShopperFilterInput>;
 };
@@ -1449,7 +1603,8 @@ export type UpdateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
   clientOrdersId?: InputMaybe<Scalars['ID']>;
   code?: InputMaybe<Scalars['Int']>;
-  endTime?: InputMaybe<Scalars['AWSDateTime']>;
+  distance?: InputMaybe<Scalars['String']>;
+  endTime?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   isCancel?: InputMaybe<Scalars['Boolean']>;
   isComplete?: InputMaybe<Scalars['Boolean']>;
@@ -1457,8 +1612,9 @@ export type UpdateOrderInput = {
   isPicked?: InputMaybe<Scalars['Boolean']>;
   onGoing?: InputMaybe<Scalars['Boolean']>;
   orderNote?: InputMaybe<Scalars['String']>;
+  shopperId?: InputMaybe<Scalars['String']>;
   shopperOrdersId?: InputMaybe<Scalars['ID']>;
-  startTime?: InputMaybe<Scalars['AWSDateTime']>;
+  startTime?: InputMaybe<Scalars['String']>;
   storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1478,13 +1634,19 @@ export type UpdateProductInput = {
   id: Scalars['ID'];
   image?: InputMaybe<Scalars['String']>;
   model?: InputMaybe<Scalars['String']>;
-  orderProductsId?: InputMaybe<Scalars['ID']>;
   price?: InputMaybe<Scalars['Float']>;
   productCategoryProductsId?: InputMaybe<Scalars['ID']>;
   rooms?: InputMaybe<Scalars['Int']>;
   size?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   washrooms?: InputMaybe<Scalars['Int']>;
+};
+
+export type UpdateProductOrderInput = {
+  _version?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID'];
+  orderId?: InputMaybe<Scalars['ID']>;
+  productId?: InputMaybe<Scalars['ID']>;
 };
 
 export type UpdateShopperInput = {
@@ -1617,6 +1779,20 @@ export type GetCategoryQueryVariables = Exact<{
 
 
 export type GetCategoryQuery = { __typename?: 'Query', getCategory?: { __typename?: 'Category', id: string, stores?: { __typename?: 'ModelStoreConnection', items: Array<{ __typename?: 'Store', categoryStoresId?: string | null, headerImg?: string | null, storeName?: string | null, branches: string, address: string, logo?: string | null, phone: string, verified: boolean, id: string, email: string } | null> } | null } | null };
+
+export type CreateOrderMutationVariables = Exact<{
+  input: CreateOrderInput;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, code?: number | null, orderNote: string, shopperOrdersId?: string | null, clientOrdersId?: string | null, storeOrdersId?: string | null, startTime: string } | null };
+
+export type CreateProductOrderMutationVariables = Exact<{
+  input: CreateProductOrderInput;
+}>;
+
+
+export type CreateProductOrderMutation = { __typename?: 'Mutation', createProductOrder?: { __typename?: 'ProductOrder', id: string, orderId: string, productId: string } | null };
 
 export type CreatePaymentIntentMutationVariables = Exact<{
   amount: Scalars['Float'];
@@ -1878,6 +2054,80 @@ export function useGetCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCategoryQueryHookResult = ReturnType<typeof useGetCategoryQuery>;
 export type GetCategoryLazyQueryHookResult = ReturnType<typeof useGetCategoryLazyQuery>;
 export type GetCategoryQueryResult = Apollo.QueryResult<GetCategoryQuery, GetCategoryQueryVariables>;
+export const CreateOrderDocument = gql`
+    mutation CreateOrder($input: CreateOrderInput!) {
+  createOrder(input: $input) {
+    id
+    code
+    orderNote
+    shopperOrdersId
+    clientOrdersId
+    storeOrdersId
+    startTime
+  }
+}
+    `;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
+export const CreateProductOrderDocument = gql`
+    mutation CreateProductOrder($input: CreateProductOrderInput!) {
+  createProductOrder(input: $input) {
+    id
+    orderId
+    productId
+  }
+}
+    `;
+export type CreateProductOrderMutationFn = Apollo.MutationFunction<CreateProductOrderMutation, CreateProductOrderMutationVariables>;
+
+/**
+ * __useCreateProductOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateProductOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductOrderMutation, { data, loading, error }] = useCreateProductOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateProductOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductOrderMutation, CreateProductOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductOrderMutation, CreateProductOrderMutationVariables>(CreateProductOrderDocument, options);
+      }
+export type CreateProductOrderMutationHookResult = ReturnType<typeof useCreateProductOrderMutation>;
+export type CreateProductOrderMutationResult = Apollo.MutationResult<CreateProductOrderMutation>;
+export type CreateProductOrderMutationOptions = Apollo.BaseMutationOptions<CreateProductOrderMutation, CreateProductOrderMutationVariables>;
 export const CreatePaymentIntentDocument = gql`
     mutation CreatePaymentIntent($amount: Float!) {
   createPaymentIntent(amount: $amount) {

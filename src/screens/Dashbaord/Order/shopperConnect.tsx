@@ -1,23 +1,20 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react'
-
 import {
   View,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Button,
   Text,
-  Platform,
   Modal,
   Pressable,
-  Alert,
 } from 'react-native'
 import MapScreen from '../Map/mapView'
 import { AntDesign } from '@expo/vector-icons'
 import LocationSearch from '../../../shared/LocationSearch'
+import { useCreateOrderMutation } from '../../../generated/graphql'
 import BottomSheetDrawer from '../../../shared/BottomSheet'
 import BottomSheet from '@gorhom/bottom-sheet'
+import CustomAlert from '../../../shared/newAlert'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../../shared/Constants'
 import { useSelector } from 'react-redux'
@@ -29,15 +26,22 @@ import OrderPeriod from './orderPeriod'
 const ShopperConnect = () => {
   const sheetRef = useRef<BottomSheet>(null)
   const [connectShopper, setConnectShoper] = useState(false)
+  const [createOrder, { data }] = useCreateOrderMutation()
   const [connectProgress, setConnectProgress] = useState(0)
-  const orderNote = useSelector(state => state.orderNote)
-
+  const orderNote = useSelector((state) => state.order)
+  const store = useSelector((state) => state.store)
+  const user = useSelector((state) => state.user)
+  const orderTime = useSelector((state) => state.order)
+  const [isOrderCreated, setIsOrderCreated] = useState(false)
+  console.log(store)
   const snapPoints = useMemo(() => ['40%'], [])
   const locationDetail = useSelector((state) => state.locationDetail)
   const navigation = useNavigation()
   const [modalVisible, setModalVisible] = useState(false)
   const [time, setTime] = useState()
   const [dist, setDist] = useState()
+
+  console.log(orderTime.orderTime)
 
   useEffect(() => {
     if (Object.keys(locationDetail.distance).length !== 0) {
@@ -46,9 +50,45 @@ const ShopperConnect = () => {
     }
   }, [locationDetail.distance])
 
+  const createOrderFunc = async () => {
+    try {
+      await createOrder({
+        variables: {
+          input: {
+            isCancel: false,
+            isDelivered: false,
+            isPicked: false,
+            onGoing: false,
+            orderNote: orderNote,
+            storeOrdersId: store.storeId,
+            shopperId: "9b32b0ec-3319-455b-bb08-09e31d3c49cb",
+            shopperOrdersId: "9b32b0ec-3319-455b-bb08-09e31d3c49cb",
+            clientOrdersId: user.userId,
+            startTime: orderTime.orderTime
+          },
+        },
+      })
+      console.log(data)
+      setIsOrderCreated(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+
+  })
+
   const onConnectShopperHandler = () => {
+    if (orderTime.orderTime === null) {
+      return CustomAlert(
+        'Date & time not selected',
+        'You need to select date and time for delivery'
+      )
+    }
+    createOrderFunc()
     setConnectShoper(!connectShopper)
-    setConnectProgress(0.00001)
+    setConnectProgress(0.0000001)
   }
 
   return (
@@ -91,7 +131,11 @@ const ShopperConnect = () => {
                     size={24}
                     color={Colors.light.textPrimaryBlack}
                   />
-                  <Text style={styles.placeholder}>{orderNote.note === "" ? "Leave note for shopper" : orderNote.note}</Text>
+                  <Text style={styles.placeholder}>
+                    {orderNote.note === ''
+                      ? 'Leave note for shopper'
+                      : orderNote.note}
+                  </Text>
                 </TouchableOpacity>
               </>
             )}

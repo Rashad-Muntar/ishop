@@ -1,5 +1,5 @@
-import React, { ReactNode, useCallback, useMemo, useRef } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { ReactNode} from 'react'
+import { View, StyleSheet } from 'react-native'
 import BottomSheet from '@gorhom/bottom-sheet'
 
 interface Props {
@@ -10,10 +10,17 @@ interface Props {
   onPandown: any
   style?: any
 }
-const BottomSheetDrawer = ({ sheetRef, style, snaPoints, index, children, onPandown }: Props) => {
+const BottomSheetDrawer = ({
+  sheetRef,
+  style,
+  snaPoints,
+  index,
+  children,
+  onPandown,
+}: Props) => {
   return (
     <BottomSheet
-    backgroundStyle={style}
+      backgroundStyle={style}
       ref={sheetRef}
       index={index}
       snapPoints={snaPoints}
@@ -31,9 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   contentContainer: {
-    // flex: 1,
     paddingHorizontal: 18,
-    // alignItems: 'center',
   },
 })
 

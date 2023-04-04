@@ -1,53 +1,78 @@
 import React, { useMemo, useRef } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native'
 import BottomSheetDrawer from '../../../shared/BottomSheet'
 import { Colors } from '../../../shared/Constants'
+import { AntDesign } from '@expo/vector-icons'
+import { useSelector } from 'react-redux'
+import Button from '../../../shared/Button'
+import { useNavigation } from '@react-navigation/native'
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
 
 const MenuScreen = () => {
   const snapPoints = useMemo(() => ['81%'], [])
+  const user = useSelector((state) => state.user)
+  const navigation = useNavigation()
+  console.log(user)
   const sheetRef = useRef<BottomSheet>(null)
   return (
-      <View>
-        <Text>sdfsdfsdfsdfsdfsd</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.btnArea}>
+          <AntDesign
+            onPress={() => navigation.navigate('Categories')}
+            name="closecircleo"
+            size={35}
+            color={Colors.light.textPrimaryBlack}
+          />
+          <Button bg={Colors.light.primary} title="Customer Service" />
+        </View>
+        <View style={styles.nameArea}>
+          <Text style={styles.welcome}>Hi Rashad!</Text>
+        </View>
       </View>
+      <View style={styles.menuContent}></View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    width: '100%',
+    height: '25%',
+    alignItems: 'center',
+    backgroundColor: Colors.light.primary50,
+  },
+  btnArea: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  selectCat: {
-    fontSize: 18,
+
+  welcome: {
+    fontSize: 25,
     fontWeight: '700',
-    paddingLeft: '3%',
-    paddingTop: '8%',
+    color: Colors.light.textPrimaryBlack,
   },
-  cardWrapper: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginTop: 60,
-    width: '95%',
+
+  nameArea: {
+    width: '100%',
+    marginTop: 30,
   },
-  sheetStyle: {
-    backgroundColor: Colors.light.primary50,
-    borderTopRightRadius: 50,
+  menuContent: {
+    backgroundColor: 'white',
+    height: '75%',
+    width: '100%',
+    // borderWidth: 3,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowOffset: { width: 1, height: 5 },
+    shadowOpacity: 1,
+    shadowRadius: 6,
     elevation: 5,
-  },
-  SheetHeading: {
-    fontWeight: '600',
-    fontSize: 17,
-  },
-  headingWrapper: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
   },
 })
 

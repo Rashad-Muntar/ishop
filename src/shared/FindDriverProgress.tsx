@@ -17,6 +17,7 @@ interface Props {
 }
 
 const FindDriverProgress = ({ loadingProgress }: Props) => {
+  
   const [progress, setProgress] = useState(loadingProgress)
   useEffect(() => {
     let subs = true

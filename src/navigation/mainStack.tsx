@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Categories from '../screens/Dashbaord/Category/Categories'
@@ -29,7 +29,10 @@ const MainNavigation = () => {
     setIsLogin(user)
   }
 
-  checkLogin()
+  useEffect(() => {
+    checkLogin()
+    console.log(isLogin)
+  }, [])
 
   return (
     // <NavigationContainer>
@@ -54,35 +57,24 @@ const MainNavigation = () => {
           options={{ headerShown: true }}
           component={VerifyCode}
         /> */}
-      {/* <Stack.Screen
-        name="Categories"
-        options={{ headerShown: false }}
-        component={Categories}
-      />
-      <Stack.Screen
-        name="Stores"
-        options={{ headerShown: false }}
-        component={Store}
-      />
-      <Stack.Screen
-        name="Store"
-        options={{ headerShown: true }}
-        component={Store}
-      /> */}
-      <Stack.Screen
+
+      {/* {isLogin ? ( */}
+        <Stack.Screen
+          name="Categories"
+          options={{ headerShown: false }}
+          component={Categories}
+        />
+   
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={GetStarted}
-      />
-      <Stack.Screen
-          options={{ headerShown: false }}
-          name="Register"
-          component={Register}
         />
+  
       <Stack.Screen
-        name="Categories"
         options={{ headerShown: false }}
-        component={Categories}
+        name="Register"
+        component={Register}
       />
       <Stack.Screen
         name="Stores"
@@ -126,14 +118,14 @@ const MainNavigation = () => {
       />
       <Stack.Screen
         name="menuScreen"
-        options={{ headerShown: true }}
+        options={{ headerShown: false }}
         component={MenuScreen}
       />
-       <Stack.Screen
-          options={{ headerShown: false }}
-          name="productOrPlaceSearch"
-          component={ProductOrPlaceSearch}
-        />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="productOrPlaceSearch"
+        component={ProductOrPlaceSearch}
+      />
       {/* <Stack.Screen
           name="Categories"
           options={{ headerShown: false }}

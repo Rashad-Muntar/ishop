@@ -6,7 +6,7 @@ const ProductOrPlaceSearch = () => {
     return (
       <SafeAreaView style={{flex: 1}}>
               <View style={styles.container}>
-        <Search placeholder='Search for product, vendors or places'/>
+        <Search width="100%" placeholder='Search for product, vendors or places'/>
     </View>
       </SafeAreaView>
   

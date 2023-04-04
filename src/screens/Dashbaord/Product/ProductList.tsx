@@ -88,16 +88,10 @@ const ProductList = () => {
               </View>
             </View>
           </HeaderImg>
-          {/* <View style={styles.hd}>
-            <ImageBackground
-              source={{ uri: data?.getProductCategory?.image }}
-              style={styles.HeaderImg}
-            />
-          </View> */}
         </View>
         <View style={styles.ctWrap}>
           <View style={styles.searchWrap}>
-            <Search placeholder="Search in Walmart" />
+            <Search width="100%" placeholder="Search in Walmart" />
           </View>
           <View style={styles.cardWrapper}>
             {data?.getProductCategory?.products?.items.map((item, index) => (
@@ -166,12 +160,12 @@ const styles = StyleSheet.create({
   },
   storeDesc: {
     height: '60%',
-    width: '90%',
+    width: '95%',
     padding: '5%',
     position: 'absolute',
     bottom: 0,
     top: '55%',
-    left: '5%',
+    left: '2.5%',
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -216,7 +210,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     margin: 3,
     marginLeft: 15,
-    padding: 8,
+    padding: 9,
+    marginTop: 25,
     position: 'absolute',
   },
   searchWrap: {
