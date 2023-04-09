@@ -1,7 +1,7 @@
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import * as Facebook from 'expo-auth-session/providers/facebook'
-import CButton from '../../shared/Button'
+import CButton from '../../shared/PrimaryButton'
 import React, { useState, useEffect } from 'react'
 import FacebookSvg from '../../../assets/svgs/Facebook'
 import { useNavigation } from '@react-navigation/native'
@@ -40,10 +40,7 @@ const FacebookAuth = () => {
     setUser(userInfo)
     SetToken(accesToken)
     navigation.navigate('Categories')
-    console.log(user)
   }
-
-  
 
   return (
     <CButton

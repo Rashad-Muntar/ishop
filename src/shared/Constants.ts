@@ -9,7 +9,8 @@ export const Colors = {
     textPrimaryBlack: '#595959',
     textPrimaryBlack100: "#8395a7",
     textPrimaryBlack50: "#ecf0f1",
-    
+    primaryBlue: "#54a0ff",
+    primaryBlue100: "#a8caff",
     tintWhite: '#878787',
     primaryRed: '#e74c3c',
     whiteText: '#fff',

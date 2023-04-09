@@ -13,7 +13,6 @@ const RootNavigator = () => {
 
   useEffect(() => {
     checkLogin()
-    console.log(isLogin)
   }, [])
 
   return (

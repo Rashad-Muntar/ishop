@@ -1,4 +1,5 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react'
+import { API, graphqlOperation } from 'aws-amplify'
 import {
   View,
   StyleSheet,
@@ -11,9 +12,13 @@ import {
 import MapScreen from '../Map/mapView'
 import { AntDesign } from '@expo/vector-icons'
 import LocationSearch from '../../../shared/LocationSearch'
-import { useCreateOrderMutation } from '../../../generated/graphql'
+import {
+  useCreateOrderMutation,
+  useUpdateOrderMutation,
+} from '../../../generated/graphql'
 import BottomSheetDrawer from '../../../shared/BottomSheet'
 import BottomSheet from '@gorhom/bottom-sheet'
+import { onUpdateOrder } from '../../../graphql/subscriptions'
 import CustomAlert from '../../../shared/newAlert'
 import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '../../../shared/Constants'
@@ -22,27 +27,31 @@ import { useNavigation } from '@react-navigation/native'
 
 import FindDriverProgress from '../../../shared/FindDriverProgress'
 import OrderPeriod from './orderPeriod'
+import randomNumber from '../../../utils/randomNumber'
+let subs
 
 const ShopperConnect = () => {
   const sheetRef = useRef<BottomSheet>(null)
   const [connectShopper, setConnectShoper] = useState(false)
-  const [createOrder, { data }] = useCreateOrderMutation()
+  const [createOrder] = useCreateOrderMutation()
+  const [updateOrder] = useUpdateOrderMutation()
   const [connectProgress, setConnectProgress] = useState(0)
   const orderNote = useSelector((state) => state.order)
   const store = useSelector((state) => state.store)
+
   const user = useSelector((state) => state.user)
   const orderTime = useSelector((state) => state.order)
+  const shoppers = useSelector(state => state.shoppersIds)
   const [isOrderCreated, setIsOrderCreated] = useState(false)
-  console.log(store)
-  const snapPoints = useMemo(() => ['40%'], [])
+  const [orderStattus, setOrderStattus] = useState()
+  const snapPoints = useMemo(() => ['75%'], [])
   const locationDetail = useSelector((state) => state.locationDetail)
   const navigation = useNavigation()
   const [modalVisible, setModalVisible] = useState(false)
   const [time, setTime] = useState()
   const [dist, setDist] = useState()
 
-  console.log(orderTime.orderTime)
-
+  console.log(shoppers)
   useEffect(() => {
     if (Object.keys(locationDetail.distance).length !== 0) {
       setTime(locationDetail.distance.distance.toFixed(2))
@@ -50,34 +59,84 @@ const ShopperConnect = () => {
     }
   }, [locationDetail.distance])
 
+  const _orderMonitoring = () => {
+    subs = API.graphql(
+      graphqlOperation(onUpdateOrder, {
+        filter: {
+          clientId: {
+            eq: user.userId,
+          },
+        },
+      })
+    ).subscribe({
+      next: ({ provider, value }) =>
+        console.log(value),
+        // setOrderStattus(value?.data?.onUpdateOrder),
+      error: (error) => console.warn(error),
+    })
+  }
+
+  const _reassignOrderHandler = async () => {
+    try {
+      await updateOrder({
+        variables: {
+          input: {
+            id: orderStattus?.id,
+            shopperId: orderStattus?.shopperId,
+          },
+        },
+      })
+    } catch (error) {
+      return error
+    }
+  }
+
+  useEffect(() => {
+    if (orderStattus?.isReject === true) {
+      _reassignOrderHandler()
+    }
+  }, [orderStattus])
+  // useEffect(() => {
+  //   if (data !== undefined && data?.updateOrder?.isAccepted === true) {
+  //     navigation.navigate('start-order')
+  //   } else if (data !== undefined && data?.updateOrder?.isReject === true) {
+  //     setIncommingOrderChange(undefined)
+  //   }
+  // }, [data])
+
+  useEffect(() => {
+    _orderMonitoring()
+    return () => {
+      subs.unsubscribe()
+    }
+  }, [])
+
   const createOrderFunc = async () => {
+    const orderCode = randomNumber()
     try {
       await createOrder({
         variables: {
           input: {
+            code: orderCode,
             isCancel: false,
             isDelivered: false,
             isPicked: false,
             onGoing: false,
             orderNote: orderNote,
             storeOrdersId: store.storeId,
-            shopperId: "9b32b0ec-3319-455b-bb08-09e31d3c49cb",
-            shopperOrdersId: "9b32b0ec-3319-455b-bb08-09e31d3c49cb",
+            clientId: user.userId,
+            shopperId: '9b32b0ec-3319-455b-bb08-09e31d3c49cb',
+            shopperOrdersId: '9b32b0ec-3319-455b-bb08-09e31d3c49cb',
             clientOrdersId: user.userId,
-            startTime: orderTime.orderTime
+            startTime: orderTime.orderTime,
           },
         },
       })
-      console.log(data)
       setIsOrderCreated(true)
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
-
-  useEffect(() => {
-
-  })
 
   const onConnectShopperHandler = () => {
     if (orderTime.orderTime === null) {
@@ -86,16 +145,17 @@ const ShopperConnect = () => {
         'You need to select date and time for delivery'
       )
     }
-    createOrderFunc()
+    if (connectShopper === false) {
+      createOrderFunc()
+    }
     setConnectShoper(!connectShopper)
-    setConnectProgress(0.0000001)
+    setConnectProgress(0.1)
   }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.wrap}>{!connectShopper && <LocationSearch />}</View>
-        <MapScreen />
+        <MapScreen mapHeight="55%" />
         <BottomSheetDrawer
           snaPoints={snapPoints}
           sheetRef={sheetRef}
@@ -114,13 +174,6 @@ const ShopperConnect = () => {
                   <Text style={styles.distance}>{time}km</Text>
                   <Text style={styles.distance}>{dist}Min.</Text>
                 </View>
-                <TouchableOpacity
-                  style={styles.date}
-                  onPress={() => setModalVisible(true)}
-                >
-                  <Ionicons name="time-outline" size={24} color="black" />
-                  <Text style={styles.placeholder}>Pick time and date</Text>
-                </TouchableOpacity>
                 <Text style={styles.optional}>Optional</Text>
                 <TouchableOpacity
                   style={styles.message}
@@ -161,20 +214,6 @@ const ShopperConnect = () => {
             </Pressable>
           </View>
         </BottomSheetDrawer>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible)
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <OrderPeriod closeModal={() => setModalVisible(!modalVisible)} />
-            </View>
-          </View>
-        </Modal>
       </View>
     </SafeAreaView>
   )

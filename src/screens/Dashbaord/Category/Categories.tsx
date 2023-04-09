@@ -31,7 +31,7 @@ const Categories = () => {
       setCategoriesData(cats.data.listCategories.items)
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
   useEffect(() => {
@@ -55,8 +55,7 @@ const Categories = () => {
     try {
       const { status } = await Audio.requestPermissionsAsync()
       if (status !== 'granted') {
-        console.log('Permission not granted')
-        return
+        return 'Permission not granted'
       }
     } catch (error) {}
   }

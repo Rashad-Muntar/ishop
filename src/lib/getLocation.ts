@@ -16,7 +16,7 @@ const GetLocation = (location) => {
           }
             return addressResponse[0]
         } catch (error) {
-          console.log(error.message)
+          return error
         }
       })()
 }

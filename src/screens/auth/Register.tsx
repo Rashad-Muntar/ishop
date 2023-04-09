@@ -33,18 +33,18 @@ const Register = () => {
     navigation.navigate('VerifyCode')
   }
 
-  useEffect(() => {
-    const connect = async () => {
-      const status = await voximplant.getClientState();
-      if (status === Voximplant.ClientState.DISCONNECTED) {
-        await voximplant.connect();
-      } else if (status === Voximplant.ClientState.LOGGED_IN) {
-        console.log("Vox user is login")
-      }
-    };
+  // useEffect(() => {
+  //   const connect = async () => {
+  //     const status = await voximplant.getClientState();
+  //     if (status === Voximplant.ClientState.DISCONNECTED) {
+  //       await voximplant.connect();
+  //     } else if (status === Voximplant.ClientState.LOGGED_IN) {
+            // return "Vox user is login"
+  //     }
+  //   };
 
-    connect();
-  }, []);
+  //   connect();
+  // }, []);
 
   // const login = useMutation(
   //   () =>
@@ -68,7 +68,7 @@ const Register = () => {
   //       //     message: t('Incorrect credentials, please try again!'),
   //       //   },
   //       // })
-  //       console.log(e.message)
+  //       return e.message
   //     },
   //   }
   // )
@@ -86,7 +86,7 @@ const Register = () => {
       Alert.alert('Confirm Number', number, [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => { return 'Cancel Pressed' },
         },
 
         {

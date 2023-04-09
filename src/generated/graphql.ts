@@ -83,20 +83,24 @@ export type CreateClientInput = {
 
 export type CreateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
+  clientId?: InputMaybe<Scalars['String']>;
   clientOrdersId?: InputMaybe<Scalars['ID']>;
   code?: InputMaybe<Scalars['Int']>;
   distance?: InputMaybe<Scalars['String']>;
   endTime?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  isAccepted?: InputMaybe<Scalars['Boolean']>;
   isCancel?: InputMaybe<Scalars['Boolean']>;
   isComplete?: InputMaybe<Scalars['Boolean']>;
   isDelivered?: InputMaybe<Scalars['Boolean']>;
   isPicked?: InputMaybe<Scalars['Boolean']>;
-  onGoing: Scalars['Boolean'];
+  isReject?: InputMaybe<Scalars['Boolean']>;
+  onGoing?: InputMaybe<Scalars['Boolean']>;
   orderNote: Scalars['String'];
-  shopperId: Scalars['String'];
+  shopperId?: InputMaybe<Scalars['String']>;
   shopperOrdersId?: InputMaybe<Scalars['ID']>;
   startTime: Scalars['String'];
+  storeId?: InputMaybe<Scalars['String']>;
   storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -339,14 +343,17 @@ export type ModelIntInput = {
 
 export type ModelOrderConditionInput = {
   and?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
+  clientId?: InputMaybe<ModelStringInput>;
   clientOrdersId?: InputMaybe<ModelIdInput>;
   code?: InputMaybe<ModelIntInput>;
   distance?: InputMaybe<ModelStringInput>;
   endTime?: InputMaybe<ModelStringInput>;
+  isAccepted?: InputMaybe<ModelBooleanInput>;
   isCancel?: InputMaybe<ModelBooleanInput>;
   isComplete?: InputMaybe<ModelBooleanInput>;
   isDelivered?: InputMaybe<ModelBooleanInput>;
   isPicked?: InputMaybe<ModelBooleanInput>;
+  isReject?: InputMaybe<ModelBooleanInput>;
   not?: InputMaybe<ModelOrderConditionInput>;
   onGoing?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelOrderConditionInput>>>;
@@ -354,6 +361,7 @@ export type ModelOrderConditionInput = {
   shopperId?: InputMaybe<ModelStringInput>;
   shopperOrdersId?: InputMaybe<ModelIdInput>;
   startTime?: InputMaybe<ModelStringInput>;
+  storeId?: InputMaybe<ModelStringInput>;
   storeOrdersId?: InputMaybe<ModelIdInput>;
 };
 
@@ -366,15 +374,18 @@ export type ModelOrderConnection = {
 
 export type ModelOrderFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
+  clientId?: InputMaybe<ModelStringInput>;
   clientOrdersId?: InputMaybe<ModelIdInput>;
   code?: InputMaybe<ModelIntInput>;
   distance?: InputMaybe<ModelStringInput>;
   endTime?: InputMaybe<ModelStringInput>;
   id?: InputMaybe<ModelIdInput>;
+  isAccepted?: InputMaybe<ModelBooleanInput>;
   isCancel?: InputMaybe<ModelBooleanInput>;
   isComplete?: InputMaybe<ModelBooleanInput>;
   isDelivered?: InputMaybe<ModelBooleanInput>;
   isPicked?: InputMaybe<ModelBooleanInput>;
+  isReject?: InputMaybe<ModelBooleanInput>;
   not?: InputMaybe<ModelOrderFilterInput>;
   onGoing?: InputMaybe<ModelBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelOrderFilterInput>>>;
@@ -382,6 +393,7 @@ export type ModelOrderFilterInput = {
   shopperId?: InputMaybe<ModelStringInput>;
   shopperOrdersId?: InputMaybe<ModelIdInput>;
   startTime?: InputMaybe<ModelStringInput>;
+  storeId?: InputMaybe<ModelStringInput>;
   storeOrdersId?: InputMaybe<ModelIdInput>;
 };
 
@@ -662,19 +674,23 @@ export type ModelSubscriptionIntInput = {
 
 export type ModelSubscriptionOrderFilterInput = {
   and?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
+  clientId?: InputMaybe<ModelSubscriptionStringInput>;
   code?: InputMaybe<ModelSubscriptionIntInput>;
   distance?: InputMaybe<ModelSubscriptionStringInput>;
   endTime?: InputMaybe<ModelSubscriptionStringInput>;
   id?: InputMaybe<ModelSubscriptionIdInput>;
+  isAccepted?: InputMaybe<ModelSubscriptionBooleanInput>;
   isCancel?: InputMaybe<ModelSubscriptionBooleanInput>;
   isComplete?: InputMaybe<ModelSubscriptionBooleanInput>;
   isDelivered?: InputMaybe<ModelSubscriptionBooleanInput>;
   isPicked?: InputMaybe<ModelSubscriptionBooleanInput>;
+  isReject?: InputMaybe<ModelSubscriptionBooleanInput>;
   onGoing?: InputMaybe<ModelSubscriptionBooleanInput>;
   or?: InputMaybe<Array<InputMaybe<ModelSubscriptionOrderFilterInput>>>;
   orderNote?: InputMaybe<ModelSubscriptionStringInput>;
   shopperId?: InputMaybe<ModelSubscriptionStringInput>;
   startTime?: InputMaybe<ModelSubscriptionStringInput>;
+  storeId?: InputMaybe<ModelSubscriptionStringInput>;
 };
 
 export type ModelSubscriptionProductCategoryFilterInput = {
@@ -781,6 +797,7 @@ export type Mutation = {
   deleteStore?: Maybe<Store>;
   getVideoToken: Scalars['String'];
   phoneVerification?: Maybe<Scalars['String']>;
+  savePaymentInfoIntent: SaveInfoIntention;
   shoppeLocationUpdate: NewShopper;
   shopperLogin: NewShopper;
   shopperSignUp: NewShopper;
@@ -824,6 +841,7 @@ export type MutationCreateOrderArgs = {
 
 export type MutationCreatePaymentIntentArgs = {
   amount: Scalars['Float'];
+  paymentMethod?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1023,24 +1041,28 @@ export type Order = {
   _lastChangedAt: Scalars['AWSTimestamp'];
   _version: Scalars['Int'];
   client?: Maybe<Client>;
+  clientId?: Maybe<Scalars['String']>;
   clientOrdersId?: Maybe<Scalars['ID']>;
   code?: Maybe<Scalars['Int']>;
   createdAt: Scalars['AWSDateTime'];
   distance?: Maybe<Scalars['String']>;
   endTime?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  isAccepted?: Maybe<Scalars['Boolean']>;
   isCancel?: Maybe<Scalars['Boolean']>;
   isComplete?: Maybe<Scalars['Boolean']>;
   isDelivered?: Maybe<Scalars['Boolean']>;
   isPicked?: Maybe<Scalars['Boolean']>;
-  onGoing: Scalars['Boolean'];
+  isReject?: Maybe<Scalars['Boolean']>;
+  onGoing?: Maybe<Scalars['Boolean']>;
   orderNote: Scalars['String'];
   products?: Maybe<ModelProductOrderConnection>;
   shopper?: Maybe<Shopper>;
-  shopperId: Scalars['String'];
+  shopperId?: Maybe<Scalars['String']>;
   shopperOrdersId?: Maybe<Scalars['ID']>;
   startTime: Scalars['String'];
   store?: Maybe<Store>;
+  storeId?: Maybe<Scalars['String']>;
   storeOrdersId?: Maybe<Scalars['ID']>;
   updatedAt: Scalars['AWSDateTime'];
 };
@@ -1058,7 +1080,7 @@ export type PaymentIntention = {
   customer: Scalars['String'];
   ephemeralKey: Scalars['String'];
   paymentIntent: Scalars['String'];
-  publishableKey: Scalars['String'];
+  publishableKey?: Maybe<Scalars['String']>;
 };
 
 export type Product = {
@@ -1360,6 +1382,14 @@ export type QuerySyncStoresArgs = {
   nextToken?: InputMaybe<Scalars['String']>;
 };
 
+export type SaveInfoIntention = {
+  __typename?: 'SaveInfoIntention';
+  customer: Scalars['String'];
+  ephemeralKey: Scalars['String'];
+  publishableKey?: Maybe<Scalars['String']>;
+  setupIntent: Scalars['String'];
+};
+
 export type Shopper = {
   __typename?: 'Shopper';
   _deleted?: Maybe<Scalars['Boolean']>;
@@ -1601,20 +1631,24 @@ export type UpdateClientInput = {
 
 export type UpdateOrderInput = {
   _version?: InputMaybe<Scalars['Int']>;
+  clientId?: InputMaybe<Scalars['String']>;
   clientOrdersId?: InputMaybe<Scalars['ID']>;
   code?: InputMaybe<Scalars['Int']>;
   distance?: InputMaybe<Scalars['String']>;
   endTime?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
+  isAccepted?: InputMaybe<Scalars['Boolean']>;
   isCancel?: InputMaybe<Scalars['Boolean']>;
   isComplete?: InputMaybe<Scalars['Boolean']>;
   isDelivered?: InputMaybe<Scalars['Boolean']>;
   isPicked?: InputMaybe<Scalars['Boolean']>;
+  isReject?: InputMaybe<Scalars['Boolean']>;
   onGoing?: InputMaybe<Scalars['Boolean']>;
   orderNote?: InputMaybe<Scalars['String']>;
   shopperId?: InputMaybe<Scalars['String']>;
   shopperOrdersId?: InputMaybe<Scalars['ID']>;
   startTime?: InputMaybe<Scalars['String']>;
+  storeId?: InputMaybe<Scalars['String']>;
   storeOrdersId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1785,7 +1819,14 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, code?: number | null, orderNote: string, shopperOrdersId?: string | null, clientOrdersId?: string | null, storeOrdersId?: string | null, startTime: string } | null };
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder?: { __typename?: 'Order', id: string, startTime: string, endTime?: string | null, code?: number | null, isCancel?: boolean | null, isReject?: boolean | null, isComplete?: boolean | null, distance?: string | null, isPicked?: boolean | null, isDelivered?: boolean | null, onGoing?: boolean | null, isAccepted?: boolean | null, shopperId?: string | null, clientId?: string | null, storeId?: string | null, orderNote: string, store?: { __typename?: 'Store', storeName?: string | null, address: string, latitude?: number | null, longitude?: number | null, phone: string, logo?: string | null } | null } | null };
+
+export type UpdateOrderMutationVariables = Exact<{
+  input: UpdateOrderInput;
+}>;
+
+
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder?: { __typename?: 'Order', id: string, startTime: string, endTime?: string | null, code?: number | null, isCancel?: boolean | null, isComplete?: boolean | null, distance?: string | null, isPicked?: boolean | null, isDelivered?: boolean | null, onGoing?: boolean | null, isAccepted?: boolean | null, shopperId?: string | null, orderNote: string, isReject?: boolean | null } | null };
 
 export type CreateProductOrderMutationVariables = Exact<{
   input: CreateProductOrderInput;
@@ -1799,7 +1840,12 @@ export type CreatePaymentIntentMutationVariables = Exact<{
 }>;
 
 
-export type CreatePaymentIntentMutation = { __typename?: 'Mutation', createPaymentIntent: { __typename?: 'PaymentIntention', customer: string, ephemeralKey: string, paymentIntent: string, publishableKey: string } };
+export type CreatePaymentIntentMutation = { __typename?: 'Mutation', createPaymentIntent: { __typename?: 'PaymentIntention', customer: string, ephemeralKey: string, paymentIntent: string, publishableKey?: string | null } };
+
+export type SavePaymentInfoIntentMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SavePaymentInfoIntentMutation = { __typename?: 'Mutation', savePaymentInfoIntent: { __typename?: 'SaveInfoIntention', customer: string, ephemeralKey: string, setupIntent: string, publishableKey?: string | null } };
 
 export type GetProductCategoryQueryVariables = Exact<{
   getProductCategoryId: Scalars['ID'];
@@ -2058,12 +2104,29 @@ export const CreateOrderDocument = gql`
     mutation CreateOrder($input: CreateOrderInput!) {
   createOrder(input: $input) {
     id
-    code
-    orderNote
-    shopperOrdersId
-    clientOrdersId
-    storeOrdersId
     startTime
+    endTime
+    code
+    isCancel
+    isReject
+    isComplete
+    distance
+    isPicked
+    isDelivered
+    onGoing
+    isAccepted
+    shopperId
+    clientId
+    storeId
+    orderNote
+    store {
+      storeName
+      address
+      latitude
+      longitude
+      phone
+      logo
+    }
   }
 }
     `;
@@ -2093,6 +2156,52 @@ export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
+export const UpdateOrderDocument = gql`
+    mutation UpdateOrder($input: UpdateOrderInput!) {
+  updateOrder(input: $input) {
+    id
+    startTime
+    endTime
+    code
+    isCancel
+    isComplete
+    distance
+    isPicked
+    isDelivered
+    onGoing
+    isAccepted
+    shopperId
+    orderNote
+    isReject
+  }
+}
+    `;
+export type UpdateOrderMutationFn = Apollo.MutationFunction<UpdateOrderMutation, UpdateOrderMutationVariables>;
+
+/**
+ * __useUpdateOrderMutation__
+ *
+ * To run a mutation, you first call `useUpdateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOrderMutation, { data, loading, error }] = useUpdateOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOrderMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOrderMutation, UpdateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, options);
+      }
+export type UpdateOrderMutationHookResult = ReturnType<typeof useUpdateOrderMutation>;
+export type UpdateOrderMutationResult = Apollo.MutationResult<UpdateOrderMutation>;
+export type UpdateOrderMutationOptions = Apollo.BaseMutationOptions<UpdateOrderMutation, UpdateOrderMutationVariables>;
 export const CreateProductOrderDocument = gql`
     mutation CreateProductOrder($input: CreateProductOrderInput!) {
   createProductOrder(input: $input) {
@@ -2164,6 +2273,41 @@ export function useCreatePaymentIntentMutation(baseOptions?: Apollo.MutationHook
 export type CreatePaymentIntentMutationHookResult = ReturnType<typeof useCreatePaymentIntentMutation>;
 export type CreatePaymentIntentMutationResult = Apollo.MutationResult<CreatePaymentIntentMutation>;
 export type CreatePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>;
+export const SavePaymentInfoIntentDocument = gql`
+    mutation SavePaymentInfoIntent {
+  savePaymentInfoIntent {
+    customer
+    ephemeralKey
+    setupIntent
+    publishableKey
+  }
+}
+    `;
+export type SavePaymentInfoIntentMutationFn = Apollo.MutationFunction<SavePaymentInfoIntentMutation, SavePaymentInfoIntentMutationVariables>;
+
+/**
+ * __useSavePaymentInfoIntentMutation__
+ *
+ * To run a mutation, you first call `useSavePaymentInfoIntentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSavePaymentInfoIntentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [savePaymentInfoIntentMutation, { data, loading, error }] = useSavePaymentInfoIntentMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSavePaymentInfoIntentMutation(baseOptions?: Apollo.MutationHookOptions<SavePaymentInfoIntentMutation, SavePaymentInfoIntentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SavePaymentInfoIntentMutation, SavePaymentInfoIntentMutationVariables>(SavePaymentInfoIntentDocument, options);
+      }
+export type SavePaymentInfoIntentMutationHookResult = ReturnType<typeof useSavePaymentInfoIntentMutation>;
+export type SavePaymentInfoIntentMutationResult = Apollo.MutationResult<SavePaymentInfoIntentMutation>;
+export type SavePaymentInfoIntentMutationOptions = Apollo.BaseMutationOptions<SavePaymentInfoIntentMutation, SavePaymentInfoIntentMutationVariables>;
 export const GetProductCategoryDocument = gql`
     query GetProductCategory($getProductCategoryId: ID!) {
   getProductCategory(id: $getProductCategoryId) {

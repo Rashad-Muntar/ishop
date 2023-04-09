@@ -76,7 +76,7 @@ export default function Push() {
       });
    
       responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log(response);
+        return response
       });
    
       return () => {

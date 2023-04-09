@@ -1,12 +1,48 @@
 mutation CreateOrder($input: CreateOrderInput!) {
   createOrder(input: $input) {
     id
-    code
-    orderNote
-    shopperOrdersId
-    clientOrdersId
-    storeOrdersId
     startTime
+    endTime
+    code
+    isCancel
+    isReject
+    isComplete
+    distance
+    isPicked
+    isDelivered
+    onGoing
+    isAccepted
+    shopperId
+    clientId
+    storeId
+    orderNote
+    store {
+      storeName
+      address
+      latitude
+      longitude
+      phone
+      logo
+    }
+  }
+}
+
+mutation UpdateOrder($input: UpdateOrderInput!) {
+  updateOrder(input: $input) {
+    id
+    startTime
+    endTime
+    code
+    isCancel
+    isComplete
+    distance
+    isPicked
+    isDelivered
+    onGoing
+    isAccepted
+    shopperId
+    orderNote
+    isReject
   }
 }
 

@@ -4,7 +4,7 @@ import BottomSheetDrawer from '../../../shared/BottomSheet'
 import { Colors } from '../../../shared/Constants'
 import { AntDesign } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
-import Button from '../../../shared/Button'
+import PrimaryButton from '../../../shared/PrimaryButton'
 import { useNavigation } from '@react-navigation/native'
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
 
@@ -12,7 +12,6 @@ const MenuScreen = () => {
   const snapPoints = useMemo(() => ['81%'], [])
   const user = useSelector((state) => state.user)
   const navigation = useNavigation()
-  console.log(user)
   const sheetRef = useRef<BottomSheet>(null)
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -24,7 +23,7 @@ const MenuScreen = () => {
             size={35}
             color={Colors.light.textPrimaryBlack}
           />
-          <Button bg={Colors.light.primary} title="Customer Service" />
+          <PrimaryButton bg={Colors.light.primary} title="Talk to us" />
         </View>
         <View style={styles.nameArea}>
           <Text style={styles.welcome}>Hi Rashad!</Text>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '25%',
     alignItems: 'center',
-    backgroundColor: Colors.light.primary50,
+    // backgroundColor: Colors.light.primary50,
   },
   btnArea: {
     width: '100%',

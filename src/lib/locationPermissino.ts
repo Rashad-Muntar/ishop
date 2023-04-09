@@ -4,8 +4,7 @@ const LocationPermission = (customLocation:any) => {
   ;(async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== 'granted') {
-      console.log('Permission to access location was denied')
-      return
+      return 'Permission to access location was denied'
     }
     let location = await Location.getCurrentPositionAsync({})
     if (Object.keys(customLocation.location).length === 0) {

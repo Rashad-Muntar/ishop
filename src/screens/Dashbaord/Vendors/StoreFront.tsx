@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   View,
   Image,
@@ -14,13 +14,20 @@ import Search from '../../../shared/Search'
 import { MaterialIcons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import ProductCategory from '../Product/ProductCategory'
+import { useListShoppersQuery } from '../../../generated/graphql'
+import { setShoppersIds } from '../../../../StateManagement/Store/Actions/shopperAction'
+import { useDispatch } from 'react-redux'
 import { useNavigation, useRoute } from '@react-navigation/native'
+
 import { useGetStoreQuery } from '../../../generated/graphql'
 import HeaderImg from '../../../shared/headerImg'
 
 const StoreFront = () => {
+  const dispatch = useDispatch()
   const route = useRoute()
   const store = route.params
+  const shoppers = useListShoppersQuery()
+  const navigation = useNavigation()
 
   const { data, loading, error } = useGetStoreQuery({
     variables: {
@@ -28,30 +35,36 @@ const StoreFront = () => {
     },
   })
 
-  const navigation = useNavigation()
+  useEffect(() => {
+    const newAvailableShoppers = shoppers?.data?.listShoppers?.items?.map(
+      (shopper) => shopper?.id
+    )
+    dispatch(setShoppersIds({ shoppersIds: newAvailableShoppers }))
+  }, [shoppers])
+  
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.HeaderWrap}>
-         
           <View style={styles.hd}>
-          <HeaderImg height={170} uriImg={{ uri: data?.getStore?.headerImg }}>
-          <TouchableOpacity
-              style={styles.backWrap}
-              onPress={navigation.goBack}
-            >
-              <AntDesign name="back" size={24} color="white" />
-            </TouchableOpacity>
-            <View style={styles.storeDesc}>
-              <View style={styles.smImgWrap}>
-                <Image
-                  style={styles.smImage}
-                  source={{ uri: data?.getStore?.logo }}
-                />
-                <Text style={styles.name}>Walmart</Text>
+            <HeaderImg height={170} uriImg={{ uri: data?.getStore?.headerImg }}>
+              <TouchableOpacity
+                style={styles.backWrap}
+                onPress={navigation.goBack}
+              >
+                <AntDesign name="back" size={24} color="white" />
+              </TouchableOpacity>
+              <View style={styles.storeDesc}>
+                <View style={styles.smImgWrap}>
+                  <Image
+                    style={styles.smImage}
+                    source={{ uri: data?.getStore?.logo }}
+                  />
+                  <Text style={styles.name}>Walmart</Text>
+                </View>
               </View>
-            </View>
-          </HeaderImg>
+            </HeaderImg>
           </View>
         </View>
         <View style={styles.ctWrap}>
@@ -60,7 +73,12 @@ const StoreFront = () => {
           </View>
           <View style={styles.cardWrapper}>
             {data?.getStore?.productCategories?.items.map((category, index) => (
-              <ProductCategory key={index} onPress={() => navigation.navigate("Products", {category})} title={category?.title} img={category?.image} />
+              <ProductCategory
+                key={index}
+                onPress={() => navigation.navigate('Products', { category })}
+                title={category?.title}
+                img={category?.image}
+              />
             ))}
           </View>
         </View>

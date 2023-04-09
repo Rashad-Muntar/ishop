@@ -2,7 +2,7 @@ import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import * as Facebook from 'expo-auth-session/providers/facebook'
 import { View, Text, StyleSheet } from 'react-native'
-import CButton from '../../shared/Button'
+import CButton from '../../shared/PrimaryButton'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { ResponseType } from 'expo-auth-session'
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: '5%',
   },
-
 })
 
 export default SocialAuth

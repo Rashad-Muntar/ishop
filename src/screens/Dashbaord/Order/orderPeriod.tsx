@@ -33,10 +33,8 @@ const OrderPeriod = ({ closeModal }: Props) => {
     dispatch(setOrderTime({orderTime: stringifyDate}))
     setShow(false)
     setDate(currentDate)
-    console.log(typeof stringifyDate)
     // const me = format(currentDate, 'MMMM d, yyyy')
     // const formatTime = format(date, 'H:m')
-    // console.log(me, formatTime)
   }
 
   const showMode = (currentMode) => {

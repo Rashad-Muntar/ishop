@@ -24,7 +24,11 @@ import { storeToShop } from '../../../shared/data'
 import { Colors } from '../../../shared/Constants'
 import { useSelector, useDispatch } from 'react-redux'
 
-const MapScreen = () => {
+interface Props {
+  mapHeight?: string, 
+  orderStart?: boolean
+}
+const MapScreen = ({mapHeight, orderStart}:Props) => {
   const dispatch = useDispatch()
   const [shoppers, setShoppers] = useState()
   const [shopperChange, setShopperChange] = useState()
@@ -40,7 +44,7 @@ const MapScreen = () => {
       const shoppers = await API.graphql(graphqlOperation(listShoppers))
       setShoppers(shoppers.data.listShoppers.items)
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
 
@@ -91,7 +95,7 @@ const MapScreen = () => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, height: mapHeight}}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="padding">
           <MapView
@@ -105,11 +109,11 @@ const MapScreen = () => {
             region={{
               latitude: location.latitude,
               longitude: location.longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+              latitudeDelta: 0.001,
+              longitudeDelta: 0.001,
             }}
           >
-            {shoppers?.map((car, index) => {
+            {/* {shoppers?.map((car, index) => {
               if (car?.latitude !== null && car?.longitude !== null) {
                 return (
                   <Marker
@@ -122,19 +126,19 @@ const MapScreen = () => {
                   />
                 )
               }
-            })}
+            })} */}
 
             <Marker
               anchor={{ x: 0.5, y: 0.5 }}
               coordinate={location}
               image={require('../../../../assets/Solids/location.png')}
             />
-            <Marker
+            {/* <Marker
               anchor={{ x: 0.5, y: 0.5 }}
               coordinate={storeToShop}
               image={require('../../../../assets/Solids/store2.png')}
-            />
-            <MapViewDirections
+            /> */}
+            {/* <MapViewDirections
               origin={storeToShop}
               destination={location}
               apikey="AIzaSyDsz1c179pD7OCWT_EmMs5cueUhMVve2gY"
@@ -167,9 +171,9 @@ const MapScreen = () => {
                 retryOnConnectionLost: true,
               }}
               onError={(errorMessage) => {
-                console.log(errorMessage)
+                return errorMessage
               }}
-            />
+            /> */}
           </MapView>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -179,13 +183,11 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '65%',
-    backgroundColor: 'grey',
     width: '100%',
   },
   map: {
+    height: "100%",
     width: '100%',
-    height: '100%',
   },
 })
 export default MapScreen

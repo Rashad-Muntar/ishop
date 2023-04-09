@@ -30,6 +30,39 @@ export const codeVerification = /* GraphQL */ `
     }
   }
 `;
+export const socialAuth = /* GraphQL */ `
+  mutation SocialAuth(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $avatar: String!
+  ) {
+    socialAuth(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      avatar: $avatar
+    ) {
+      client {
+        id
+        firstName
+        lastName
+        email
+        password
+        phone
+        location
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      token
+      success
+      message
+    }
+  }
+`;
 export const createPaymentIntent = /* GraphQL */ `
   mutation CreatePaymentIntent($amount: Float!) {
     createPaymentIntent(amount: $amount) {
@@ -272,10 +305,17 @@ export const createOrder = /* GraphQL */ `
       endTime
       code
       isCancel
+      isReject
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
+      isAccepted
+      shopperId
+      clientId
+      storeId
+      orderNote
       shopper {
         id
         avatar
@@ -356,10 +396,17 @@ export const updateOrder = /* GraphQL */ `
       endTime
       code
       isCancel
+      isReject
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
+      isAccepted
+      shopperId
+      clientId
+      storeId
+      orderNote
       shopper {
         id
         avatar
@@ -440,10 +487,17 @@ export const deleteOrder = /* GraphQL */ `
       endTime
       code
       isCancel
+      isReject
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
+      isAccepted
+      shopperId
+      clientId
+      storeId
+      orderNote
       shopper {
         id
         avatar
@@ -973,31 +1027,15 @@ export const createProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
-      order {
-        id
-        startTime
-        endTime
-        code
-        isCancel
-        isComplete
-        isPicked
-        isDelivered
-        onGoing
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        shopperOrdersId
-        clientOrdersId
-        storeOrdersId
+      orders {
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
       productCategoryProductsId
     }
   }
@@ -1030,31 +1068,15 @@ export const updateProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
-      order {
-        id
-        startTime
-        endTime
-        code
-        isCancel
-        isComplete
-        isPicked
-        isDelivered
-        onGoing
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        shopperOrdersId
-        clientOrdersId
-        storeOrdersId
+      orders {
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
       productCategoryProductsId
     }
   }
@@ -1087,16 +1109,45 @@ export const deleteProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
+      orders {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      productCategoryProductsId
+    }
+  }
+`;
+export const createProductOrder = /* GraphQL */ `
+  mutation CreateProductOrder(
+    $input: CreateProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    createProductOrder(input: $input, condition: $condition) {
+      id
+      orderId
+      productId
       order {
         id
         startTime
         endTime
         code
         isCancel
+        isReject
         isComplete
+        distance
         isPicked
         isDelivered
         onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
         createdAt
         updatedAt
         _version
@@ -1106,13 +1157,154 @@ export const deleteProduct = /* GraphQL */ `
         clientOrdersId
         storeOrdersId
       }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
-      productCategoryProductsId
+    }
+  }
+`;
+export const updateProductOrder = /* GraphQL */ `
+  mutation UpdateProductOrder(
+    $input: UpdateProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    updateProductOrder(input: $input, condition: $condition) {
+      id
+      orderId
+      productId
+      order {
+        id
+        startTime
+        endTime
+        code
+        isCancel
+        isReject
+        isComplete
+        distance
+        isPicked
+        isDelivered
+        onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        shopperOrdersId
+        clientOrdersId
+        storeOrdersId
+      }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteProductOrder = /* GraphQL */ `
+  mutation DeleteProductOrder(
+    $input: DeleteProductOrderInput!
+    $condition: ModelProductOrderConditionInput
+  ) {
+    deleteProductOrder(input: $input, condition: $condition) {
+      id
+      orderId
+      productId
+      order {
+        id
+        startTime
+        endTime
+        code
+        isCancel
+        isReject
+        isComplete
+        distance
+        isPicked
+        isDelivered
+        onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        shopperOrdersId
+        clientOrdersId
+        storeOrdersId
+      }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

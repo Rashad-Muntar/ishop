@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Categories from '../screens/Dashbaord/Category/Categories'
 import Store from '../screens/Dashbaord/Vendors/Stores'
-
+import OrderSubmitted from '../screens/Dashbaord/Checkout.tsx/orderSubmitted'
 import StoreFront from '../screens/Dashbaord/Vendors/StoreFront'
 import GetStarted from '../screens/GetStarted'
 import Register from '../screens/auth/Register'
@@ -31,12 +31,9 @@ const MainNavigation = () => {
 
   useEffect(() => {
     checkLogin()
-    console.log(isLogin)
   }, [])
 
   return (
-    // <NavigationContainer>
-
     <Stack.Navigator
       screenOptions={{
         cardStyle: {
@@ -92,7 +89,7 @@ const MainNavigation = () => {
         component={ProductList}
       />
       <Stack.Screen
-        name="Checkout"
+        name="Cart"
         options={{ headerShown: true }}
         component={Checkout}
       />
@@ -103,7 +100,7 @@ const MainNavigation = () => {
       />
       <Stack.Screen
         name="Delivery-address"
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
         component={SearchView}
       />
       <Stack.Screen
@@ -126,62 +123,19 @@ const MainNavigation = () => {
         name="productOrPlaceSearch"
         component={ProductOrPlaceSearch}
       />
-      {/* <Stack.Screen
-          name="Categories"
+           {/* <Stack.Screen
+        name="Cart"
+        options={{ headerShown: true }}
+        component={Checkout}
+      /> */}
+      <Stack.Screen
+          name="Order-Complete"
           options={{ headerShown: false }}
-          component={Categories}
-        /> */}
-      {/* <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={GetStarted}
+          component={OrderSubmitted}
         />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Register"
-          component={Register}
-        /> */}
-      {/* <Stack.Screen
-          name="VerifyCode"
-          options={{ headerShown: true }}
-          component={VerifyCode}
-        />
-        <Stack.Screen
-          name="Categories"
-          options={{ headerShown: false }}
-          component={Categories}
-        />
-        <Stack.Screen
-          name="Store"
-          options={{ headerShown: true }}
-          component={Store}
-        />
-        <Stack.Screen
-          name="Bookings"
-          options={{ headerShown: true }}
-          component={Booking}
-        />
-        <Stack.Screen
-          name="History"
-          options={{ headerShown: true }}
-          component={Booking}
-        />
-        <Stack.Screen
-          name="FAQ"
-          options={{ headerShown: true }}
-          component={Booking}
-        /> */}
-      {/* <Stack.Screen
-          name="StoreFront"
-          options={{ headerShown: false }}
-          component={ProductCategoryList}
-        /> */}
 
-      {/* 
-     
-        */}
     </Stack.Navigator>
-    // </NavigationContainer>
+
   )
 }
 

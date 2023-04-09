@@ -6,3 +6,12 @@ mutation CreatePaymentIntent($amount: Float!) {
     publishableKey
   }
 }
+
+mutation SavePaymentInfoIntent {
+  savePaymentInfoIntent {
+    customer
+    ephemeralKey
+    setupIntent
+    publishableKey
+  }
+}

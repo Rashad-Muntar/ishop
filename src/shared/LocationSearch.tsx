@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, Button, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, Button, TouchableOpacity, SafeAreaView } from 'react-native'
 import { Colors } from './Constants'
 import { AntDesign } from '@expo/vector-icons'
 import { SearchBar } from '@rneui/themed'

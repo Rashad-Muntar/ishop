@@ -25,6 +25,8 @@ const BottomSheetDrawer = ({
       index={index}
       snapPoints={snaPoints}
       enablePanDownToClose={onPandown}
+      containerHeight={200}
+      contentHeight={300}
     >
       <View style={styles.contentContainer}>{children}</View>
     </BottomSheet>

@@ -29,10 +29,6 @@ function OrderNote() {
     navigation.goBack()
   }
 
-  useEffect(() => {
-    console.log(note)
-  }, [note])
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentWrap}>

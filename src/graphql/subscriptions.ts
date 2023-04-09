@@ -24,7 +24,7 @@ export const onShopperLocationUpdate = /* GraphQL */ `
       message
     }
   }
-`;
+`
 export const onCreateCategory = /* GraphQL */ `
   subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     onCreateCategory(filter: $filter) {
@@ -42,7 +42,7 @@ export const onCreateCategory = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onUpdateCategory = /* GraphQL */ `
   subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     onUpdateCategory(filter: $filter) {
@@ -60,7 +60,7 @@ export const onUpdateCategory = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onDeleteCategory = /* GraphQL */ `
   subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
     onDeleteCategory(filter: $filter) {
@@ -78,7 +78,7 @@ export const onDeleteCategory = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onCreateOrder = /* GraphQL */ `
   subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
     onCreateOrder(filter: $filter) {
@@ -87,10 +87,17 @@ export const onCreateOrder = /* GraphQL */ `
       endTime
       code
       isCancel
+      isReject
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
+      isAccepted
+      shopperId
+      clientId
+      storeId
+      orderNote
       shopper {
         id
         avatar
@@ -104,11 +111,6 @@ export const onCreateOrder = /* GraphQL */ `
         location
         latitude
         longitude
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       store {
         id
@@ -124,11 +126,6 @@ export const onCreateOrder = /* GraphQL */ `
         headerImg
         logo
         verified
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         categoryStoresId
       }
       client {
@@ -139,27 +136,16 @@ export const onCreateOrder = /* GraphQL */ `
         password
         phone
         location
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       products {
         nextToken
-        startedAt
       }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       shopperOrdersId
       clientOrdersId
       storeOrdersId
     }
   }
-`;
+`
 export const onUpdateOrder = /* GraphQL */ `
   subscription OnUpdateOrder($filter: ModelSubscriptionOrderFilterInput) {
     onUpdateOrder(filter: $filter) {
@@ -169,78 +155,28 @@ export const onUpdateOrder = /* GraphQL */ `
       code
       isCancel
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
-      shopper {
-        id
-        avatar
-        firstName
-        lastName
-        email
-        password
-        phone
-        deliveryOption
-        isOnline
-        location
-        latitude
-        longitude
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      isAccepted
+      clientId
+      shopperId
+      orderNote
+      isReject
       store {
-        id
-        email
-        password
         storeName
-        address
-        latitude
-        longitude
-        phone
-        outletType
-        branches
-        headerImg
         logo
-        verified
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryStoresId
+        address
       }
       client {
-        id
         firstName
         lastName
-        email
-        password
-        phone
         location
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
-      products {
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      shopperOrdersId
-      clientOrdersId
-      storeOrdersId
     }
   }
-`;
+`
 export const onDeleteOrder = /* GraphQL */ `
   subscription OnDeleteOrder($filter: ModelSubscriptionOrderFilterInput) {
     onDeleteOrder(filter: $filter) {
@@ -249,10 +185,17 @@ export const onDeleteOrder = /* GraphQL */ `
       endTime
       code
       isCancel
+      isReject
       isComplete
+      distance
       isPicked
       isDelivered
       onGoing
+      isAccepted
+      shopperId
+      clientId
+      storeId
+      orderNote
       shopper {
         id
         avatar
@@ -321,7 +264,7 @@ export const onDeleteOrder = /* GraphQL */ `
       storeOrdersId
     }
   }
-`;
+`
 export const onCreateShopper = /* GraphQL */ `
   subscription OnCreateShopper($filter: ModelSubscriptionShopperFilterInput) {
     onCreateShopper(filter: $filter) {
@@ -348,7 +291,7 @@ export const onCreateShopper = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onUpdateShopper = /* GraphQL */ `
   subscription OnUpdateShopper($filter: ModelSubscriptionShopperFilterInput) {
     onUpdateShopper(filter: $filter) {
@@ -375,7 +318,7 @@ export const onUpdateShopper = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onDeleteShopper = /* GraphQL */ `
   subscription OnDeleteShopper($filter: ModelSubscriptionShopperFilterInput) {
     onDeleteShopper(filter: $filter) {
@@ -402,7 +345,7 @@ export const onDeleteShopper = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onCreateClient = /* GraphQL */ `
   subscription OnCreateClient($filter: ModelSubscriptionClientFilterInput) {
     onCreateClient(filter: $filter) {
@@ -424,7 +367,7 @@ export const onCreateClient = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onUpdateClient = /* GraphQL */ `
   subscription OnUpdateClient($filter: ModelSubscriptionClientFilterInput) {
     onUpdateClient(filter: $filter) {
@@ -446,7 +389,7 @@ export const onUpdateClient = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onDeleteClient = /* GraphQL */ `
   subscription OnDeleteClient($filter: ModelSubscriptionClientFilterInput) {
     onDeleteClient(filter: $filter) {
@@ -468,7 +411,7 @@ export const onDeleteClient = /* GraphQL */ `
       _lastChangedAt
     }
   }
-`;
+`
 export const onCreateStore = /* GraphQL */ `
   subscription OnCreateStore($filter: ModelSubscriptionStoreFilterInput) {
     onCreateStore(filter: $filter) {
@@ -511,7 +454,7 @@ export const onCreateStore = /* GraphQL */ `
       categoryStoresId
     }
   }
-`;
+`
 export const onUpdateStore = /* GraphQL */ `
   subscription OnUpdateStore($filter: ModelSubscriptionStoreFilterInput) {
     onUpdateStore(filter: $filter) {
@@ -554,7 +497,7 @@ export const onUpdateStore = /* GraphQL */ `
       categoryStoresId
     }
   }
-`;
+`
 export const onDeleteStore = /* GraphQL */ `
   subscription OnDeleteStore($filter: ModelSubscriptionStoreFilterInput) {
     onDeleteStore(filter: $filter) {
@@ -597,7 +540,7 @@ export const onDeleteStore = /* GraphQL */ `
       categoryStoresId
     }
   }
-`;
+`
 export const onCreateProductCategory = /* GraphQL */ `
   subscription OnCreateProductCategory(
     $filter: ModelSubscriptionProductCategoryFilterInput
@@ -639,7 +582,7 @@ export const onCreateProductCategory = /* GraphQL */ `
       storeProductCategoriesId
     }
   }
-`;
+`
 export const onUpdateProductCategory = /* GraphQL */ `
   subscription OnUpdateProductCategory(
     $filter: ModelSubscriptionProductCategoryFilterInput
@@ -681,7 +624,7 @@ export const onUpdateProductCategory = /* GraphQL */ `
       storeProductCategoriesId
     }
   }
-`;
+`
 export const onDeleteProductCategory = /* GraphQL */ `
   subscription OnDeleteProductCategory(
     $filter: ModelSubscriptionProductCategoryFilterInput
@@ -723,7 +666,7 @@ export const onDeleteProductCategory = /* GraphQL */ `
       storeProductCategoriesId
     }
   }
-`;
+`
 export const onCreateProduct = /* GraphQL */ `
   subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
     onCreateProduct(filter: $filter) {
@@ -749,35 +692,19 @@ export const onCreateProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
-      order {
-        id
-        startTime
-        endTime
-        code
-        isCancel
-        isComplete
-        isPicked
-        isDelivered
-        onGoing
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        shopperOrdersId
-        clientOrdersId
-        storeOrdersId
+      orders {
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
       productCategoryProductsId
     }
   }
-`;
+`
 export const onUpdateProduct = /* GraphQL */ `
   subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
     onUpdateProduct(filter: $filter) {
@@ -803,35 +730,19 @@ export const onUpdateProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
-      order {
-        id
-        startTime
-        endTime
-        code
-        isCancel
-        isComplete
-        isPicked
-        isDelivered
-        onGoing
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        shopperOrdersId
-        clientOrdersId
-        storeOrdersId
+      orders {
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
       productCategoryProductsId
     }
   }
-`;
+`
 export const onDeleteProduct = /* GraphQL */ `
   subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
     onDeleteProduct(filter: $filter) {
@@ -857,16 +768,44 @@ export const onDeleteProduct = /* GraphQL */ `
         _lastChangedAt
         storeProductCategoriesId
       }
+      orders {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      productCategoryProductsId
+    }
+  }
+`
+export const onCreateProductOrder = /* GraphQL */ `
+  subscription OnCreateProductOrder(
+    $filter: ModelSubscriptionProductOrderFilterInput
+  ) {
+    onCreateProductOrder(filter: $filter) {
+      id
+      orderId
+      productId
       order {
         id
         startTime
         endTime
         code
         isCancel
+        isReject
         isComplete
+        distance
         isPicked
         isDelivered
         onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
         createdAt
         updatedAt
         _version
@@ -876,13 +815,152 @@ export const onDeleteProduct = /* GraphQL */ `
         clientOrdersId
         storeOrdersId
       }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      orderProductsId
-      productCategoryProductsId
     }
   }
-`;
+`
+export const onUpdateProductOrder = /* GraphQL */ `
+  subscription OnUpdateProductOrder(
+    $filter: ModelSubscriptionProductOrderFilterInput
+  ) {
+    onUpdateProductOrder(filter: $filter) {
+      id
+      orderId
+      productId
+      order {
+        id
+        startTime
+        endTime
+        code
+        isCancel
+        isReject
+        isComplete
+        distance
+        isPicked
+        isDelivered
+        onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        shopperOrdersId
+        clientOrdersId
+        storeOrdersId
+      }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`
+export const onDeleteProductOrder = /* GraphQL */ `
+  subscription OnDeleteProductOrder(
+    $filter: ModelSubscriptionProductOrderFilterInput
+  ) {
+    onDeleteProductOrder(filter: $filter) {
+      id
+      orderId
+      productId
+      order {
+        id
+        startTime
+        endTime
+        code
+        isCancel
+        isReject
+        isComplete
+        distance
+        isPicked
+        isDelivered
+        onGoing
+        isAccepted
+        shopperId
+        clientId
+        storeId
+        orderNote
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        shopperOrdersId
+        clientOrdersId
+        storeOrdersId
+      }
+      product {
+        id
+        title
+        detail
+        brand
+        color
+        size
+        rooms
+        washrooms
+        model
+        price
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        productCategoryProductsId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`

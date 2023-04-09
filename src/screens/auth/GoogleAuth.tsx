@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
-import CButton from '../../shared/Button'
+import CButton from '../../shared/PrimaryButton'
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useSocialAuthMutation } from '../../generated/graphql'
@@ -20,7 +20,7 @@ const GoogleAuth = () => {
   const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  // console.log(user)
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId:
       '786388500443-ho50efo22a6s2rke3402ak3gk71uqjk7.apps.googleusercontent.com',
@@ -63,7 +63,10 @@ const GoogleAuth = () => {
       const userId = newUser?.data?.socialAuth?.client?.id
       const userName = userInfo?.given_name
       const authToken = newUser?.data?.socialAuth?.token
-      await AsyncStorage.setItem('user', JSON.stringify({ token: authToken, id: userId }))
+      await AsyncStorage.setItem(
+        'user',
+        JSON.stringify({ token: authToken, id: userId })
+      )
       dispatch(loginAction({ userId, authToken, userName }))
       setUser(userInfo)
     } catch (error) {

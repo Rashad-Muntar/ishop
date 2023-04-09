@@ -40,7 +40,6 @@ const ProductList = () => {
   const sheetRef = useRef<BottomSheet>(null)
   const snapPoints = useMemo(() => ['1%', '25%', '50%'], [])
   const cartItems = useSelector((state: any) => state.cart)
-  console.log(cartItems)
   const totalPrice = useSelector(cartTotalPriceSelector)
   const totalItems = useSelector(cartTotalSelector)
   const { data, loading, error } = useGetProductCategoryQuery({
@@ -117,7 +116,7 @@ const ProductList = () => {
         </View>
       </ScrollView>
       <Cart
-        onOpenCart={() => navigation.navigate('Checkout')}
+        onOpenCart={() => navigation.navigate('Cart')}
         totalItems={totalItems}
         totalPrice={totalPrice}
       />

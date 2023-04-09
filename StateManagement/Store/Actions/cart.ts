@@ -7,8 +7,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, { payload }) {
-      //   console.log(payload);
-      //id is the unique id of the item
+  
       const { id } = payload
 
       const find = state.find((item) => item.id === id)
